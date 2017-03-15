@@ -13,6 +13,7 @@ def indexpage():
 
 @website.route('/<location>')
 def namepage(location):
-	return Webpage('name.html', name=location)
+	testdata = [{ 'field1' : 'data1' , 'field2' : 'data2'} , { 'field1' : 'data3' , 'field2' : 'data4'}]
+	return Webpage('name.html', name = location, testdata = testdata)
 
 #-----------------------------------------------

@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <link rel="stylesheet" href='/static/style.css' />
+        {% if title %}
+        <title>Test Website - {{ title }}</title>
+        {% else %}
+        <title>Test Website - !NO TITLE!</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>Webpage:</div>
+        {% block content %}{% endblock %}
+    </body>
+</html>
