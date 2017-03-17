@@ -10,14 +10,16 @@ class DefineDelugeInterface:
 
 	def openconnection(self):
 
-		self.delugeinterface.connect()
+		while self.delugeinterface.connected == False:
+			self.delugeinterface.connect()
 		return self.delugeinterface.connected
 
 # =========================================================================================
 
 	def closeconnection(self):
 
-		self.delugeinterface.disconnect()
+		#while self.delugeinterface.connected == True:
+		#self.delugeinterface.disconnect()
 		return self.delugeinterface.connected
 
 # =========================================================================================
@@ -30,7 +32,7 @@ class DefineDelugeInterface:
 
 	def gettorrentdata(self, torrentid):
 
-		return self.delugeinterface.call('core.get_torrent_status', torrentid, self.getdelugekeys)
+		return self.delugeinterface.call('core.get_torrent_status', torrentid, self.getdelugekeys())
 
 	# =========================================================================================
 

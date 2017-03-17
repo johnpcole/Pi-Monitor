@@ -1,0 +1,55 @@
+body {
+    background: #AA0000;
+    font-family: 'Trebuchet MS';
+    line-height: 100%;
+}
+
+.c1 {
+	width: 30px;
+}
+
+.c2 {
+	width: 750px;
+}
+
+.c3 {
+	width: 150px;
+}
+
+.sub {
+    position: relative;
+    background-color: #FFDDCC;
+	color: black;
+	display: inline-block;
+	height: 30px;
+	padding: 1px;
+	overflow: hidden;
+	margin: 1px;
+	border-style: none;
+}
+
+.main {
+    position: relative;
+    background-color: #FFCC99;
+	width: 800px;
+	border-style: solid;
+	border-width: 0px 0px 0px 5px;
+	border-color: #FFAA00;
+	overflow: hidden;
+	padding: 5px 5px 5px 5px;
+	border-radius: 0px 20px 5px 0px;
+    margin: 10 auto;
+}
+
+.right {
+    text-align: right;
+}
+
+p {
+    margin: 6px;
+    padding: 0;
+    /* vertical-align: middle;
+    position: relative;
+    top: 0;
+    left: 0; */
+}

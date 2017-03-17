@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <link rel="stylesheet" href='/static/style.css' />
+        <title>Test Website</title>
+    </head>
+    <body>
+        <h1>Hello World</h1>
+
+		{% for torrent in torrentlist %}
+
+		<div class="main">
+			<div class="sub c1">
+				<p>.</p>
+			</div>
+			<div class="sub c2">
+				<p>{{ torrent.torrentname }}</p>
+			</div>
+			<div class="sub c3">
+				<p>{{ torrent.status }}</p>
+			</div>
+			<div class="sub c3">
+				<p class="right">{{ torrent.progress }}&#37;</p>
+			</div>
+			<div class="sub c3">
+				{% if torrent.finished %}
+				<p>Finished</p>
+				{% else %}
+				<p>In Progress</p>
+				{% endif %}
+			</div>
+			<div class="sub c3">
+				<p class="right">{{ torrent.size }}</p>
+			</div>
+			<div class="sub c3">
+				<p class="right">{{ torrent.eta }}</p>
+			</div>
+		</div>
+
+		{% endfor %}
+
+
+
+
+		<div class="main">
+			<div class="sub c1">
+				<p></p>
+			</div>
+			<div class="sub c2">
+				<h1></h1>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+		</div>
+		<div class="main">
+			<div class="sub c1">
+				<p></p>
+			</div>
+			<div class="sub c2">
+				<h1></h1>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+		</div>
+		<div class="main">
+			<div class="sub c1">
+				<p></p>
+			</div>
+			<div class="sub c2">
+				<h1></h1>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+			<div class="sub c3">
+				<p></p>
+			</div>
+		</div>
+
+    </body>
+</html>

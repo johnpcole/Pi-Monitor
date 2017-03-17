@@ -40,7 +40,7 @@ class DefineTorrentItem:
 			if dataitem == "name":
 				self.torrentname = datalist[dataitem]
 
-			elif dataitem == "size":
+			elif dataitem == "total_size":
 				self.size = datalist[dataitem]
 
 			elif dataitem == "state":
@@ -56,8 +56,9 @@ class DefineTorrentItem:
 				self.finished = datalist[dataitem]
 
 			elif dataitem == "files":
-				for fileitem in dataitem:
-					self.files.append(FileData.createitem(fileitem['index'], fileitem['path']))
+				#for fileitem in dataitem:
+				#	self.files.append(FileData.createitem(fileitem['index'], fileitem['path']))
+				print "ignoring file data right now"
 
 			elif dataitem == "moviename":
 				self.moviename = datalist[dataitem]

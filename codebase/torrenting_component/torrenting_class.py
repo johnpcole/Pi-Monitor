@@ -16,10 +16,9 @@ class DefineTorrentManager:
 	def refreshtorrentlist(self):
 
 		outcome = self.delugeclient.openconnection()
+
 		torrentidlist = self.delugeclient.gettorrentlist()
-
 		for torrentiditem in torrentidlist:
-
 			existingtorrent = self.gettorrent(torrentiditem)
 
 			if existingtorrent is None:
@@ -28,14 +27,19 @@ class DefineTorrentManager:
 			self.refreshtorrentdata(existingtorrent)
 
 		outcome = self.delugeclient.closeconnection()
+		print "Connection closed: ", self.delugeclient.delugeinterface.connected
 
 		cleanlist = []
 
 		for existingtorrent in self.torrents:
-
+			foundflag = False
 			for torrentiditem in torrentidlist:
 				if torrentiditem == existingtorrent.getid():
 					cleanlist.append(existingtorrent)
+					foundflag = True
+
+			if foundflag == False:
+				print "Deleting Torrent ", existingtorrent.getid()
 
 		self.torrents = cleanlist
 
@@ -44,6 +48,7 @@ class DefineTorrentManager:
 	def addtorrent(self, torrentid):
 
 		self.torrents.append(TorrentData.createitem(torrentid))
+		print "Adding Torrent ", torrentid
 
 		return self.gettorrent(torrentid)
 
@@ -63,11 +68,18 @@ class DefineTorrentManager:
 	def refreshtorrentdata(self, torrentobject):
 
 		torrentdata = self.delugeclient.gettorrentdata(torrentobject.getid())
-
+		print "Refreshing Torrent ", torrentobject.getid()
 		torrentobject.updateinfo(torrentdata)
 
-# =========================================================================================
+	# =========================================================================================
 
 	def configuretorrent(self, torrentid, stuff):
 
 		temp = stuff
+
+
+	# =========================================================================================
+
+	def gettorrentdata(self):
+
+		return self.torrents
