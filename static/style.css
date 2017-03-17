@@ -4,8 +4,15 @@ body {
     line-height: 100%;
 }
 
+a {
+    text-decoration: none;
+	padding: 0px;
+	margin: 0px;
+    border-style: none;
+}
+
 .c1 {
-	width: 30px;
+	width: 20px;
 }
 
 .c2 {
@@ -18,27 +25,33 @@ body {
 
 .sub {
     position: relative;
-    background-color: #FFDDCC;
+    background-color: #F0C090;
 	color: black;
 	display: inline-block;
-	height: 30px;
-	padding: 1px;
+	height: 20px;
+	padding: 0px 0px 0px 0px;
 	overflow: hidden;
-	margin: 1px;
+	margin: 0px 0px 0px 0px;
 	border-style: none;
 }
 
 .main {
-    position: relative;
+    /* position: relative; */
     background-color: #FFCC99;
-	width: 800px;
 	border-style: solid;
 	border-width: 0px 0px 0px 5px;
 	border-color: #FFAA00;
 	overflow: hidden;
 	padding: 5px 5px 5px 5px;
 	border-radius: 0px 20px 5px 0px;
-    margin: 10 auto;
+}
+
+.wrapper {
+    /* position: relative; */
+	width: 800px;
+	overflow: hidden;
+    margin: 10px auto 10px auto;
+    border-style: none;
 }
 
 .right {
@@ -46,7 +59,7 @@ body {
 }
 
 p {
-    margin: 6px;
+    margin: 1px 3px 0px 3px;
     padding: 0;
     /* vertical-align: middle;
     position: relative;

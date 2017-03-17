@@ -10,15 +10,21 @@ website = Webserver(__name__)
 @website.route('/')
 def indexpage():
 	torrentmanager.refreshtorrentlist()
-	return Webpage('index.html', torrentlist = torrentmanager.gettorrentdata())
+	return Webpage('index.html', torrentlist = torrentmanager.getalltorrentdata())
 
 #-----------------------------------------------
 
-@website.route('/<location>')
-def namepage(location):
-	testdata = [{ 'field1' : 'data1' , 'field2' : 'data2'} , { 'field1' : 'data3' , 'field2' : 'data4'}]
-	return Webpage('name.html', name = location, testdata = testdata)
+@website.route('/Torrent=<torrentid>')
+def namepage(torrentid):
+	torrentobject = torrentmanager.gettorrent(torrentid)
+	if torrentobject is not None:
+		torrentmanager.refreshtorrentdata(torrentobject)
+		return Webpage('torrent.html', selectedtorrent = torrentobject)
+	else:
+		torrentmanager.refreshtorrentlist()
+		return Webpage('index.html', torrentlist = torrentmanager.getalltorrentdata())
 
 #-----------------------------------------------
+
 
 website.run(debug=True) #, host='0.0.0.0')

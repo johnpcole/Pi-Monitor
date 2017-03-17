@@ -27,7 +27,7 @@ class DefineTorrentManager:
 			self.refreshtorrentdata(existingtorrent)
 
 		outcome = self.delugeclient.closeconnection()
-		print "Connection closed: ", self.delugeclient.delugeinterface.connected
+		print "Connection closure attempted - Connection State = ", self.delugeclient.delugeinterface.connected
 
 		cleanlist = []
 
@@ -80,6 +80,6 @@ class DefineTorrentManager:
 
 	# =========================================================================================
 
-	def gettorrentdata(self):
+	def getalltorrentdata(self):
 
 		return self.torrents

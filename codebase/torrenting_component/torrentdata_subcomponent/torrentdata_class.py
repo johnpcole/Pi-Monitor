@@ -9,7 +9,7 @@ class DefineTorrentItem:
 
 		self.torrentid = torrentid
 
-		self.size = -99999
+		self.size = "!UNKNOWN!"
 
 		self.status = "!UNKNOWN!"
 
@@ -41,7 +41,15 @@ class DefineTorrentItem:
 				self.torrentname = datalist[dataitem]
 
 			elif dataitem == "total_size":
-				self.size = datalist[dataitem]
+				rawsize = datalist[dataitem]
+				if rawsize > 1000000000:
+					self.size = ("%8.2f" % ( int(rawsize / 10000000) * 0.01)) + " Gb"
+				elif rawsize > 1000000:
+					self.size = ("%8.2f" % ( int(rawsize / 10000) * 0.01)) + " Mb"
+				elif rawsize > 1000:
+					self.size = ("%8.2f" % ( int(rawsize / 10) * 0.01)) + " kb"
+				else:
+					self.size = str(int(rawsize) ) + " b"
 
 			elif dataitem == "state":
 				self.status = datalist[dataitem]
@@ -50,10 +58,13 @@ class DefineTorrentItem:
 				self.location = datalist[dataitem]
 
 			elif dataitem == "progress":
-				self.progress = datalist[dataitem]
+				self.progress = str(int(datalist[dataitem])) + "%"
 
 			elif dataitem == "is_finished":
-				self.finished = datalist[dataitem]
+				if datalist[dataitem] == True:
+					self.finished = "Completed"
+				else:
+					self.finished = "In Progress"
 
 			elif dataitem == "files":
 				#for fileitem in dataitem:

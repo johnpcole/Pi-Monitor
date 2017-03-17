@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-    <h1>Hello {{ name }}!</h1>
-    {% for dataitem in testdata %}
-    <div><p>{{ dataitem.field1 }} = <b>{{ dataitem.field2 }}</b></p></div>
-    {% endfor %}
-    <p><a href='/'>Return to root</a></p>
-{% endblock %}

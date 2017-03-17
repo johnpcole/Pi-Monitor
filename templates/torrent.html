@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="wrapper">
+	<div class="main">
+		<div class="sub c1">
+			<p>.</p>
+		</div>
+		<div class="sub c2">
+			<p>{{ selectedtorrent.torrentname }}</p>
+		</div>
+		<div class="sub c3">
+			<p>{{ selectedtorrent.status }}</p>
+		</div>
+		<div class="sub c3">
+			<p class="right">{{ selectedtorrent.progress }}&#37;</p>
+		</div>
+		<div class="sub c3">
+			{% if selectedtorrent.finished %}
+			<p>Finished</p>
+			{% else %}
+			<p>In Progress</p>
+			{% endif %}
+		</div>
+		<div class="sub c3">
+			<p class="right">{{ selectedtorrent.size }}</p>
+		</div>
+		<div class="sub c3">
+			<p class="right">{{ selectedtorrent.eta }}</p>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

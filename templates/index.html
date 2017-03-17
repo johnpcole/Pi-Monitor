@@ -1,13 +1,11 @@
-<html>
-    <head>
-        <link rel="stylesheet" href='/static/style.css' />
-        <title>Test Website</title>
-    </head>
-    <body>
-        <h1>Hello World</h1>
+{% extends "base.html" %}
 
-		{% for torrent in torrentlist %}
+{% block content %}
 
+{% for torrent in torrentlist %}
+
+<div class="wrapper">
+	<a href="/Torrent={{ torrent.torrentid }}">
 		<div class="main">
 			<div class="sub c1">
 				<p>.</p>
@@ -19,14 +17,10 @@
 				<p>{{ torrent.status }}</p>
 			</div>
 			<div class="sub c3">
-				<p class="right">{{ torrent.progress }}&#37;</p>
+				<p class="right">{{ torrent.progress }}</p>
 			</div>
 			<div class="sub c3">
-				{% if torrent.finished %}
-				<p>Finished</p>
-				{% else %}
-				<p>In Progress</p>
-				{% endif %}
+				<p>{{ torrent.finished }}</p>
 			</div>
 			<div class="sub c3">
 				<p class="right">{{ torrent.size }}</p>
@@ -35,81 +29,10 @@
 				<p class="right">{{ torrent.eta }}</p>
 			</div>
 		</div>
+	</a>
+</div>
 
-		{% endfor %}
+{% endfor %}
 
+{% endblock %}
 
-
-
-		<div class="main">
-			<div class="sub c1">
-				<p></p>
-			</div>
-			<div class="sub c2">
-				<h1></h1>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-		</div>
-		<div class="main">
-			<div class="sub c1">
-				<p></p>
-			</div>
-			<div class="sub c2">
-				<h1></h1>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-		</div>
-		<div class="main">
-			<div class="sub c1">
-				<p></p>
-			</div>
-			<div class="sub c2">
-				<h1></h1>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-			<div class="sub c3">
-				<p></p>
-			</div>
-		</div>
-
-    </body>
-</html>
