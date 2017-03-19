@@ -1,4 +1,5 @@
 from filedata_subcomponent import filedata_module as FileData
+from .. import functions_module as Functions
 
 
 class DefineTorrentItem:
@@ -21,13 +22,11 @@ class DefineTorrentItem:
 
 		self.files = []
 
-		self.moviename = ""
+		self.torrenttype = "!UNKNOWN!"
 
-		self.tvshowname = ""
+		self.movieorshowname = ""
 
-		self.tvseries = -99999
-
-		self.tvepisode = -99999
+		self.seriesoryear = -99999
 
 		self.eta = -99999
 
@@ -41,15 +40,7 @@ class DefineTorrentItem:
 				self.torrentname = datalist[dataitem]
 
 			elif dataitem == "total_size":
-				rawsize = datalist[dataitem]
-				if rawsize > 1000000000:
-					self.size = ("%8.2f" % ( int(rawsize / 10000000) * 0.01)) + " Gb"
-				elif rawsize > 1000000:
-					self.size = ("%8.2f" % ( int(rawsize / 10000) * 0.01)) + " Mb"
-				elif rawsize > 1000:
-					self.size = ("%8.2f" % ( int(rawsize / 10) * 0.01)) + " kb"
-				else:
-					self.size = str(int(rawsize) ) + " b"
+				self.size = Functions.sanitisesize(datalist[dataitem])
 
 			elif dataitem == "state":
 				self.status = datalist[dataitem]
@@ -67,9 +58,7 @@ class DefineTorrentItem:
 					self.finished = "In Progress"
 
 			elif dataitem == "files":
-				#for fileitem in dataitem:
-				#	self.files.append(FileData.createitem(fileitem['index'], fileitem['path']))
-				print "ignoring file data right now"
+				self.updatefiledata(datalist[dataitem])
 
 			elif dataitem == "moviename":
 				self.moviename = datalist[dataitem]
@@ -91,6 +80,18 @@ class DefineTorrentItem:
 				assert 0 == 1, outcome
 
 # =========================================================================================
+
+	def updatefiledata(self, filedata):
+
+		for fileitem in filedata:
+			foundflag = False
+			for existingfile in self.files:
+				if existingfile.getid() == fileitem['index']:
+					foundflag = True
+			if foundflag == False:
+				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'], Functions.sanitisesize(fileitem['size'])))
+
+		# =========================================================================================
 
 	def getid(self):
 

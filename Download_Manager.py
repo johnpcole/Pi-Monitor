@@ -1,6 +1,9 @@
-from codebase.torrenting_component import torrenting_module as TorrentManager
+from codebase import torrenting_module as TorrentManager
 from flask import Flask as Webserver
 from flask import render_template as Webpage
+from flask import jsonify as Jsondata
+from datetime import datetime
+
 
 torrentmanager = TorrentManager.createmanager('192.168.1.78', 58846, 'piuser', 'pipassword')
 website = Webserver(__name__)
@@ -26,5 +29,8 @@ def namepage(torrentid):
 
 #-----------------------------------------------
 
+@website.route('/UpdateData')
+def updatedata():
+	return Jsondata(torrents=torrentmanager.getalltorrentdataasjson())
 
 website.run(debug=True) #, host='0.0.0.0')

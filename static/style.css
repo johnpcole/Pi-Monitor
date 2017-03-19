@@ -1,5 +1,5 @@
 body {
-    background: #AA0000;
+    background: #AA9999;
     font-family: 'Trebuchet MS';
     line-height: 100%;
 }
@@ -11,31 +11,49 @@ a {
     border-style: none;
 }
 
-.c1 {
+.tileicon {
 	width: 20px;
 }
 
-.c2 {
-	width: 750px;
-}
-
-.c3 {
+.tiledata {
 	width: 150px;
 }
 
-.sub {
+.tilesection {
     position: relative;
     background-color: #F0C090;
 	color: black;
 	display: inline-block;
-	height: 20px;
+	height: 18px;
 	padding: 0px 0px 0px 0px;
 	overflow: hidden;
 	margin: 0px 0px 0px 0px;
 	border-style: none;
+    white-space: nowrap;
+    font-size: 80%;
 }
 
-.main {
+.tiletitle {
+	width: 750px;
+	height: 20px;
+    font-size: 100%;
+}
+.filename {
+	width: 750px;
+	height: 20px;
+    font-size: 100%;
+}
+
+.filespacer {
+	width: 780px;
+	height: 5px;
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+	border-color: #FFAA00;
+	margin: 5px 0px 0px -5px;
+}
+
+.tile {
     /* position: relative; */
     background-color: #FFCC99;
 	border-style: solid;
@@ -46,11 +64,11 @@ a {
 	border-radius: 0px 20px 5px 0px;
 }
 
-.wrapper {
+.tilewrapper {
     /* position: relative; */
 	width: 800px;
 	overflow: hidden;
-    margin: 10px auto 10px auto;
+    margin: 10px auto 10px 10px;
     border-style: none;
 }
 

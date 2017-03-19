@@ -1,32 +1,39 @@
 {% extends "base.html" %}
 
+{% block javascript %}
+
+	<script src="/static/jquery-3.2.0.js"></script>
+	<script src="/static/index.js"></script>
+
+{% endblock %}
+
 {% block content %}
 
 {% for torrent in torrentlist %}
 
-<div class="wrapper">
+<div class="tilewrapper">
 	<a href="/Torrent={{ torrent.torrentid }}">
-		<div class="main">
-			<div class="sub c1">
+		<div class="tile" id="Torrent-{{ torrent.torrentid }}">
+			<div class="tilesection tileicon">
 				<p>.</p>
 			</div>
-			<div class="sub c2">
+			<div class="tilesection tiletitle">
 				<p>{{ torrent.torrentname }}</p>
 			</div>
-			<div class="sub c3">
-				<p>{{ torrent.status }}</p>
+			<div class="tilesection tiledata">
+				<p id="Status-{{ torrent.torrentid }}">{{ torrent.status }}</p>
 			</div>
-			<div class="sub c3">
-				<p class="right">{{ torrent.progress }}</p>
+			<div class="tilesection tiledata">
+				<p class="right" id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</p>
 			</div>
-			<div class="sub c3">
-				<p>{{ torrent.finished }}</p>
+			<div class="tilesection tiledata">
+				<p id="Finished-{{ torrent.torrentid }}">{{ torrent.finished }}</p>
 			</div>
-			<div class="sub c3">
+			<div class="tilesection tiledata">
 				<p class="right">{{ torrent.size }}</p>
 			</div>
-			<div class="sub c3">
-				<p class="right">{{ torrent.eta }}</p>
+			<div class="tilesection tiledata">
+				<p class="right" id="Eta-{{ torrent.torrentid }}">{{ torrent.eta }}</p>
 			</div>
 		</div>
 	</a>

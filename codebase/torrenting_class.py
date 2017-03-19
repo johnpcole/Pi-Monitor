@@ -27,7 +27,7 @@ class DefineTorrentManager:
 			self.refreshtorrentdata(existingtorrent)
 
 		outcome = self.delugeclient.closeconnection()
-		print "Connection closure attempted - Connection State = ", self.delugeclient.delugeinterface.connected
+		print "Connection closure attempted - Connection State = ", outcome
 
 		cleanlist = []
 
@@ -68,18 +68,32 @@ class DefineTorrentManager:
 	def refreshtorrentdata(self, torrentobject):
 
 		torrentdata = self.delugeclient.gettorrentdata(torrentobject.getid())
-		print "Refreshing Torrent ", torrentobject.getid()
 		torrentobject.updateinfo(torrentdata)
 
-	# =========================================================================================
+# =========================================================================================
 
 	def configuretorrent(self, torrentid, stuff):
 
 		temp = stuff
 
-
-	# =========================================================================================
+# =========================================================================================
 
 	def getalltorrentdata(self):
 
 		return self.torrents
+
+# =========================================================================================
+
+	def getalltorrentdataasjson(self):
+
+		outcome = []
+
+		for torrentitem in self.torrents:
+			torrentdata = {'torrentid': torrentitem.getid(),
+							'status': torrentitem.getstatus(),
+							'progress': torrentitem.getprogress(),
+							'finished': torrentitem.getfinished(),
+							'eta': torrentitem.geteta()}
+			outcome.append(torrentdata)
+
+		return outcome
