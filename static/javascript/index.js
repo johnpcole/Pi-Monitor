@@ -7,7 +7,7 @@ $(document).ready(function ()
     setInterval(function()
     {
         //alert("hi")
-        updateTorrentInfo();
+        updateTorrentsInfo();
     }, 10000);
 });
 
@@ -15,9 +15,9 @@ $(document).ready(function ()
 
 // Ajax call for all torrent data
 
-function updateTorrentInfo()
+function updateTorrentsInfo()
 {
-    $.getJSON('UpdateData')
+    $.getJSON('UpdateTorrentList')
         .done(function (data)
         {
             var torrentlist = data.torrents;
@@ -37,12 +37,11 @@ function updateTorrentTile(dataitem)
     var tile = document.getElementById("Torrent-"+tid);
     if (tile != null) {
         //tile.style.backgroundColor = "red";
-        updateTorrentData(tid, "Eta", dataitem.eta);
-        updateTorrentData(tid, "Progress", dataitem.progress);
-        updateTorrentData(tid, "Status", dataitem.status);
-        updateTorrentData(tid, "Finished", dataitem.finished);
+        updateTorrentImage(tid, "Status", dataitem.status, "tilesubicon");
+        updateTorrentData(tid, "Progress", dataitem.progress)
+        updateTorrentData(tid, "SizeEta", "of "+dataitem.sizeeta)
     } else {
-        alert(dataitem.torrentid);
+        alert("updateTorrentTile: "+dataitem.torrentid);
     }
 };
 
@@ -55,6 +54,20 @@ function updateTorrentData(tid, fieldname, fieldvalue)
     if (tileData != null) {
         tileData.innerHTML = fieldvalue;
     } else {
-        alert(fieldname+"-"+tid);
+        alert("updateTorrentData: "+fieldname+"-"+tid);
+    }
+};
+
+
+// Update the displayed image
+
+function updateTorrentImage(tid, fieldname, fieldimage, fieldclass)
+{
+    var tileData = document.getElementById(fieldname+"-"+tid);
+    if (tileData != null) {
+        tileData.innerHTML = "<img class=\""+ fieldclass +"\" src=\"/static/images/" + fieldimage + ".png\" alt=\"" + fieldimage + "\" />"
+;
+    } else {
+        alert("updateTorrentImage: "+ fieldname +"-"+ tid);
     }
 };

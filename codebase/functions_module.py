@@ -10,3 +10,19 @@ def sanitisesize(rawsize):
 		outcome = str(int(rawsize)) + " b"
 
 	return outcome
+
+
+def sanitisetime(rawtime):
+
+	if rawtime > 86400:
+		outcome = ("%8.1f" % (int(rawtime / 8640) * 0.1)) + " d"
+	elif rawtime > 3600:
+		outcome = ("%8.1f" % (int(rawtime / 360) * 0.1)) + " h"
+	elif rawtime > 60:
+		outcome = ("%8.1f" % (int(rawtime / 6) * 0.1)) + " m"
+	elif rawtime > 1:
+		outcome = str(rawtime) + "s"
+	else:
+		outcome = "-"
+
+	return outcome

@@ -22,13 +22,13 @@ class DefineTorrentItem:
 
 		self.files = []
 
-		self.torrenttype = "!UNKNOWN!"
+		self.torrenttype = "movie" #"unknown"
 
-		self.movieorshowname = ""
+		self.movieorshowname = "My First Film" #""
 
-		self.seriesoryear = -99999
+		self.seasonoryear = "2016" #""
 
-		self.eta = -99999
+		self.eta = "!UNKNOWN!"
 
 	# =========================================================================================
 
@@ -43,7 +43,8 @@ class DefineTorrentItem:
 				self.size = Functions.sanitisesize(datalist[dataitem])
 
 			elif dataitem == "state":
-				self.status = datalist[dataitem]
+				temp = datalist[dataitem]
+				self.status = temp.lower()
 
 			elif dataitem == "save_path":
 				self.location = datalist[dataitem]
@@ -60,20 +61,14 @@ class DefineTorrentItem:
 			elif dataitem == "files":
 				self.updatefiledata(datalist[dataitem])
 
-			elif dataitem == "moviename":
-				self.moviename = datalist[dataitem]
+			elif (dataitem == "moviename") or (dataitem == "tvshowname"):
+				self.movieorshowname = datalist[dataitem]
 
-			elif dataitem == "tvshowname":
-				self.tvshowname = datalist[dataitem]
-
-			elif dataitem == "tvseries":
-				self.tvseries = datalist[dataitem]
-
-			elif dataitem == "tvepisode":
-				self.tvepisode = datalist[dataitem]
+			elif (dataitem == "year") or (dataitem == "season"):
+				self.seasonoryear = datalist[dataitem]
 
 			elif dataitem == "eta":
-				self.eta = datalist[dataitem]
+				self.eta = Functions.sanitisetime(datalist[dataitem])
 
 			else:
 				outcome = "Unknown Data Label: " + dataitem
@@ -168,3 +163,65 @@ class DefineTorrentItem:
 	def geteta(self):
 
 		return self.eta
+
+# =========================================================================================
+
+	def gettype(self):
+
+		return self.torrenttype
+
+# =========================================================================================
+
+	def getsizeeta(self):
+
+		if self.status == "downloading":
+			outcome = self.size + " (~" + self.eta + ")"
+		else:
+			outcome = self.size
+		return outcome
+
+# =========================================================================================
+
+	def getsanitisedname(self):
+
+		outcome = self.movieorshowname
+		if self.seasonoryear != "":
+			outcome = outcome + "   (" + self.seasonoryear + ")"
+		return outcome
+
+# =========================================================================================
+
+	def getheadlinedata(self):
+
+		return {'torrentid': self.torrentid,
+				   'torrentname': self.torrentname,
+				   'torrenttype': self.torrenttype,
+				   'status': self.status,
+				   'progress': self.progress,
+				   'finished': self.finished,
+				   'sizeeta': self.getsizeeta()}
+
+# =========================================================================================
+
+	def getupdatedata(self):
+		return {'torrentid': self.torrentid,
+				'status': self.status,
+				'progress': self.progress,
+				'finished': self.finished,
+				'sizeeta': self.getsizeeta()}
+
+
+# =========================================================================================
+
+	def getextendeddata(self):
+
+		return {'torrentid': self.torrentid,
+				   'torrentname': self.torrentname,
+				   'torrenttype': self.torrenttype,
+				   'status': self.status,
+				   'progress': self.progress,
+				   'finished': self.finished,
+				   'sizeeta': self.getsizeeta(),
+				   'files': self.files,
+				   'sanitisedname': self.getsanitisedname()}
+

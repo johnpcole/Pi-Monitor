@@ -2,8 +2,8 @@
 
 {% block javascript %}
 
-	<script src="/static/jquery-3.2.0.js"></script>
-	<script src="/static/index.js"></script>
+    <script src="/static/javascript/jquery-3.2.0.js"></script>
+    <script src="/static/javascript/index.js"></script>
 
 {% endblock %}
 
@@ -12,31 +12,21 @@
 {% for torrent in torrentlist %}
 
 <div class="tilewrapper">
-	<a href="/Torrent={{ torrent.torrentid }}">
-		<div class="tile" id="Torrent-{{ torrent.torrentid }}">
-			<div class="tilesection tileicon">
-				<p>.</p>
-			</div>
-			<div class="tilesection tiletitle">
-				<p>{{ torrent.torrentname }}</p>
-			</div>
-			<div class="tilesection tiledata">
-				<p id="Status-{{ torrent.torrentid }}">{{ torrent.status }}</p>
-			</div>
-			<div class="tilesection tiledata">
-				<p class="right" id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</p>
-			</div>
-			<div class="tilesection tiledata">
-				<p id="Finished-{{ torrent.torrentid }}">{{ torrent.finished }}</p>
-			</div>
-			<div class="tilesection tiledata">
-				<p class="right">{{ torrent.size }}</p>
-			</div>
-			<div class="tilesection tiledata">
-				<p class="right" id="Eta-{{ torrent.torrentid }}">{{ torrent.eta }}</p>
-			</div>
-		</div>
-	</a>
+    <a href="/Torrent={{ torrent.torrentid }}">
+        <div class="tile" id="Torrent-{{ torrent.torrentid }}">
+            <div class="tilesection tileicon">
+                <img class="tileicon" src="/static/images/{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
+            </div><div class="tilesection tiletitle">
+                <p>{{ torrent.torrentname }}</p>
+            </div><div class="tilesection tilesubicon largeindent" id="Status-{{ torrent.torrentid }}">
+                <img class="tilesubicon" src="/static/images/{{ torrent.status }}.png" alt="{{ torrent.status }}" />
+            </div><div class="tilesection tilepercentage">
+                <p class="right" id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</p>
+            </div><div class="tilesection tiledata">
+                <p id="SizeEta-{{ torrent.torrentid }}">of {{ torrent.sizeeta }}</p>
+            </div>
+        </div>
+    </a>
 </div>
 
 {% endfor %}

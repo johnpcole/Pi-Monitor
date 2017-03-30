@@ -2,61 +2,60 @@
 
 {% block javascript %}
 
-	<script src="/static/jquery-3.2.0.js"></script>
-	<script src="/static/torrent.js"></script>
+    <script src="/static/javascript/jquery-3.2.0.js"></script>
+    <script src="/static/javascript/torrent.js"></script>
 
 {% endblock %}
 
 {% block content %}
 
+<div>
+    <form action="." method="POST">
+        <input type="button" onclick="javascript:updateTorrent('Stop');" value="Stop" class="button" />
+        <input type="button" onclick="javascript:updateTorrent('Start');" value="Start" class="button" />
+        <input type="button" onclick="javascript:updateTextFields('Show');" value="Edit" class="button" />
+        <input type="button" onclick="javascript:updateTextFields('Hide');" value="Save" class="button" />
+        <input type="button" onclick="javascript:updateTorrent('Copy');" value="Copy" class="button" />
+        <input type="button" onclick="javascript:updateTorrent('Delete');" value="Delete" class="button" />
+        <div id="textfields"></div>
+    </form>
+</div>
+
 <div class="tilewrapper">
-	<div class="tile">
-		<div class="tilesection tileicon">
-			<p>.</p>
-		</div>
-		<div class="tilesection tiletitle">
-			<p>{{ selectedtorrent.torrentname }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p>{{ selectedtorrent.status }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p class="right">{{ selectedtorrent.progress }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p>{{ selectedtorrent.finished }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p class="right">{{ selectedtorrent.size }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p class="right">{{ selectedtorrent.eta }}</p>
-		</div>
+    <div class="tile">
+        <div class="tilesection tileicon">
+            <img src="/static/images/{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" style="width:20px;height:20px;" />
+        </div><div class="tilesection tiletitle">
+            <p>{{ selectedtorrent.torrentname }}</p>
+        </div><div class="tilesection tilesubicon largeindent" id="Status">
+            <img class="tilesubicon" src="/static/images/{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" />
+        </div><div class="tilesection tilepercentage">
+            <p class="right" id="Progress-{{ selectedtorrent.torrentid }}">{{ selectedtorrent.progress }}</p>
+        </div><div class="tilesection tiledata">
+            <p id="SizeEta">of {{ selectedtorrent.sizeeta }}</p>
+        </div><div class="tilesection tilenamebanner">
+            <p>{{ selectedtorrent.sanitisedname }}</p>
+        </div>
 
 
 {% for fileitem in selectedtorrent.files %}
 
-		<div class="tilesection filespacer">
-		</div>
-		<div class="tilesection tileicon">
-			<p class="right">{{ fileitem.fileid }}</p>
-		</div>
-		<div class="tilesection tiletitle">
-			<p>{{ fileitem.shortpath }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p class="right">{{ fileitem.size }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p>{{ fileitem.filetype }}</p>
-		</div>
-		<div class="tilesection tiledata">
-			<p>{{ fileitem.episode }}</p>
-		</div>
+        <div class="tilesection filespacer">
+        </div><div class="tilesection tileicon">
+            <p class="right">{{ fileitem.fileid }}</p>
+        </div><div class="tilesection tiletitle">
+            <p>{{ fileitem.shortpath }}</p>
+        </div><div class="tilesection tiledata">
+            <p class="right">{{ fileitem.size }}</p>
+        </div><div class="tilesection tiledata">
+            <p>{{ fileitem.filetype }}</p>
+        </div><div class="tilesection tiledata">
+            <p>{{ fileitem.episode }}</p>
+        </div>
 
 {% endfor %}
 
-	</div>
+    </div>
 </div>
 
 {% endblock %}

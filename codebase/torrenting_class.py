@@ -80,7 +80,12 @@ class DefineTorrentManager:
 
 	def getalltorrentdata(self):
 
-		return self.torrents
+		outcome = []
+
+		for torrentitem in self.torrents:
+			outcome.append(torrentitem.getheadlinedata())
+
+		return outcome
 
 # =========================================================================================
 
@@ -89,11 +94,6 @@ class DefineTorrentManager:
 		outcome = []
 
 		for torrentitem in self.torrents:
-			torrentdata = {'torrentid': torrentitem.getid(),
-							'status': torrentitem.getstatus(),
-							'progress': torrentitem.getprogress(),
-							'finished': torrentitem.getfinished(),
-							'eta': torrentitem.geteta()}
-			outcome.append(torrentdata)
+			outcome.append(torrentitem.getupdatedata())
 
 		return outcome
