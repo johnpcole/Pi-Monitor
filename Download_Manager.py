@@ -51,28 +51,33 @@ def updatetorrentpage(torrentid, action):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
 		if action == "Refresh":
-			torrentmanager.refreshtorrentdata(torrentobject)
+			refreshmode = "refresh"
 			print "REFRESH!"
 		elif action == "Stop":
-			torrentmanager.refreshtorrentdata(torrentobject)
+			refreshmode = "refresh"
 			print "STOP!"
 		elif action == "Start":
-			torrentmanager.refreshtorrentdata(torrentobject)
+			refreshmode = "refresh"
 			print "START!"
 		elif action == "Copy":
 			print "COPY!"
+			refreshmode = "refresh"
 		elif action == "Delete":
-			torrentmanager.refreshtorrentdata(torrentobject)
+			refreshmode = "refresh"
 			print "DELETE!"
-		elif action[:5] == "Edit|":
+		elif action[:12] == "Reconfigure|":
 			print "EDIT!"
-			rawactionlist = action[5:]
-			print rawactionlist
+			refreshmode = "reconfigure"
+			rawactionlist = action[12:]
 			actionlist = rawactionlist.split("|")
-			print actionlist
+			torrentobject.updateinfo({ 'moviename' : actionlist[0] })
+			torrentobject.updateinfo({ 'year' : actionlist[1] })
 		else:
 			print "Unknown action for torrent ", torrentid
-		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
+			refreshmode = "refresh"
+		if refreshmode == "refresh":
+			torrentmanager.refreshtorrentdata(torrentobject)
+		return Jsondata(selectedtorrent=torrentobject.getextendeddata(refreshmode))
 	else:
 		print "Unknown AJAX request for torrent ", torrentid
 

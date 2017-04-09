@@ -21,7 +21,11 @@ function updateTorrent(action)
     $.getJSON('UpdateTorrent='+pathname.substring(9)+'='+action)
         .done(function (data)
         {
-            updateTorrentTile(data.selectedtorrent);
+            if (action == 'Refresh') {
+                updateTorrentTile(data.selectedtorrent);
+            } else {
+                updateTorrentConfig(data.selectedtorrent);
+            };
         });
 };
 
@@ -35,6 +39,16 @@ function updateTorrentTile(dataitem)
     updateTorrentData("Progress", dataitem.progress);
     updateTorrentData("SizeEta", "of "+dataitem.sizeeta);
 };
+
+
+
+// Update the displayed data for configured data
+
+function updateTorrentConfig(dataitem)
+{
+    updateTorrentData("Sanitisedname", dataitem.sanitisedname);
+};
+
 
 
 // Update the displayed data value
@@ -79,7 +93,7 @@ function updateTextFields(displaymode)
         } else {
             var moviename = document.getElementsByName('moviename')[0].value;
             var movieyear = document.getElementsByName('movieyear')[0].value;
-            updateTorrent('Edit|'+moviename+"|"+movieyear);
+            updateTorrent('Reconfigure|'+moviename+"|"+movieyear);
             fieldArea.innerHTML = "";
         };
     } else {
