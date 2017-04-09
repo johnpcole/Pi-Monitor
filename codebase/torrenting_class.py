@@ -78,22 +78,11 @@ class DefineTorrentManager:
 
 # =========================================================================================
 
-	def getalltorrentdata(self):
+	def gettorrentlistdata(self, datamode):
 
 		outcome = []
 
 		for torrentitem in self.torrents:
-			outcome.append(torrentitem.getheadlinedata())
-
-		return outcome
-
-# =========================================================================================
-
-	def getalltorrentdataasjson(self):
-
-		outcome = []
-
-		for torrentitem in self.torrents:
-			outcome.append(torrentitem.getupdatedata())
+			outcome.append(torrentitem.getheadlinedata(datamode))
 
 		return outcome

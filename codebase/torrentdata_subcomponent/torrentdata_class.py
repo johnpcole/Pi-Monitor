@@ -191,37 +191,48 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getheadlinedata(self):
+	def getheadlinedata(self, datamode):
 
-		return {'torrentid': self.torrentid,
-				   'torrentname': self.torrentname,
-				   'torrenttype': self.torrenttype,
-				   'status': self.status,
-				   'progress': self.progress,
-				   'finished': self.finished,
-				   'sizeeta': self.getsizeeta()}
+		if datamode == "initialise":
+			outcome = { 'torrentid': self.torrentid,
+						'torrentname': self.torrentname,
+						'torrenttype': self.torrenttype,
+						'status': self.status,
+						'progress': self.progress,
+						'finished': self.finished,
+						'sizeeta': self.getsizeeta()}
+		elif datamode == "refresh":
+			outcome = { 'torrentid': self.torrentid,
+						'status': self.status,
+						'progress': self.progress,
+						'finished': self.finished,
+						'sizeeta': self.getsizeeta()}
+		else:
+			assert 1==0, datamode
+		return outcome
 
 # =========================================================================================
 
-	def getupdatedata(self):
-		return {'torrentid': self.torrentid,
-				'status': self.status,
-				'progress': self.progress,
-				'finished': self.finished,
-				'sizeeta': self.getsizeeta()}
+	def getextendeddata(self, datamode):
 
-
-# =========================================================================================
-
-	def getextendeddata(self):
-
-		return {'torrentid': self.torrentid,
-				   'torrentname': self.torrentname,
-				   'torrenttype': self.torrenttype,
-				   'status': self.status,
-				   'progress': self.progress,
-				   'finished': self.finished,
-				   'sizeeta': self.getsizeeta(),
-				   'files': self.files,
-				   'sanitisedname': self.getsanitisedname()}
+		if datamode == "initialise":
+			outcome = { 'torrentid': self.torrentid,
+						'torrentname': self.torrentname,
+						'torrenttype': self.torrenttype,
+						'status': self.status,
+						'progress': self.progress,
+						'finished': self.finished,
+						'sizeeta': self.getsizeeta(),
+						'files': self.files,
+						'sanitisedname': self.getsanitisedname()}
+		elif datamode == "refresh":
+			outcome = { 'torrentname': self.torrentname,
+						'torrenttype': self.torrenttype,
+						'status': self.status,
+						'progress': self.progress,
+						'sizeeta': self.getsizeeta(),
+						'sanitisedname': self.getsanitisedname()}
+		else:
+			assert 1 == 0, datamode
+		return outcome
 

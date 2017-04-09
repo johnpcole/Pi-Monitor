@@ -18,10 +18,10 @@ $(document).ready(function ()
 function updateTorrent(action)
 {
     var pathname = window.location.pathname;
-    $.getJSON('UpdateTorrent='+action+'-'+pathname.substring(9))
+    $.getJSON('UpdateTorrent='+pathname.substring(9)+'='+action)
         .done(function (data)
         {
-            updateTorrentTile(torrentdata);
+            updateTorrentTile(data.selectedtorrent);
         });
 };
 
@@ -67,12 +67,20 @@ function updateTorrentImage(fieldname, fieldimage, fieldclass)
 
 function updateTextFields(displaymode)
 {
-    var fieldData = document.getElementById('textfields');
-    if (fieldData != null) {
+    var fieldArea = document.getElementById('textfields');
+    if (fieldArea != null) {
         if (displaymode == 'Show') {
-            fieldData.innerHTML = "<input type=\"text\" name=\"moviename\" /><input type=\"text\" name=\"movieyear\" />";
+            var itemdetails = document.getElementById('Sanitisedname').innerHTML;
+            var itemsplit = itemdetails.split("   (");
+            var moviename = itemsplit[0]
+            var itemsplit = itemsplit[1].split(")")
+            var movieyear = itemsplit[0]
+            fieldArea.innerHTML = "<input type=\"text\" name=\"moviename\" value=\""+moviename+"\"/><input type=\"text\" name=\"movieyear\" value=\""+movieyear+"\" />";
         } else {
-            fieldData.innerHTML = "";
+            var moviename = document.getElementsByName('moviename')[0].value;
+            var movieyear = document.getElementsByName('movieyear')[0].value;
+            updateTorrent('Edit|'+moviename+"|"+movieyear);
+            fieldArea.innerHTML = "";
         };
     } else {
         alert("Cant find text fields");

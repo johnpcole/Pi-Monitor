@@ -12,22 +12,28 @@ website = Webserver(__name__)
 #-----------------------------------------------
 
 @website.route('/')
-def listpage():
+def initialiselistpage():
 	torrentmanager.refreshtorrentlist()
-	return Webpage('index.html', torrentlist = torrentmanager.getalltorrentdata())
+	return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
+
+#-----------------------------------------------
+
+@website.route('/UpdateTorrentList')
+def updatelistpage():
+	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"))
 
 #-----------------------------------------------
 
 @website.route('/Torrent=<torrentid>')
-def torrentpage(torrentid):
+def initialisetorrentpage(torrentid):
 
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
-		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata())
+		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"))
 	else:
 		torrentmanager.refreshtorrentlist()
-		return Webpage('index.html', torrentlist = torrentmanager.getalltorrentdata())
+		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
 
 	# elif Webpost.method == 'POST':
 	#
@@ -40,14 +46,8 @@ def torrentpage(torrentid):
 
 #-----------------------------------------------
 
-@website.route('/UpdateTorrentList')
-def updatelistdata():
-	return Jsondata(torrents=torrentmanager.getalltorrentdataasjson())
-
-#-----------------------------------------------
-
-@website.route('/UpdateTorrent=<action>-<torrentid>')
-def updatetorrentdata(action, torrentid):
+@website.route('/UpdateTorrent=<torrentid>=<action>')
+def updatetorrentpage(torrentid, action):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
 		if action == "Refresh":
@@ -61,14 +61,18 @@ def updatetorrentdata(action, torrentid):
 			print "START!"
 		elif action == "Copy":
 			print "COPY!"
-		elif action == "Edit":
-			print "EDIT!"
 		elif action == "Delete":
 			torrentmanager.refreshtorrentdata(torrentobject)
 			print "DELETE!"
+		elif action[:5] == "Edit|":
+			print "EDIT!"
+			rawactionlist = action[5:]
+			print rawactionlist
+			actionlist = rawactionlist.split("|")
+			print actionlist
 		else:
 			print "Unknown action for torrent ", torrentid
-		return Jsondata(selectedtorrent=torrentobject.getupdatedata())
+		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
 	else:
 		print "Unknown AJAX request for torrent ", torrentid
 

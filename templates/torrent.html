@@ -9,16 +9,15 @@
 
 {% block content %}
 
+<form action="." method="POST">
 <div>
-    <form action="." method="POST">
         <input type="button" onclick="javascript:updateTorrent('Stop');" value="Stop" class="button" />
         <input type="button" onclick="javascript:updateTorrent('Start');" value="Start" class="button" />
         <input type="button" onclick="javascript:updateTextFields('Show');" value="Edit" class="button" />
         <input type="button" onclick="javascript:updateTextFields('Hide');" value="Save" class="button" />
         <input type="button" onclick="javascript:updateTorrent('Copy');" value="Copy" class="button" />
         <input type="button" onclick="javascript:updateTorrent('Delete');" value="Delete" class="button" />
-        <div id="textfields"></div>
-    </form>
+
 </div>
 
 <div class="tilewrapper">
@@ -30,12 +29,13 @@
         </div><div class="tilesection tilesubicon largeindent" id="Status">
             <img class="tilesubicon" src="/static/images/{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" />
         </div><div class="tilesection tilepercentage">
-            <p class="right" id="Progress-{{ selectedtorrent.torrentid }}">{{ selectedtorrent.progress }}</p>
+            <p class="right" id="Progress">{{ selectedtorrent.progress }}</p>
         </div><div class="tilesection tiledata">
             <p id="SizeEta">of {{ selectedtorrent.sizeeta }}</p>
         </div><div class="tilesection tilenamebanner">
-            <p>{{ selectedtorrent.sanitisedname }}</p>
-        </div>
+            <p id="Sanitisedname">{{ selectedtorrent.sanitisedname }}</p>
+        </div><div id="textfields"></div>
+
 
 
 {% for fileitem in selectedtorrent.files %}
@@ -57,5 +57,6 @@
 
     </div>
 </div>
+</form>
 
 {% endblock %}
