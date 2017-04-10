@@ -2,11 +2,11 @@
 
 $(document).ready(function ()
 {
-    //updateBuildTiles();
+    updateControl('Edit', 'Show');
+
     // Refresh the tiles every minute.
     setInterval(function()
     {
-        //alert("hi")
         updateTorrent('Refresh');
     }, 10000);
 });
@@ -77,28 +77,62 @@ function updateTorrentImage(fieldname, fieldimage, fieldclass)
 };
 
 
-// Show and hide text fields
+// Edit torrent configuration
 
-function updateTextFields(displaymode)
+function editTorrentConfiguration()
 {
-    var fieldArea = document.getElementById('textfields');
-    if (fieldArea != null) {
-        if (displaymode == 'Show') {
-            var itemdetails = document.getElementById('Sanitisedname').innerHTML;
-            var itemsplit = itemdetails.split("   (");
-            var moviename = itemsplit[0]
-            var itemsplit = itemsplit[1].split(")")
-            var movieyear = itemsplit[0]
-            fieldArea.innerHTML = "<input type=\"text\" name=\"moviename\" value=\""+moviename+"\"/><input type=\"text\" name=\"movieyear\" value=\""+movieyear+"\" />";
-        } else {
-            var moviename = document.getElementsByName('moviename')[0].value;
-            var movieyear = document.getElementsByName('movieyear')[0].value;
-            updateTorrent('Reconfigure|'+moviename+"|"+movieyear);
-            fieldArea.innerHTML = "";
-        };
-    } else {
-        alert("Cant find text fields");
-    }
+    var itemdetails = document.getElementById('Sanitisedname').innerHTML;
+    var itemsplit = itemdetails.split("   (");
+    var moviename = itemsplit[0];
+    var itemsplit = itemsplit[1].split(")");
+    var movieyear = itemsplit[0];
+    document.getElementsByName('moviename')[0].value = moviename;
+    document.getElementsByName('movieyear')[0].value = movieyear;
+    updateArea('edittextfields', 'Show');
+    updateControl('Edit', 'Hide');
+    updateControl('Save', 'Show');
 };
 
 
+// Save torrent configuration
+
+function saveTorrentConfiguration()
+{
+    var moviename = document.getElementsByName('moviename')[0].value;
+    var movieyear = document.getElementsByName('movieyear')[0].value;
+    updateTorrent('Reconfigure|'+moviename+"|"+movieyear);
+    updateArea('edittextfields', 'Hide');
+    updateControl('Edit', 'Show');
+    updateControl('Save', 'Hide');
+};
+
+
+
+// Update control visibility
+
+function updateControl(controlname, displayvalue)
+{
+    var controlobject = document.getElementsByName(controlname)[0];
+    if (displayvalue == 'Hide') {
+        controlobject.style.display = "none";
+    } else {
+        controlobject.style.display = "inline";
+    };
+};
+
+
+// Update area visibility
+
+function updateArea(areaname, displayvalue)
+{
+    var areaobjectlist = document.getElementsByClassName(areaname);
+    var areaindex;
+    for (areaindex = 0; areaindex < areaobjectlist.length; areaindex++) {
+        areaobject = areaobjectlist[areaindex]
+        if (displayvalue == 'Hide') {
+            areaobject.style.display = "none";
+        } else {
+            areaobject.style.display = "inline";
+        };
+    };
+};

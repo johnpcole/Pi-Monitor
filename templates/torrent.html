@@ -9,14 +9,13 @@
 
 {% block content %}
 
-<form action="." method="POST">
 <div>
-        <input type="button" onclick="javascript:updateTorrent('Stop');" value="Stop" class="button" />
-        <input type="button" onclick="javascript:updateTorrent('Start');" value="Start" class="button" />
-        <input type="button" onclick="javascript:updateTextFields('Show');" value="Edit" class="button" />
-        <input type="button" onclick="javascript:updateTextFields('Hide');" value="Save" class="button" />
-        <input type="button" onclick="javascript:updateTorrent('Copy');" value="Copy" class="button" />
-        <input type="button" onclick="javascript:updateTorrent('Delete');" value="Delete" class="button" />
+        <input type="button" name="Stop" onclick="javascript:updateTorrent('Stop');" value="Stop" class="button" />
+        <input type="button" name="Start" onclick="javascript:updateTorrent('Start');" value="Start" class="button" />
+        <input type="button" name="Edit" onclick="javascript:editTorrentConfiguration();" value="Edit" class="button" />
+        <input type="button" name="Save" onclick="javascript:saveTorrentConfiguration();" value="Save" class="button" />
+        <input type="button" name="Copy" onclick="javascript:updateTorrent('Copy');" value="Copy" class="button" />
+        <input type="button" name="Delete" onclick="javascript:updateTorrent('Delete');" value="Delete" class="button" />
 
 </div>
 
@@ -34,14 +33,18 @@
             <p id="SizeEta">of {{ selectedtorrent.sizeeta }}</p>
         </div><div class="tilesection tilenamebanner">
             <p id="Sanitisedname">{{ selectedtorrent.sanitisedname }}</p>
-        </div><div id="textfields"></div>
+        </div><div class="edittextfields">
+            <input type="text" name="moviename" value="" />
+            <input type="text" name="movieyear" value="" />
+        </div>
 
 
 
 {% for fileitem in selectedtorrent.files %}
 
         <div class="tilesection filespacer">
-        </div><div class="tilesection tileicon">
+        </div>
+        <div class="tilesection tileicon">
             <p class="right">{{ fileitem.fileid }}</p>
         </div><div class="tilesection tiletitle">
             <p>{{ fileitem.shortpath }}</p>
@@ -51,12 +54,14 @@
             <p>{{ fileitem.filetype }}</p>
         </div><div class="tilesection tiledata">
             <p>{{ fileitem.episode }}</p>
+        </div><div class="edittextfields">
+            <input type="text" name="fileindex-{{ fileitem.fileid }}" value="" />
+            <input type="text" name="filetype-{{ fileitem.fileid }}" value="" />
         </div>
 
 {% endfor %}
 
     </div>
 </div>
-</form>
 
 {% endblock %}
