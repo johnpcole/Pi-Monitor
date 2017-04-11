@@ -138,25 +138,25 @@ class DefineTorrentItem:
 
 	def getmoviename(self):
 
-		return self.moviename
+		return self.movieorshowname
 
 # =========================================================================================
 
 	def getshowname(self):
 
-		return self.tvshowname
+		return self.movieorshowname
 
 # =========================================================================================
 
-	def getseries(self):
+	def getseason(self):
 
-		return self.tvseries
+		return self.seasonoryear
 
 # =========================================================================================
 
-	def getepisode(self):
+	def getyear(self):
 
-		return self.tvepisode
+		return self.seasonoryear
 
 # =========================================================================================
 
