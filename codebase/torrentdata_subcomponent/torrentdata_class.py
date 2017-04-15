@@ -39,6 +39,9 @@ class DefineTorrentItem:
 			if dataitem == "name":
 				self.torrentname = datalist[dataitem]
 
+			elif dataitem == "torrenttype":
+				self.torrenttype = datalist[dataitem]
+
 			elif dataitem == "total_size":
 				self.size = Functions.sanitisesize(datalist[dataitem])
 

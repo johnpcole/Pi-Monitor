@@ -11,23 +11,23 @@
 {% block content %}
 
 <div>
-        <input type="button" name="Stop" onclick="javascript:updateTorrent('Stop');" value="Stop" class="button" />
-        <input type="button" name="Start" onclick="javascript:updateTorrent('Start');" value="Start" class="button" />
-        <input type="button" name="Edit" onclick="javascript:editTorrentConfiguration();" value="Edit" class="button" />
-        <input type="button" name="Save" onclick="javascript:saveTorrentConfiguration();" value="Save" class="button" />
-        <input type="button" name="Copy" onclick="javascript:updateTorrent('Copy');" value="Copy" class="button" />
-        <input type="button" name="Delete" onclick="javascript:updateTorrent('Delete');" value="Delete" class="button" />
+        <input type="button" name="Stop" onclick="javascript:updateTorrent('Stop');" value="Stop" />
+        <input type="button" name="Start" onclick="javascript:updateTorrent('Start');" value="Start" />
+        <input type="button" name="Edit" onclick="javascript:editTorrentConfiguration();" value="Edit" />
+        <input type="button" name="Save" onclick="javascript:saveTorrentConfiguration();" value="Save" />
+        <input type="button" name="Copy" onclick="javascript:updateTorrent('Copy');" value="Copy" />
+        <input type="button" name="Delete" onclick="javascript:updateTorrent('Delete');" value="Delete" />
 
 </div>
 
 <div class="tilewrapper">
     <div class="tile">
         <div class="tilesection tileicon">
-            <img src="/static/images/{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" style="width:20px;height:20px;" />
+            <img id="torrenttypeimage" class="tileicon" src="/static/images/{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" style="width:20px;height:20px;" />
         </div><div class="tilesection tiletitle">
             <p>{{ selectedtorrent.torrentname }}</p>
         </div><div class="tilesection tilesubicon largeindent" id="Status">
-            <img class="tilesubicon" src="/static/images/{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" />
+            <img id="Status" class="tilesubicon" src="/static/images/{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" />
         </div><div class="tilesection tilepercentage">
             <p class="right" id="Progress">{{ selectedtorrent.progress }}</p>
         </div><div class="tilesection tiledata">
@@ -35,19 +35,22 @@
         </div><div class="tilesection tilenamebanner">
             <p id="Sanitisedname">{{ selectedtorrent.sanitisedname }}</p>
         </div><div class="edittextfields">
+            <div class="tilesection filespacer"></div>
+            <input type="button" name="MakeUnknown" onclick="javascript:changeTorrentType('unknown');" value="Unknown"/>
+            <input type="button" name="MakeMovie" onclick="javascript:changeTorrentType('movie');" value="Movie" />
+            <input type="button" name="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');" value="TV Show" />
+            <select name="tvshowselector">
+                {% for tvshowitem in tvshowlist %}
+                <option value="{{ tvshowitem }}">{{ tvshowitem }}</option>
+                {% endfor %}
+            </select>
             <input type="text" name="moviename" value="" />
             <input type="text" name="movieyear" value="" />
-            <label class="switch"><input type="checkbox"><div class="slider round"></div></label>
-  <select id="country" name="country">
-    <option value="au">Australia</option>
-    <option value="ca">Canada</option>
-    <option value="usa">USA</option>
-  </select>
+
         </div>
 
 
-
-{% for fileitem in selectedtorrent.files %}
+        {% for fileitem in selectedtorrent.files %}
 
         <div class="tilesection filespacer">
         </div>
@@ -66,9 +69,14 @@
             <input type="text" name="filetype-{{ fileitem.fileid }}" value="" />
         </div>
 
-{% endfor %}
+        {% endfor %}
 
     </div>
 </div>
 
 {% endblock %}
+
+
+                    <!--<img class="tilesubicon" src="/static/images/movie.png" alt="movie" />
+                    <label class="switch"><input type="checkbox" name="torrenttypeswitch"><div class="slider round"></div></label>
+                    <img class="tilesubicon" src="/static/images/tvshow.png" alt="tvshow" />-->

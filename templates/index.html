@@ -3,6 +3,7 @@
 {% block javascript %}
 
     <script src="/static/javascript/jquery-3.2.0.js"></script>
+    <script src="/static/javascript/common.js"></script>
     <script src="/static/javascript/index.js"></script>
 
 {% endblock %}
@@ -13,13 +14,13 @@
 
 <div class="tilewrapper">
     <a href="/Torrent={{ torrent.torrentid }}">
-        <div class="tile" id="Torrent-{{ torrent.torrentid }}">
+        <div class="tile">
             <div class="tilesection tileicon">
                 <img class="tileicon" src="/static/images/{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
             </div><div class="tilesection tiletitle">
                 <p>{{ torrent.torrentname }}</p>
             </div><div class="tilesection tilesubicon largeindent" id="Status-{{ torrent.torrentid }}">
-                <img class="tilesubicon" src="/static/images/{{ torrent.status }}.png" alt="{{ torrent.status }}" />
+                <img id="StatusIcon-{{ torrent.torrentid }}" class="tilesubicon" src="/static/images/{{ torrent.status }}.png" alt="{{ torrent.status }}" />
             </div><div class="tilesection tilepercentage">
                 <p class="right" id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</p>
             </div><div class="tilesection tiledata">

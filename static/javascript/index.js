@@ -7,7 +7,7 @@ $(document).ready(function ()
     setInterval(function()
     {
         //alert("hi")
-        updateTorrentsInfo();
+        updateTorrentsList();
     }, 10000);
 });
 
@@ -15,9 +15,9 @@ $(document).ready(function ()
 
 // Ajax call for all torrent data
 
-function updateTorrentsInfo()
+function updateTorrentsList()
 {
-    $.getJSON('UpdateTorrentList')
+    $.getJSON('UpdateTorrentsList')
         .done(function (data)
         {
             var torrentlist = data.torrents;
@@ -34,40 +34,8 @@ function updateTorrentsInfo()
 function updateTorrentTile(dataitem)
 {
     tid = dataitem.torrentid
-    var tile = document.getElementById("Torrent-"+tid);
-    if (tile != null) {
-        //tile.style.backgroundColor = "red";
-        updateTorrentImage(tid, "Status", dataitem.status, "tilesubicon");
-        updateTorrentData(tid, "Progress", dataitem.progress)
-        updateTorrentData(tid, "SizeEta", "of "+dataitem.sizeeta)
-    } else {
-        alert("updateTorrentTile: "+dataitem.torrentid);
-    }
+    rerenderImage("StatusIcon-"+tid, dataitem.status);
+    rerenderText("Progress-"+tid, dataitem.progress)
+    rerenderText("SizeEta-"+tid, "of "+dataitem.sizeeta)
 };
 
-
-// Update the displayed data value
-
-function updateTorrentData(tid, fieldname, fieldvalue)
-{
-    var tileData = document.getElementById(fieldname+"-"+tid);
-    if (tileData != null) {
-        tileData.innerHTML = fieldvalue;
-    } else {
-        alert("updateTorrentData: "+fieldname+"-"+tid);
-    }
-};
-
-
-// Update the displayed image
-
-function updateTorrentImage(tid, fieldname, fieldimage, fieldclass)
-{
-    var tileData = document.getElementById(fieldname+"-"+tid);
-    if (tileData != null) {
-        tileData.innerHTML = "<img class=\""+ fieldclass +"\" src=\"/static/images/" + fieldimage + ".png\" alt=\"" + fieldimage + "\" />"
-;
-    } else {
-        alert("updateTorrentImage: "+ fieldname +"-"+ tid);
-    }
-};

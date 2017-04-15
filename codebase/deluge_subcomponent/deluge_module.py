@@ -1,5 +1,5 @@
-#from . import deluge_class as DelugeInterfaceClass
-from . import dummy_class as DelugeInterfaceClass
+from . import deluge_class as DelugeInterfaceClass
+#from . import dummy_class as DelugeInterfaceClass
 
 
 

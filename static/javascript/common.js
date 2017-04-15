@@ -6,8 +6,14 @@ function rerenderControl(controlname, displayvalue)
     var controlobject = document.getElementsByName(controlname)[0];
     if (displayvalue == 'Hide') {
         controlobject.style.display = "none";
-    } else {
+    } else if (displayvalue == 'Show') {
         controlobject.style.display = "inline";
+    } else if (displayvalue == 'Enable') {
+        controlobject.disabled = false;
+    } else if (displayvalue == 'Disable') {
+        controlobject.disabled = true;
+    } else {
+        alert ("Unknown button state: "+displayvalue)
     };
 };
 
@@ -61,15 +67,35 @@ function getText(fieldname)
 
 // Update the displayed image
 
-function rerenderImage(fieldname, fieldimage, fieldclass)
+function rerenderImage(fieldname, fieldimage)
 {
     var tileData = document.getElementById(fieldname);
     if (tileData != null) {
-        tileData.innerHTML = "<img class=\""+ fieldclass +"\" src=\"/static/images/" + fieldimage + ".png\" alt=\"" + fieldimage + "\" />";
+        tileData.src = "/static/images/"+fieldimage+".png";
     } else {
         alert("rerenderImage: "+ fieldname);
     }
 };
+
+
+
+// Get displayed image filename
+
+function getImageName(fieldname)
+{
+    var tileData = document.getElementById(fieldname);
+    var outcome = "unknown"
+    if (tileData != null) {
+        var fullpath = tileData.src;
+        var pathsplit = fullpath.split('/');
+        var filename = pathsplit[pathsplit.length -1];
+        outcome = filename.split('.')[0];
+    } else {
+        alert("GetImageName: "+ fieldname);
+    }
+    return outcome
+};
+
 
 
 
@@ -90,3 +116,19 @@ function setFieldValue(fieldname, fieldvalue)
 };
 
 
+
+//Set checkbox value
+
+function setCheckboxValue(fieldname, fieldvalue)
+{
+    document.getElementsByName(fieldname)[0].checked = fieldvalue;
+};
+
+
+
+//Get checkbox value
+
+function getCheckboxValue(fieldname)
+{
+    return document.getElementsByName(fieldname)[0].checked;
+};

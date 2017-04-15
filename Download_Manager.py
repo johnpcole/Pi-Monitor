@@ -6,7 +6,8 @@ from flask import jsonify as Jsondata
 
 
 
-torrentmanager = TorrentManager.createmanager('192.168.1.78', 58847, 'piuser', 'pipassword')
+torrentmanager = TorrentManager.createmanager('12.13.14.44', 58847, 'delugeweb_public', 'publicpassword')
+tvshowlist = ['Doctor Who', 'Family Guy', '- New']
 website = Webserver(__name__)
 
 #-----------------------------------------------
@@ -18,7 +19,7 @@ def initialiselistpage():
 
 #-----------------------------------------------
 
-@website.route('/UpdateTorrentList')
+@website.route('/UpdateTorrentsList')
 def updatelistpage():
 	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"))
 
@@ -30,7 +31,7 @@ def initialisetorrentpage(torrentid):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
-		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"))
+		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"), tvshowlist = tvshowlist)
 	else:
 		torrentmanager.refreshtorrentlist()
 		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
@@ -70,8 +71,9 @@ def updatetorrentpage(torrentid, action):
 			refreshmode = "reconfigure"
 			rawactionlist = action[12:]
 			actionlist = rawactionlist.split("|")
-			torrentobject.updateinfo({ 'moviename' : actionlist[0] })
-			torrentobject.updateinfo({ 'year' : actionlist[1] })
+			torrentobject.updateinfo({ 'torrenttype' : actionlist[0] })
+			torrentobject.updateinfo({ 'moviename' : actionlist[1] })
+			torrentobject.updateinfo({ 'year' : actionlist[2] })
 		else:
 			print "Unknown action for torrent ", torrentid
 			refreshmode = "refresh"
