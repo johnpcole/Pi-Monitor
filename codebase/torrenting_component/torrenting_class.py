@@ -5,7 +5,10 @@ class DefineTorrentManager:
 
 	def __init__(self, address, port, username, password):
 
-		self.delugeclient = DelugeClient.createinterface(address, port, username, password)
+		if address == "dummy":
+			self.delugeclient = DelugeClient.createdummy()
+		else:
+			self.delugeclient = DelugeClient.createinterface(address, port, username, password)
 
 		#self.laststatustime = ???
 

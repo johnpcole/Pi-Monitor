@@ -1,12 +1,15 @@
-from codebase import torrenting_module as TorrentManager
+from codebase.torrenting_component import torrenting_module as TorrentManager
+from codebase.fileprocessing_component import fileprocessing_module as FileManager
 from flask import Flask as Webserver
 from flask import render_template as Webpage
 from flask import jsonify as Jsondata
 #from flask import request as Webpost
 
 
-
-torrentmanager = TorrentManager.createmanager('12.13.14.44', 58847, 'delugeweb_public', 'publicpassword')
+torrentcredentials = FileManager.readfromdisk('./cache/connection.cfg')
+#print torrentcredentials[0], torrentcredentials[1], torrentcredentials[2], torrentcredentials[3]
+torrentmanager = TorrentManager.createmanager(torrentcredentials[0], torrentcredentials[1], torrentcredentials[2],
+																								torrentcredentials[3])
 tvshowlist = ['Doctor Who', 'Family Guy', '- New']
 website = Webserver(__name__)
 
@@ -36,52 +39,33 @@ def initialisetorrentpage(torrentid):
 		torrentmanager.refreshtorrentlist()
 		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
 
-	# elif Webpost.method == 'POST':
-	#
-	# 	print "Received Data", Webpost.form['moviename']
-	# 	print "Received Data", Webpost.form['buttons']
-	# 	return Webpage('index.html', torrentlist = torrentmanager.getalltorrentdata())
-	#
-	# else:
-	# 	print "Unknown Web request"
+#-----------------------------------------------
+
+@website.route('/RefreshTorrent=<torrentid>')
+def updatetorrentpage(torrentid):
+	torrentobject = torrentmanager.gettorrent(torrentid)
+	if torrentobject is not None:
+		print "REFRESH!"
+		torrentmanager.refreshtorrentdata(torrentobject)
+		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
+	else:
+		print "Refreshing unknown torrent ", torrentid
 
 #-----------------------------------------------
 
-@website.route('/UpdateTorrent=<torrentid>=<action>')
-def updatetorrentpage(torrentid, action):
+@website.route('/ReconfigureTorrent=<torrentid>=<newdata>')
+def updatetorrentconfiguration(torrentid, newdata):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
-		if action == "Refresh":
-			refreshmode = "refresh"
-			print "REFRESH!"
-		elif action == "Stop":
-			refreshmode = "refresh"
-			print "STOP!"
-		elif action == "Start":
-			refreshmode = "refresh"
-			print "START!"
-		elif action == "Copy":
-			print "COPY!"
-			refreshmode = "refresh"
-		elif action == "Delete":
-			refreshmode = "refresh"
-			print "DELETE!"
-		elif action[:12] == "Reconfigure|":
-			print "EDIT!"
-			refreshmode = "reconfigure"
-			rawactionlist = action[12:]
-			actionlist = rawactionlist.split("|")
-			torrentobject.updateinfo({ 'torrenttype' : actionlist[0] })
-			torrentobject.updateinfo({ 'moviename' : actionlist[1] })
-			torrentobject.updateinfo({ 'year' : actionlist[2] })
-		else:
-			print "Unknown action for torrent ", torrentid
-			refreshmode = "refresh"
-		if refreshmode == "refresh":
-			torrentmanager.refreshtorrentdata(torrentobject)
-		return Jsondata(selectedtorrent=torrentobject.getextendeddata(refreshmode))
+		print "RECONFIGURE!"
+		actionlist = newdata.split("|")
+		torrentobject.updateinfo({ 'torrenttype' : actionlist[0] })
+		torrentobject.updateinfo({ 'moviename' : actionlist[1] })
+		torrentobject.updateinfo({ 'year' : actionlist[2] })
 	else:
-		print "Unknown AJAX request for torrent ", torrentid
+		print "Reconfiguring unknown torrent ", torrentid
+	torrentmanager.refreshtorrentdata(torrentobject)
+	return Jsondata(selectedtorrent=torrentobject.getextendeddata("reconfigure"))
 
 
 

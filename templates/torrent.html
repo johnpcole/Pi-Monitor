@@ -26,7 +26,7 @@
             <img id="torrenttypeimage" class="tileicon" src="/static/images/{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" style="width:20px;height:20px;" />
         </div><div class="tilesection tiletitle">
             <p>{{ selectedtorrent.torrentname }}</p>
-        </div><div class="tilesection tilesubicon largeindent" id="Status">
+        </div><div class="tilesection tilesubicon largeindent">
             <img id="Status" class="tilesubicon" src="/static/images/{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" />
         </div><div class="tilesection tilepercentage">
             <p class="right" id="Progress">{{ selectedtorrent.progress }}</p>
@@ -44,6 +44,7 @@
                 <option value="{{ tvshowitem }}">{{ tvshowitem }}</option>
                 {% endfor %}
             </select>
+            <input type="button" name="AddTVShow" onclick="javascript:ConfigureTVShow('Add');" value="New" />
             <input type="text" name="moviename" value="" />
             <input type="text" name="movieyear" value="" />
 
@@ -65,8 +66,11 @@
         </div><div class="tilesection tiledata">
             <p>{{ fileitem.episode }}</p>
         </div><div class="edittextfields">
+            <input type="button" name="MakeOther-{{ fileitem.fileid }}" onclick="javascript:changeFileType('{{ fileitem.fileid }}','unknown');" value="Dont Copy"/>
+            <input type="button" name="MakeVideo-{{ fileitem.fileid }}" onclick="javascript:changeFileType('{{ fileitem.fileid }}','movie');" value="Video" />
+            <input type="button" name="MakeSubtitle-{{ fileitem.fileid }}" onclick="javascript:changeFileType('{{ fileitem.fileid }}','tvshow');" value="Subtitle" />
             <input type="text" name="fileindex-{{ fileitem.fileid }}" value="" />
-            <input type="text" name="filetype-{{ fileitem.fileid }}" value="" />
+            <input type="text" name="filetype2-{{ fileitem.fileid }}" value="" />
         </div>
 
         {% endfor %}

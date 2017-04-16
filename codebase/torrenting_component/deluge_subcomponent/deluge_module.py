@@ -1,5 +1,5 @@
 from . import deluge_class as DelugeInterfaceClass
-#from . import dummy_class as DelugeInterfaceClass
+from . import dummy_class as DummyInterfaceClass
 
 
 
@@ -10,3 +10,7 @@ from . import deluge_class as DelugeInterfaceClass
 def createinterface(address, port, username, password):
 	return DelugeInterfaceClass.DefineDelugeInterface(address, port, username, password)
 
+
+
+def createdummy():
+	return DummyInterfaceClass.DefineDelugeInterface()

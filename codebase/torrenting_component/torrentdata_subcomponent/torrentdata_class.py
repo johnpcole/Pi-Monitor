@@ -1,5 +1,5 @@
 from filedata_subcomponent import filedata_module as FileData
-from .. import functions_module as Functions
+from ...functions_component import functions_module as Functions
 
 
 class DefineTorrentItem:

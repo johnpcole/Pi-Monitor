@@ -1,8 +1,8 @@
-from deluge_client import DelugeRPCClient as DelugeDaemonInterface
+#from deluge_client import DelugeRPCClient as DelugeDaemonInterface
 
 class DefineDelugeInterface:
 
-	def __init__(self, address, port, username, password):
+	def __init__(self):
 
 		self.delugeinterface = "Dummy Interface Object"
 
