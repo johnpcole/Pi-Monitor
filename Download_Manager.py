@@ -6,11 +6,13 @@ from flask import jsonify as Jsondata
 #from flask import request as Webpost
 
 
-torrentcredentials = FileManager.readfromdisk('./cache/connection.cfg')
+torrentcredentials = FileManager.readfromdisk('./data/connection.cfg')
+networkmountpoint = FileManager.readfromdisk('./data/mountpoint.cfg')
 #print torrentcredentials[0], torrentcredentials[1], torrentcredentials[2], torrentcredentials[3]
 torrentmanager = TorrentManager.createmanager(torrentcredentials[0], torrentcredentials[1], torrentcredentials[2],
 																								torrentcredentials[3])
 tvshowlist = ['Doctor Who', 'Family Guy', '- New']
+
 website = Webserver(__name__)
 
 #-----------------------------------------------
