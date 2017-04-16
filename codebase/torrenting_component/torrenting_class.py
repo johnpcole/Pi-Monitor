@@ -30,7 +30,7 @@ class DefineTorrentManager:
 			self.refreshtorrentdata(existingtorrent)
 
 		outcome = self.delugeclient.closeconnection()
-		print "Connection closure attempted - Connection State = ", outcome
+		#print "Connection closure attempted - Connection State = ", outcome
 
 		cleanlist = []
 
@@ -70,10 +70,16 @@ class DefineTorrentManager:
 
 	def refreshtorrentdata(self, torrentobject):
 
+		outcome = self.delugeclient.openconnection()
+
 		torrentdata = self.delugeclient.gettorrentdata(torrentobject.getid())
 		torrentobject.updateinfo(torrentdata)
 
-# =========================================================================================
+		outcome = self.delugeclient.closeconnection()
+		#print "Connection closure attempted - Connection State = ", outcome
+
+
+	# =========================================================================================
 
 	def configuretorrent(self, torrentid, stuff):
 

@@ -6,11 +6,8 @@ from flask import jsonify as Jsondata
 #from flask import request as Webpost
 
 
-torrentcredentials = FileManager.readfromdisk('./data/connection.cfg')
-networkmountpoint = FileManager.readfromdisk('./data/mountpoint.cfg')
-#print torrentcredentials[0], torrentcredentials[1], torrentcredentials[2], torrentcredentials[3]
-torrentmanager = TorrentManager.createmanager(torrentcredentials[0], torrentcredentials[1], torrentcredentials[2],
-																								torrentcredentials[3])
+filecredentials = FileManager.getlibraryconnectionconfig()
+torrentmanager = TorrentManager.createmanager(FileManager.gettorrentconnectionconfig())
 tvshowlist = ['Doctor Who', 'Family Guy', '- New']
 
 website = Webserver(__name__)
@@ -26,6 +23,7 @@ def initialiselistpage():
 
 @website.route('/UpdateTorrentsList')
 def updatelistpage():
+	torrentmanager.refreshtorrentlist()
 	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"))
 
 #-----------------------------------------------
@@ -47,7 +45,6 @@ def initialisetorrentpage(torrentid):
 def updatetorrentpage(torrentid):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
-		print "REFRESH!"
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
 	else:
@@ -59,7 +56,6 @@ def updatetorrentpage(torrentid):
 def updatetorrentconfiguration(torrentid, newdata):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
-		print "RECONFIGURE!"
 		actionlist = newdata.split("|")
 		torrentobject.updateinfo({ 'torrenttype' : actionlist[0] })
 		torrentobject.updateinfo({ 'moviename' : actionlist[1] })
@@ -71,4 +67,4 @@ def updatetorrentconfiguration(torrentid, newdata):
 
 
 
-website.run(debug=True) #, host='0.0.0.0')
+website.run(debug=True)#, host='0.0.0.0')
