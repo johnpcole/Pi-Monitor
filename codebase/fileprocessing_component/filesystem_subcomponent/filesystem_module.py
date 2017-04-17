@@ -1,10 +1,16 @@
 import os as OperatingSystem
 
 def mountnetworkdrive(mountpoint, networkpath, username, password):
-	OperatingSystem.system('mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
+	if concatenatepaths(" ", " ") == "/":
+		OperatingSystem.system('mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
+	else:
+		OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
 
 def unmountnetworkdrive(mountpoint):
-	OperatingSystem.system('umount '+mountpoint)
+	if concatenatepaths(" ", " ") == "/":
+		OperatingSystem.system('umount '+mountpoint)
+	else:
+		OperatingSystem.system('NET USE '+mountpoint+' /DELETE')
 
 
 # ---------------------------------------------
@@ -100,7 +106,12 @@ def getfolderlisting(folderpath):
 # ---------------------------------------------
 
 def concatenatepaths(path1, path2):
-	return OperatingSystem.path.join(path1, path2)
+	prefix = path1
+	if len(path1) == 2:
+		if path1[1:2] == ":":
+			prefix = path1 + "\\"
+
+	return OperatingSystem.path.join(prefix, path2)
 
 
 

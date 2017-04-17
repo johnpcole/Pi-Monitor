@@ -21,7 +21,8 @@ function updateTorrentsList()
         .done(function (data)
         {
             var torrentlist = data.torrents;
-            $.each(torrentlist, function(index) {
+            $.each(torrentlist, function(index)
+            {
                 updateTorrentTile(torrentlist[index]);
             });
         });

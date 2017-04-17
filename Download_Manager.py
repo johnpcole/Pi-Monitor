@@ -6,9 +6,8 @@ from flask import jsonify as Jsondata
 #from flask import request as Webpost
 
 
-filecredentials = FileManager.getlibraryconnectionconfig()
+librarymanager = FileManager.createmanager(FileManager.getlibraryconnectionconfig())
 torrentmanager = TorrentManager.createmanager(FileManager.gettorrentconnectionconfig())
-tvshowlist = ['Doctor Who', 'Family Guy', '- New']
 
 website = Webserver(__name__)
 
@@ -34,7 +33,8 @@ def initialisetorrentpage(torrentid):
 	torrentobject = torrentmanager.gettorrent(torrentid)
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
-		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"), tvshowlist = tvshowlist)
+		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"),
+										tvshowlist = librarymanager.gettvshows())
 	else:
 		torrentmanager.refreshtorrentlist()
 		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
@@ -64,6 +64,16 @@ def updatetorrentconfiguration(torrentid, newdata):
 		print "Reconfiguring unknown torrent ", torrentid
 	torrentmanager.refreshtorrentdata(torrentobject)
 	return Jsondata(selectedtorrent=torrentobject.getextendeddata("reconfigure"))
+
+#-----------------------------------------------
+
+@website.route('/GetTVShowSeasons=<showname>')
+def updatetvshowseasonslist(showname):
+	return Jsondata(seasons = librarymanager.gettvshowseasons(showname))
+
+#-----------------------------------------------
+
+
 
 
 

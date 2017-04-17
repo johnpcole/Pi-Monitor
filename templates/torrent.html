@@ -39,15 +39,16 @@
             <input type="button" name="MakeUnknown" onclick="javascript:changeTorrentType('unknown');" value="Unknown"/>
             <input type="button" name="MakeMovie" onclick="javascript:changeTorrentType('movie');" value="Movie" />
             <input type="button" name="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');" value="TV Show" />
-            <select name="tvshowselector">
+            <select name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
                 {% for tvshowitem in tvshowlist %}
                 <option value="{{ tvshowitem }}">{{ tvshowitem }}</option>
                 {% endfor %}
             </select>
             <input type="button" name="AddTVShow" onclick="javascript:ConfigureTVShow('Add');" value="New" />
+            <select name="tvshowseasonselector">
+            </select>
             <input type="text" name="moviename" value="" />
             <input type="text" name="movieyear" value="" />
-
         </div>
 
 

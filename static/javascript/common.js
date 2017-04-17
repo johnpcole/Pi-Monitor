@@ -132,3 +132,47 @@ function getCheckboxValue(fieldname)
 {
     return document.getElementsByName(fieldname)[0].checked;
 };
+
+
+//Repopulates dropdown list
+
+function repopulateDropDownList(fieldname, itemlist)
+{
+    var combobox = document.getElementsByName(fieldname)[0];
+    var newoptions = '';
+    $.each(itemlist, function(index)
+    {
+        newoptions = newoptions + '<option value=\"'+itemlist[index]+'\">'+itemlist[index]+'</option>';
+    });
+    combobox.innerHTML = newoptions;
+};
+
+/*
+//Clear dropdown list
+
+function clearDropDownList(fieldname)
+{
+    var combobox = document.getElementsByName(fieldname)[0];
+    while (comboBox.options.length > 0)
+    {
+        comboBox.remove(0);
+    };
+};
+*/
+
+
+//Set dropdown value
+
+function setDropDownValue(fieldname, fieldvalue)
+{
+    var combobox = document.getElementsByName(fieldname)[0];
+    var itemcount = combobox.options.length;
+    for (var i=0; i<itemcount; i++)
+    {
+        if (combobox.options[i].value == fieldvalue)
+        {
+            combobox.options[i].selected = true;
+            break;
+        };
+    };
+};
