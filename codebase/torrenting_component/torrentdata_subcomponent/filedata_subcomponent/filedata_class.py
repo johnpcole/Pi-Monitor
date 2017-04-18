@@ -13,20 +13,19 @@ class DefineFileItem:
 		self.size = size
 
 		self.filetype = "NONE"
+		self.updatefiletype()
 
-		self.episode = -99999
+		self.episode = ""
 
 # =========================================================================================
 
-	def updatefilepurpose(self, episode, filetype):
-
-		self.filetype = filetype
+	def updatefilepurpose(self, episode):
 
 		self.episode = episode
 
 # =========================================================================================
 
-	def getepisode(self):
+	def getpurpose(self):
 
 		return self.episode
 
@@ -59,3 +58,31 @@ class DefineFileItem:
 	def getsize(self):
 
 		return self.path
+
+# =========================================================================================
+
+	def updatefiletype(self):
+
+		filenamesplit = self.shortpath.split('.')
+		extension = filenamesplit[len(filenamesplit)-1]
+		outcome = "NONE"
+
+		if extension == "srt":
+			outcome = "SUBTITLE"
+		elif extension == "sub":
+			outcome = "SUBTITLE"
+
+		elif extension == "avi":
+			outcome = "VIDEO"
+		elif extension == "divx":
+			outcome = "VIDEO"
+		elif extension == "m4v":
+			outcome = "VIDEO"
+		elif extension == "mkv":
+			outcome = "VIDEO"
+		elif extension == "mov":
+			outcome = "VIDEO"
+		elif extension == "mp4":
+			outcome = "VIDEO"
+
+		self.filetype = outcome

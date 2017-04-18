@@ -116,11 +116,21 @@ p {
     left: 0; */
 }
 
-.edittextfields {
+.editfields {
     display: none;
 }
 
+.tvshowonlyfields {
+    display: inline;
+}
 
+.movieonlyfields {
+    display: inline;
+}
+
+.episodeselector {
+    display: inline;
+}
 
 .typeselectordiv {
     width: 100px;

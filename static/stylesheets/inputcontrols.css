@@ -22,7 +22,7 @@ input[type=button] {
 /* Button in edit text fields                          */
 /* =================================================== */
 
-div.edittextfields input[type=button] {
+div.editfields input[type=button] {
     width: 40px;
     height: 40px;
     background-color: #ffaaff;

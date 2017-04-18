@@ -2,7 +2,7 @@
 
 $(document).ready(function ()
 {
-    rerenderControl('Edit', 'Show');
+    changeControlState('Edit', 'Show');
 
     // Refresh the tiles every minute.
     setInterval(function()
@@ -44,6 +44,8 @@ function updateTorrentConfig(action)
 
 function updateTVShowSeasons(selectedseason)
 {
+    changeControlState('tvshowseasonselector', 'Hide');
+    changeControlState('AddShowSeason', 'Hide');
     var tvshowname = getFieldValue("tvshowselector");
     if (tvshowname != "") {
         $.getJSON('GetTVShowSeasons='+tvshowname)
@@ -54,6 +56,8 @@ function updateTVShowSeasons(selectedseason)
     } else {
         updateTVShowSeasonsList("", selectedseason);
     };
+    changeControlState('tvshowseasonselector', 'Show');
+    changeControlState('AddShowSeason', 'Show');
 };
 
 
@@ -110,9 +114,9 @@ function editTorrentConfiguration()
         setFieldValue('tvshowselector', moviename);
         updateTVShowSeasons(movieyear);
     };
-    rerenderArea('edittextfields', 'Show');
-    rerenderControl('Edit', 'Hide');
-    rerenderControl('Save', 'Show');
+    changeAreasState('editfields', 'Show');
+    changeControlState('Edit', 'Hide');
+    changeControlState('Save', 'Show');
 };
 
 
@@ -120,23 +124,31 @@ function editTorrentConfiguration()
 
 function saveTorrentConfiguration()
 {
-    var currenttorrenttype = getImageName('torrenttypeimage')
     var moviename = ""
     var movieyear = ""
-    if (currenttorrenttype == 'tvshow') {
+    var newtype = ""
+    if (getControlState('MakeTVShow') == 'Disabled') {
+        newtype = "tvshow";
+    } else if (getControlState('MakeMovie') == 'Disabled') {
+        newtype = "movie";
+    } else {
+        newtype = "unknown";
+    }
+    if (newtype == 'tvshow') {
         moviename = getFieldValue("tvshowselector");
         movieyear = getFieldValue('tvshowseasonselector');
-    } else if (currenttorrenttype == 'movie') {
+    } else if (newtype == 'movie') {
         moviename = getFieldValue("moviename");
         movieyear = getFieldValue('movieyear');
     } else {
         moviename = "";
         movieyear = "";
     };
-    updateTorrentConfig(currenttorrenttype+'|'+moviename+'|'+movieyear);
-    rerenderArea('edittextfields', 'Hide');
-    rerenderControl('Edit', 'Show');
-    rerenderControl('Save', 'Hide');
+    updateTorrentConfig(newtype+'|'+moviename+'|'+movieyear);
+    changeAreasState('editfields', 'Hide');
+    rerenderImage('torrenttypeimage', newtype);
+    changeControlState('Edit', 'Show');
+    changeControlState('Save', 'Hide');
 };
 
 
@@ -146,39 +158,58 @@ function changeTorrentType(newtype)
 {
     if (newtype == "movie") {
         setFieldValue('moviename', '');
-        setFieldValue('movieyear', '')
-        rerenderControl('AddTVShow', "Hide");
-        rerenderControl('tvshowselector', "Hide");
-        rerenderControl('tvshowseasonselector', "Hide");
-        rerenderControl('moviename', "Show");
-        rerenderControl('movieyear', "Show");
-        rerenderControl('MakeMovie', "Disable");
-        rerenderControl('MakeTVShow', "Enable");
-        rerenderControl('MakeUnknown', "Enable");
+        setFieldValue('movieyear', '');
+        changeAreasState('tvshowonlyfields', "Hide");
+        changeAreasState('movieonlyfields', "Show");
+        changeControlState('MakeMovie', "Disable");
+        changeControlState('MakeTVShow', "Enable");
+        changeControlState('MakeUnknown', "Enable");
     } else if (newtype == "tvshow") {
         setFieldValue('tvshowselector', '');
-        setFieldValue('tvshowseasonselector', '')
-        rerenderControl('AddTVShow', "Show");
-        rerenderControl('tvshowselector', "Show");
-        rerenderControl('tvshowseasonselector', "Show");
-        rerenderControl('moviename', "Hide");
-        rerenderControl('movieyear', "Hide");
-        rerenderControl('MakeMovie', "Enable");
-        rerenderControl('MakeTVShow', "Disable");
-        rerenderControl('MakeUnknown', "Enable");
+        setFieldValue('tvshowseasonselector', '');
+        changeAreasState('movieonlyfields', "Hide");
+        changeAreasState('tvshowonlyfields', "Show");
+        changeControlState('MakeMovie', "Enable");
+        changeControlState('MakeTVShow', "Disable");
+        changeControlState('MakeUnknown', "Enable");
     } else {
         setFieldValue('moviename', '');
         setFieldValue('tvshowselector', '');
         setFieldValue('movieyear', '');
         setFieldValue('tvshowseasonselector', '');
-        rerenderControl('AddTVShow', "Hide");
-        rerenderControl('tvshowselector', "Hide");
-        rerenderControl('tvshowseasonselector', "Hide");
-        rerenderControl('moviename', "Hide");
-        rerenderControl('movieyear', "Hide");
-        rerenderControl('MakeMovie', "Enable");
-        rerenderControl('MakeTVShow', "Enable");
-        rerenderControl('MakeUnknown', "Disable");
+        changeAreasState('tvshowonlyfields', "Hide");
+        changeAreasState('movieonlyfields', "Hide");
+        changeControlState('MakeMovie', "Enable");
+        changeControlState('MakeTVShow', "Enable");
+        changeControlState('MakeUnknown', "Disable");
     };
-    rerenderImage('torrenttypeimage', newtype);
+};
+
+
+
+function repopulateEpisodeLists(listmode)
+{
+    var newoptions = '';
+    var liindex = 0;
+    var liindexa = 0;
+    if (listmode == "tvshow") {
+        for (liindex = 1; liindex < 50; liindex++) {
+            newoptions = newoptions + '<option value=\"'+liindex+'\">'+liindex+'</option>'
+        }
+        for (liindex = 1; liindex < 49; liindex++) {
+            liindexa = liindex + 1
+            newoptions = newoptions + '<option value=\"'+liindex+'-'+liindexa+'\">'+liindex+'-'+liindexa+'</option>'
+        }
+    } else {
+        newoptions = newoptions + '<option value=\"Full\">Full</option>'
+        newoptions = newoptions + '<option value=\"Part 1\">Part 1</option>'
+        newoptions = newoptions + '<option value=\"Part 2\">Part 2</option>'
+        newoptions = newoptions + '<option value=\"Part 3\">Part 3</option>'
+    };
+    var ddobjectlist = document.getElementsByClass('episodeselector');
+    var ddindex;
+    for (ddindex = 0; ddindex < ddobjectlist.length; ddindex++) {
+        ddobject = ddobjectlist[ddindex];
+        ddobject.innerHTML = newoptions;
+    };
 };
