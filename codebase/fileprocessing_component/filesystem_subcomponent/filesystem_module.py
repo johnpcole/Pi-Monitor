@@ -2,13 +2,13 @@ import os as OperatingSystem
 
 def mountnetworkdrive(mountpoint, networkpath, username, password):
 	if concatenatepaths(" ", " ") == " / ":
-		OperatingSystem.system('mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
+		OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
 	else:
 		OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
 
 def unmountnetworkdrive(mountpoint):
 	if concatenatepaths(" ", " ") == " / ":
-		OperatingSystem.system('umount '+mountpoint)
+		OperatingSystem.system('sudo umount '+mountpoint)
 	else:
 		OperatingSystem.system('NET USE '+mountpoint+' /DELETE')
 
