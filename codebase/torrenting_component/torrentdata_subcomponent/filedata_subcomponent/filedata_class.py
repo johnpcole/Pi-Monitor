@@ -12,7 +12,7 @@ class DefineFileItem:
 
 		self.size = size
 
-		self.filetype = "NONE"
+		self.filetype = "NOT PROCESSED"
 		self.updatefiletype()
 
 		self.episode = ""
@@ -86,3 +86,11 @@ class DefineFileItem:
 			outcome = "VIDEO"
 
 		self.filetype = outcome
+
+	# =========================================================================================
+
+	def getsavedata(self):
+
+		outcome = str(self.getid()) + "|" + self.getpurpose()
+		return outcome
+

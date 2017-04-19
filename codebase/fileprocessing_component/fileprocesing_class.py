@@ -16,6 +16,7 @@ class DefineLibraryManager:
 
 		self.discovertvshows()
 
+	# =========================================================================================
 
 	def discovertvshows(self):
 
@@ -34,16 +35,19 @@ class DefineLibraryManager:
 				self.tvshows[rootitem] = seasonlist
 		FileSystem.unmountnetworkdrive(self.mountpoint)
 
-
+	# =========================================================================================
 
 	def gettvshowlists(self):
 
 		return self.tvshows
 
+	# =========================================================================================
 
 	def gettvshows(self):
 
 		return sorted(self.tvshows.keys())
+
+	# =========================================================================================
 
 	def gettvshowseasons(self, tvshowname):
 
@@ -52,3 +56,4 @@ class DefineLibraryManager:
 		else:
 			outcome = []
 		return outcome
+

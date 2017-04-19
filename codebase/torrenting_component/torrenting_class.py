@@ -10,8 +10,6 @@ class DefineTorrentManager:
 		else:
 			self.delugeclient = DelugeClient.createinterface(address, port, username, password)
 
-		#self.laststatustime = ???
-
 		self.torrents = []
 
 # =========================================================================================
@@ -22,7 +20,7 @@ class DefineTorrentManager:
 
 		torrentidlist = self.delugeclient.gettorrentlist()
 		for torrentiditem in torrentidlist:
-			existingtorrent = self.gettorrent(torrentiditem)
+			existingtorrent = self.gettorrentobject(torrentiditem)
 
 			if existingtorrent is None:
 				existingtorrent = self.addtorrent(torrentiditem)
@@ -53,11 +51,11 @@ class DefineTorrentManager:
 		self.torrents.append(TorrentData.createitem(torrentid))
 		print "Adding Torrent ", torrentid
 
-		return self.gettorrent(torrentid)
+		return self.gettorrentobject(torrentid)
 
 # =========================================================================================
 
-	def gettorrent(self, torrentid):
+	def gettorrentobject(self, torrentid):
 
 		outcome = None
 		for existingtorrent in self.torrents:
@@ -95,3 +93,27 @@ class DefineTorrentManager:
 			outcome.append(torrentitem.getheadlinedata(datamode))
 
 		return outcome
+
+# =========================================================================================
+
+	def getconfigs(self):
+
+		outcome = []
+		for torrentitem in self.torrents:
+			newrows = torrentitem.getsavedata()
+			for newrow in newrows:
+				outcome.append(newrow)
+		return outcome
+
+# =========================================================================================
+
+	def setconfigs(self, datalist):
+
+		for dataitem in datalist:
+			datavalues = dataitem.split("|")
+			torrentobject = self.gettorrentobject(datavalues[0])
+			if torrentobject is not None:
+				torrentobject.setsavedata(datavalues)
+			else:
+				print "Ignoring Saved Config for torrent ", datavalues[0]
+

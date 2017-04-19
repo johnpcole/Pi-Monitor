@@ -8,6 +8,9 @@ from flask import jsonify as Jsondata
 
 librarymanager = FileManager.createmanager(FileManager.getlibraryconnectionconfig())
 torrentmanager = TorrentManager.createmanager(FileManager.gettorrentconnectionconfig())
+torrentmanager.refreshtorrentlist()
+torrentmanager.setconfigs(FileManager.loadconfigs())
+
 
 website = Webserver(__name__)
 
@@ -30,7 +33,7 @@ def updatelistpage():
 @website.route('/Torrent=<torrentid>')
 def initialisetorrentpage(torrentid):
 
-	torrentobject = torrentmanager.gettorrent(torrentid)
+	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"),
@@ -43,7 +46,7 @@ def initialisetorrentpage(torrentid):
 
 @website.route('/RefreshTorrent=<torrentid>')
 def updatetorrentpage(torrentid):
-	torrentobject = torrentmanager.gettorrent(torrentid)
+	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
@@ -54,7 +57,7 @@ def updatetorrentpage(torrentid):
 
 @website.route('/ReconfigureTorrent=<torrentid>=<newdata>')
 def updatetorrentconfiguration(torrentid, newdata):
-	torrentobject = torrentmanager.gettorrent(torrentid)
+	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
 		actionlist = newdata.split("|")
 		torrentobject.updateinfo({ 'torrenttype' : actionlist[0] })
@@ -62,14 +65,15 @@ def updatetorrentconfiguration(torrentid, newdata):
 		torrentobject.updateinfo({ 'year' : actionlist[2] })
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
-	torrentmanager.refreshtorrentdata(torrentobject)
+	FileManager.saveconfigs(torrentmanager.getconfigs())
+	#torrentmanager.refreshtorrentdata(torrentobject)
 	return Jsondata(selectedtorrent=torrentobject.getextendeddata("reconfigure"))
 
 #-----------------------------------------------
 
 @website.route('/GetTVShowSeasons=<showname>')
 def updatetvshowseasonslist(showname):
-	return Jsondata(seasons = librarymanager.gettvshowseasons(showname))
+	return Jsondata(seasons=librarymanager.gettvshowseasons(showname))
 
 #-----------------------------------------------
 

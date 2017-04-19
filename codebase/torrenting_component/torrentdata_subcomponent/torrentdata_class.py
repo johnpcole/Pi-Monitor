@@ -6,7 +6,7 @@ class DefineTorrentItem:
 
 	def __init__(self, torrentid):
 
-		self.torrentname = "!UNKNOWN!"
+		self.torrentname = ""
 
 		self.torrentid = torrentid
 
@@ -22,11 +22,11 @@ class DefineTorrentItem:
 
 		self.files = []
 
-		self.torrenttype = "movie" #"unknown"
+		self.torrenttype = "unknown"
 
-		self.movieorshowname = "My First Film" #""
+		self.movieorshowname = ""
 
-		self.seasonoryear = "2016" #""
+		self.seasonoryear = ""
 
 		self.eta = "!UNKNOWN!"
 
@@ -79,17 +79,27 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
+	def getfileobject(self, fileid):
+
+		outcome = None
+
+		for existingfile in self.files:
+			if existingfile.getid() == fileid:
+				outcome = existingfile
+
+		return outcome
+
+# =========================================================================================
+
 	def updatefiledata(self, filedata):
 
 		for fileitem in filedata:
-			foundflag = False
-			for existingfile in self.files:
-				if existingfile.getid() == fileitem['index']:
-					foundflag = True
-			if foundflag == False:
-				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'], Functions.sanitisesize(fileitem['size'])))
+			existingfile = self.getfileobject(fileitem['index'])
+			if existingfile is None:
+				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'],
+																			Functions.sanitisesize(fileitem['size'])))
 
-		# =========================================================================================
+# =========================================================================================
 
 	def getid(self):
 
@@ -239,4 +249,36 @@ class DefineTorrentItem:
 		else:
 			assert 1 == 0, datamode
 		return outcome
+
+# =========================================================================================
+
+	def getsavedata(self):
+
+		outcome = self.getid() + "|-"
+		outcome = outcome + "|" + self.getname()
+		outcome = outcome + "|" + self.gettype()
+		outcome = outcome + "|" + self.getmoviename()
+		outcome = outcome + "|" + self.getyear()
+		outcomelist = []
+		outcomelist.append(outcome)
+		for fileitem in self.files:
+			outcome = self.getid() + "|" + fileitem.getsavedata()
+			outcomelist.append(outcome)
+		return outcomelist
+
+# =========================================================================================
+
+	def setsavedata(self, dataarray):
+
+		if dataarray[1] == "-":
+			self.updateinfo({"name": dataarray[2], "torrenttype": dataarray[3], "moviename": dataarray[4],
+																								"year": dataarray[5]})
+		else:
+			existingfile = self.getfileobject(int(dataarray[1]))
+			if existingfile is not None:
+				existingfile.updatefilepurpose(dataarray[2])
+			else:
+				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]
+
+
 
