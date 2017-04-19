@@ -51,8 +51,17 @@ class DefineLibraryManager:
 
 	def gettvshowseasons(self, tvshowname):
 
+		outcome = []
 		if tvshowname in self.tvshows:
-			outcome = sorted(self.tvshows[tvshowname])
+			seasonlist = {}
+			for seasonname in self.tvshows[tvshowname]:
+				if seasonname[:7] == "Season ":
+					seasonindex = ("000" + seasonname[7:])[-2:]
+					seasonlist[seasonindex] = seasonname
+				elif seasonname[:7] == "Special":
+					seasonlist["000"] = seasonname
+			for key in sorted(seasonlist, reverse = True):
+				outcome.append(seasonlist[key])
 		else:
 			outcome = []
 		return outcome
