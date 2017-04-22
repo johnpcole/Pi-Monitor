@@ -1,0 +1,49 @@
+.tilewrapper {
+    display: inline-block;
+    width: 480px;
+    height: 60px;
+    overflow: hidden;
+    margin: 7px;
+    padding: 0;
+    border-style: none;
+    box-shadow: 5px 5px 2px #AAAAAA;
+    outline: 0;
+}
+
+.tilefiller {
+    height: 100%;
+    width: 100%;
+    background-color: #0690A8;
+    color: #FFFFFF;
+    border-style: none;
+    margin: 0;
+    padding: 1px 1px 1px 1px;
+    overflow: hidden;
+}
+
+.titlebox {
+    height: 20px;
+    background-color: #aaaa00;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 1px 1px 1px 1px;
+}
+
+.titleleft {
+    width: 360px;
+    text-align: left;
+}
+
+.titlemiddle {
+    width: 20px;
+    text-align: center;
+}
+
+.titleright {
+    width: 92px;
+    text-align: right;
+}
+
+

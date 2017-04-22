@@ -8,13 +8,17 @@
 
 {% block content %}
 
-{% for torrent in torrentlist %}
+    {% for torrent in torrentlist %}<a class="tilewrapper" href="/Torrent={{ torrent.torrentid }}">
+        <div class="tilefiller">
+            <div class="titlebox titleleft">
+                {{ torrent.torrenttitle }}
+            </div><div class="titlebox titlemiddle">
+                <img src="/static/images/{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
+            </div><div class="titlebox titleright">
+                {{ torrent.torrentsubtitle }}
+            </div>
+            <!--<div class="tilesection tileicon">
 
-<div class="tilewrapper">
-    <a href="/Torrent={{ torrent.torrentid }}">
-        <div class="tile">
-            <div class="tilesection tileicon">
-                <img class="tileicon" src="/static/images/{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
             </div><div class="tilesection tiletitle">
                 <p>{{ torrent.torrentname }}</p>
             </div><div class="tilesection tilesubicon largeindent" id="Status-{{ torrent.torrentid }}">
@@ -23,12 +27,9 @@
                 <p class="right" id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</p>
             </div><div class="tilesection tiledata">
                 <p id="SizeEta-{{ torrent.torrentid }}">of {{ torrent.sizeeta }}</p>
-            </div>
+            </div>-->
         </div>
-    </a>
-</div>
-
-{% endfor %}
+    </a>{% endfor %}
 
 {% endblock %}
 

@@ -10,14 +10,14 @@ class DefineDelugeInterface:
 
 	def openconnection(self):
 
-		print "Pretending to connect"
+		#print "Pretending to connect"
 		return True
 
 # =========================================================================================
 
 	def closeconnection(self):
 
-		print "Pretending to disconnect"
+		#print "Pretending to disconnect"
 		return False
 
 # =========================================================================================

@@ -204,10 +204,38 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
+	def getheadlinename(self):
+
+		if self.torrenttype == "movie":
+			outcome = self.movieorshowname
+		elif self.torrenttype == "tvshow":
+			outcome = self.movieorshowname
+		else:
+			outcome = "New Unspecified Torrent"
+		return outcome
+
+# =========================================================================================
+
+	def getheadlinesubname(self):
+
+		if self.torrenttype == "movie":
+			outcome = self.seasonoryear
+		elif self.torrenttype == "tvshow":
+			outcome = self.seasonoryear
+		else:
+			outcome = ""
+		return outcome
+
+
+
+		# =========================================================================================
+
 	def getheadlinedata(self, datamode):
 
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
+						'torrenttitle': self.getheadlinename(),
+						'torrentsubtitle': self.getheadlinesubname(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.status,

@@ -1,7 +1,10 @@
 body {
-    background: #AA9999;
-    font-family: 'Trebuchet MS';
+    width: 1000px;
+    background: #CCCCCC;
+    font-family: 'Open Sans', sans-serif;
     line-height: 100%;
+    margin: 0 auto;
+    padding: 5px;
 }
 
 a {
@@ -70,16 +73,6 @@ a {
     margin: 5px 0px 0px -5px;
 }
 
-.tile {
-    /* position: relative; */
-    background-color: #FFCC99;
-    border-style: solid;
-    border-width: 0px 0px 0px 5px;
-    border-color: #FFAA00;
-    overflow: hidden;
-    padding: 5px 5px 5px 5px;
-    border-radius: 0px 20px 5px 0px;
-}
 
 .tileicon {
     width: 20px;
@@ -93,14 +86,6 @@ a {
 
 .largeindent {
     margin-left: 550px;
-}
-
-.tilewrapper {
-    /* position: relative; */
-    width: 800px;
-    overflow: hidden;
-    margin: 10px auto 10px 10px;
-    border-style: none;
 }
 
 .right {
