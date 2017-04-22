@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 
 {% block javascript %}
-
     <script src="/static/javascript/index.js"></script>
-
 {% endblock %}
 
 {% block content %}
-
-{% for torrent in torrentlist %}<a class="tilewrapper" href="/Torrent={{ torrent.torrentid }}">
+{% for torrent in torrentlist %}<a class="tile headlinetile" href="/Torrent={{ torrent.torrentid }}">
     <div class="titlebox titleleft">
         {{ torrent.torrenttitle }}
     </div><div class="titlebox titleright">
@@ -19,6 +16,5 @@
         <img id="StatusIcon-{{ torrent.torrentid }}" src="/static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
     </div>
 </a>{% endfor %}
-
 {% endblock %}
 
