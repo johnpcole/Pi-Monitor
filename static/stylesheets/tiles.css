@@ -1,49 +1,98 @@
+/* ===============================================================================
+   TILE
+   =============================================================================== */
+
 .tilewrapper {
     display: inline-block;
-    width: 480px;
-    height: 60px;
+    width: 460px;
     overflow: hidden;
     margin: 7px;
-    padding: 0;
+    padding: 7px 10px;
+    background-color: #0690A8;
+    color: #FFFFFF;
     border-style: none;
     box-shadow: 5px 5px 2px #AAAAAA;
     outline: 0;
 }
 
-.tilefiller {
-    height: 100%;
-    width: 100%;
-    background-color: #0690A8;
-    color: #FFFFFF;
-    border-style: none;
-    margin: 0;
-    padding: 1px 1px 1px 1px;
-    overflow: hidden;
-}
+/* ===============================================================================
+   TILE TITLE ROW
+   =============================================================================== */
 
 .titlebox {
-    height: 20px;
-    background-color: #aaaa00;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
-    margin: 1px 1px 1px 1px;
+    padding: 2px 3px 6px 3px;
 }
 
 .titleleft {
-    width: 360px;
+    width: 341px;
     text-align: left;
 }
 
-.titlemiddle {
-    width: 20px;
-    text-align: center;
-}
-
 .titleright {
-    width: 92px;
+    width: 106px;
     text-align: right;
 }
 
+.titlebox img {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin: -2px 5px -2px 0px;
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
 
+/* ===============================================================================
+   TITLE SEPARATOR LINE
+   =============================================================================== */
+
+.tilesplitter {
+    height: 2px;
+    width: 452px;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #FFFFFF;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* ===============================================================================
+   TILE SUBTILE ROW
+   =============================================================================== */
+
+.subtitlebox {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: 75%;
+    padding: 5px 3px 4px 3px;
+}
+
+.subtitleleft {
+    width: 402px;
+    text-align: left;
+}
+
+.subtitleright {
+    width: 45px;
+    text-align: right;
+}
+
+.subtitlebox img {
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 5px -2px 0px;
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
+
+span {
+    margin: 0;
+    padding: 0;
+}

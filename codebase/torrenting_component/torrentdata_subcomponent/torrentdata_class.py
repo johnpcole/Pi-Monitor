@@ -133,13 +133,40 @@ class DefineTorrentItem:
 
 	def getprogress(self):
 
-		return self.progress
+		if self.progress == "100%":
+			outcome = ""
+		else:
+			outcome = self.progress
+		return outcome
 
 # =========================================================================================
 
 	def getfinished(self):
 
 		return self.finished
+
+
+# =========================================================================================
+
+	def getfullstatus(self):
+
+		if self.status == "queued":
+			if self.finished == True:
+				outcome = "seeding_queued"
+			else:
+				outcome = "downloading_queued"
+		elif self.status == "paused":
+			if self.finished == True:
+				outcome = "seeding_paused"
+			else:
+				outcome = "downloading_paused"
+		elif self.status == "downloading":
+			outcome = "downloading_active"
+		elif self.status == "seeding":
+			outcome = "seeding_active"
+		else:
+			outcome = self.status
+		return outcome
 
 # =========================================================================================
 
@@ -238,16 +265,12 @@ class DefineTorrentItem:
 						'torrentsubtitle': self.getheadlinesubname(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
-						'status': self.status,
-						'progress': self.progress,
-						'finished': self.finished,
-						'sizeeta': self.getsizeeta()}
+						'status': self.getfullstatus(),
+						'progress': self.progress}
 		elif datamode == "refresh":
 			outcome = { 'torrentid': self.torrentid,
-						'status': self.status,
-						'progress': self.progress,
-						'finished': self.finished,
-						'sizeeta': self.getsizeeta()}
+						'status': self.getfullstatus(),
+						'progress': self.progress}
 		else:
 			assert 1==0, datamode
 		return outcome
