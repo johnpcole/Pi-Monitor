@@ -7,7 +7,7 @@ $(document).ready(function ()
     // Refresh the tiles every minute.
     setInterval(function()
     {
-        updateTorrentState('Refresh');
+        //updateTorrentState('Refresh');
     }, 10000);
 });
 
@@ -75,9 +75,8 @@ function updateTVShowSeasonsList(seasonslist, selectedseason)
 
 function updateTorrentStateDisplay(dataitem)
 {
-    rerenderImage("Status", dataitem.status);
+    rerenderImage("Status", "status_"+dataitem.status);
     rerenderText("Progress", dataitem.progress);
-    rerenderText("SizeEta", "of "+dataitem.sizeeta);
 };
 
 

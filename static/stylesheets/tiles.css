@@ -3,24 +3,68 @@
     overflow: hidden;
     margin: 7px;
     padding: 7px 10px;
-    background-color: #0690A8;
     color: #FFFFFF;
     border-style: none;
     box-shadow: 5px 5px 2px #AAAAAA;
     outline: 0;
 }
 
+a.tile {
+    text-decoration: none;
+}
+
+a.tile:hover {
+    background-color: #000000;
+}
+
+.torrent_seeding_active {
+    background-color: #008800;
+}
+
+.torrent_seeding_queued {
+    background-color: #008800;
+}
+
+.torrent_seeding_paused {
+    background-color: #004400;
+}
+
+.torrent_downloading_active {
+    background-color: #AA2200;
+}
+
+.torrent_downloading_queued {
+    background-color: #AA2200;
+}
+
+.torrent_downloading_paused {
+    background-color: #551100;
+}
+
+.torrent_checking {
+    background-color: #AAAA00;
+}
+
+.torrent_error {
+    background-color: #AA0000;
+}
+
+
+
 /* ===============================================================================
    TILES
    =============================================================================== */
+
+.bannertile {
+    width: 954px;
+}
 
 .headlinetile {
     width: 460px;
 }
 
 .torrenttile {
-    width: 950px;
-    height: 200px;
+    width: 860px;
 }
 
 
@@ -37,20 +81,35 @@
 }
 
 .titleleft {
-    width: 341px;
+    width: 337px;
     text-align: left;
 }
 
 .titleright {
-    width: 106px;
+    width: 110px;
     text-align: right;
+}
+
+.titleleftextended {
+    width: 608px;
+    text-align: left;
+}
+
+.titlerightextended {
+    width: 240px;
+    text-align: right;
+}
+
+.titlefullwidth {
+    width: 454px;
+    text-align: left;
 }
 
 .titlebox img {
     display: inline-block;
     height: 16px;
     width: 16px;
-    margin: -2px 5px -2px 0px;
+    margin: -2px 5px -2px 5px;
     -webkit-filter: brightness(9) saturate(9);
     filter: brightness(9) saturate(9);
 }
@@ -61,12 +120,19 @@
 
 .tilesplitter {
     height: 2px;
-    width: 452px;
     border-style: solid;
     border-width: 0px 0px 1px 0px;
     border-color: #FFFFFF;
     margin: 0 auto;
     padding: 0;
+}
+
+.splitterline {
+    width: 452px;
+}
+
+.splitterextended {
+    width: 852px;
 }
 
 /* ===============================================================================
@@ -79,16 +145,41 @@
     white-space: nowrap;
     display: inline-block;
     font-size: 75%;
-    padding: 5px 3px 4px 3px;
+    padding: 5px 4px 4px 4px;
 }
 
 .subtitleleft {
-    width: 402px;
+    width: 396px;
     text-align: left;
 }
 
 .subtitleright {
-    width: 45px;
+    width: 47px;
+    text-align: right;
+}
+
+.subtitleleftextended {
+    width: 664px;
+    text-align: left;
+}
+
+.subtitlerightextended {
+    width: 180px;
+    text-align: right;
+}
+
+.subtitlefullwidth {
+    width: 452px;
+    text-align: left;
+}
+
+.fileleft {
+    width: 353px;
+    text-align: left;
+}
+
+.fileright {
+    width: 90px;
     text-align: right;
 }
 
@@ -96,12 +187,14 @@
     display: inline-block;
     height: 13px;
     width: 13px;
-    margin: -2px 5px -2px 0px;
+    margin: -2px 5px -2px 5px;
     -webkit-filter: brightness(9) saturate(9);
     filter: brightness(9) saturate(9);
 }
 
-span {
-    margin: 0;
-    padding: 0;
-}
+
+
+
+
+
+

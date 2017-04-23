@@ -212,12 +212,14 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getsizeeta(self):
+	def getprogresssizeeta(self):
 
-		if self.status == "downloading":
-			outcome = self.size + " (~" + self.eta + ")"
-		else:
-			outcome = self.size
+		outcome = self.getprogress()
+		if outcome != "":
+			outcome = outcome + " of "
+		outcome = outcome + self.size
+		if self.getfullstatus() == "downloading_active":
+			outcome = outcome + " (~" + self.eta + ")"
 		return outcome
 
 # =========================================================================================
@@ -281,18 +283,17 @@ class DefineTorrentItem:
 
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
+						'torrenttitle': self.getheadlinename(),
+						'torrentsubtitle': self.getheadlinesubname(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
-						'status': self.status,
-						'progress': self.progress,
-						'finished': self.finished,
-						'sizeeta': self.getsizeeta(),
+						'status': self.getfullstatus(),
+						'progress': self.getprogresssizeeta(),
 						'files': self.files,
 						'sanitisedname': self.getsanitisedname()}
 		elif datamode == "refresh":
-			outcome = { 'status': self.status,
-						'progress': self.progress,
-						'sizeeta': self.getsizeeta()}
+			outcome = { 'status': self.getfullstatus(),
+						'progress': self.getprogresssizeeta()}
 		elif datamode == "reconfigure":
 			outcome = { 'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,

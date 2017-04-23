@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="tile bannertile"></div>
 <div>
     <input type="button" name="Stop" onclick="javascript:updateTorrent('Stop');" value="Stop" />
     <input type="button" name="Start" onclick="javascript:updateTorrent('Start');" value="Start" />
@@ -14,33 +15,26 @@
     <input type="button" name="Delete" onclick="javascript:updateTorrent('Delete');" value="Delete" />
 </div>
 
-<div class="tile torrenttile">
-    <div class="titlebox titleleft">
+
+
+<div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
+    <div class="titlebox titleleftextended">
         {{ selectedtorrent.torrenttitle }}
-    </div><div class="titlebox titleright">
-        <img src="/static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" />{{ selectedtorrent.torrentsubtitle }}
-    </div><div class="tilesplitter"></div><div class="subtitlebox subtitleleft">
+    </div><div class="titlebox titlerightextended">
+        <img src="/static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" />
+        {{ selectedtorrent.torrentsubtitle }}
+    </div><div class="tilesplitter splitterextended"></div><div class="subtitlebox subtitleleftextended">
         {{ selectedtorrent.torrentname }}
-    </div><div class="subtitlebox subtitleright">
-        <img id="StatusIcon-{{ selectedtorrent.torrentid }}" src="/static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress-{{ selectedtorrent.torrentid }}">{{ selectedtorrent.progress }}</span>
+    </div><div class="subtitlebox subtitlerightextended">
+        <img id="Status" src="/static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
     </div>
+</div>
 
 
 
 
-
-
-    <div class="tilesection tileicon">
-        <img id="torrenttypeimage" class="tileicon" src="/static/images/{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" style="width:20px;height:20px;" />
-    </div><div class="tilesection tiletitle">
-        <p>{{ selectedtorrent.torrentname }}</p>
-    </div><div class="tilesection tilesubicon largeindent">
-        <img id="Status" class="tilesubicon" src="/static/images/{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" />
-    </div><div class="tilesection tilepercentage">
-        <p class="right" id="Progress">{{ selectedtorrent.progress }}</p>
-    </div><div class="tilesection tiledata">
-        <p id="SizeEta">of {{ selectedtorrent.sizeeta }}</p>
-    </div><div class="tilesection tilenamebanner">
+<div style="display: none;">
+    <div class="tilesection tilenamebanner">
         <p id="Sanitisedname">{{ selectedtorrent.sanitisedname }}</p>
     </div><div class="editfields">
         <div class="tilesection filespacer"></div>
@@ -61,25 +55,25 @@
             <input type="text" name="movieyear" value="" />
         </div>
     </div>
+</div>
 
-    {% for fileitem in selectedtorrent.files %}
-
-    <div class="tilesection filespacer">
-    </div><div class="tilesection tileicon">
-        <p class="right">{{ fileitem.fileid }}</p>
-    </div><div class="tilesection tiletitle">
-        <p>{{ fileitem.shortpath }}</p>
-    </div><div class="tilesection tiledata">
-        <p class="right">{{ fileitem.size }}</p>
-    </div><div class="tilesection tiledata">
-        <p>{{ fileitem.filetype }}</p>
-    </div><div class="tilesection tiledata">
-        <p>{{ fileitem.episode }}</p>
+{% for fileitem in selectedtorrent.files %}<div class="tile headlinetile">
+    <div class="titlebox titlefullwidth">
+        qwreqwre{{ fileitem.episode }}
+        <img src="/static/images/type_unknown.png" alt="unknown" />
+    </div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
+        {{ fileitem.shortpath }}
+    </div><div class="subtitlebox fileright">
+        <img src="/static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />
+        {{ fileitem.size }}
     </div>
+
+
+
 
     {% if fileitem.filetype != "NONE" %}
 
-    <div class="editfields">
+    <div style="display: none;" class="editfields">
         <div class="tvshowonlyfields movieonlyfields">
             <input type="button" name="designateignore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','unknown');" value="Dont Copy"/>
         </div><div class="tvshowonlyfields">
@@ -106,10 +100,8 @@
     </div>
 
     {% endif %}
+</div>{% endfor %}
 
-    {% endfor %}
-
-</div>
 {% endblock %}
 
 
