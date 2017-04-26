@@ -1,0 +1,30 @@
+/* =================================================== */
+/* Textbox & Drop-down list                            */
+/* =================================================== */
+
+input[type=text], select {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 100%;
+    height: 30px;
+    background-color: #999999;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    margin: 0;
+    padding: 0px 6px;
+}
+
+.movieyearfield {
+    width: 60px;
+}
+
+.movienamefield {
+    width: 573px;
+}
+
+.tvshownamefield {
+    width: 462px;
+}
+
+.tvshowseasonfield {
+    width: 150px;
+}

@@ -1,16 +1,25 @@
 body {
-    background: #AA9999;
-    font-family: 'Trebuchet MS';
+    width: 990px;
+    background: #CCCCCC;
+    font-family: 'Open Sans', sans-serif;
     line-height: 100%;
+    margin: 0 auto;
+    padding: 5px;
 }
 
+span {
+    margin: 0;
+    padding: 0;
+}
+
+
+/*
 a {
     text-decoration: none;
     padding: 0px;
     margin: 0px;
     border-style: none;
 }
-
 .tiledata {
     width: 150px;
 }
@@ -70,16 +79,6 @@ a {
     margin: 5px 0px 0px -5px;
 }
 
-.tile {
-    /* position: relative; */
-    background-color: #FFCC99;
-    border-style: solid;
-    border-width: 0px 0px 0px 5px;
-    border-color: #FFAA00;
-    overflow: hidden;
-    padding: 5px 5px 5px 5px;
-    border-radius: 0px 20px 5px 0px;
-}
 
 .tileicon {
     width: 20px;
@@ -95,14 +94,6 @@ a {
     margin-left: 550px;
 }
 
-.tilewrapper {
-    /* position: relative; */
-    width: 800px;
-    overflow: hidden;
-    margin: 10px auto 10px 10px;
-    border-style: none;
-}
-
 .right {
     text-align: right;
 }
@@ -113,7 +104,7 @@ p {
     /* vertical-align: middle;
     position: relative;
     top: 0;
-    left: 0; */
+    left: 0;
 }
 
 .editfields {
@@ -147,3 +138,5 @@ p {
     display: inline-block;
     background-color: #ff00ff;
 }
+
+*/

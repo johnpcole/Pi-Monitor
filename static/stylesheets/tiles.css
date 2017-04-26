@@ -1,0 +1,121 @@
+.tile {
+    display: inline-block;
+    overflow: hidden;
+    margin: 7px;
+    padding: 7px 10px;
+    color: #FFFFFF;
+    border-style: none;
+    box-shadow: 5px 5px 2px #AAAAAA;
+    outline: 0;
+}
+
+a.tile {
+    text-decoration: none;
+}
+
+a.tile:hover {
+    background-color: #000000;
+}
+
+.torrent_seeding_active {
+    background-color: #008800;
+}
+
+.torrent_seeding_queued {
+    background-color: #008800;
+}
+
+.torrent_seeding_paused {
+    background-color: #004400;
+}
+
+.torrent_downloading_active {
+    background-color: #AA2200;
+}
+
+.torrent_downloading_queued {
+    background-color: #AA2200;
+}
+
+.torrent_downloading_paused {
+    background-color: #551100;
+}
+
+.torrent_checking {
+    background-color: #AAAA00;
+}
+
+.torrent_error {
+    background-color: #AA0000;
+}
+
+.file_all {
+    background-color: #AAAA00;
+}
+
+
+/* ===============================================================================
+   TILES
+   =============================================================================== */
+
+.bannertile {
+    width: 954px;
+}
+
+
+/* ===============================================================================
+   TILE TITLE ROW
+   =============================================================================== */
+
+.titlebox {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    padding: 2px 3px 6px 3px;
+}
+
+.titlebox img {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin: -2px 5px -2px 5px;
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
+
+/* ===============================================================================
+   TITLE SEPARATOR LINE
+   =============================================================================== */
+
+.tilesplitter {
+    height: 2px;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #FFFFFF;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+/* ===============================================================================
+   TILE SUBTILE ROW
+   =============================================================================== */
+
+.subtitlebox {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: 75%;
+    padding: 5px 4px 4px 4px;
+}
+
+.subtitlebox img {
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin: -2px 5px -2px 5px;
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}

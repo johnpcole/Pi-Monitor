@@ -28,11 +28,18 @@ class DefineLibraryManager:
 			if rootlisting[rootitem] == "Folder":
 				subfolder = FileSystem.concatenatepaths(rootfolder, rootitem)
 				sublisting = FileSystem.getfolderlisting(subfolder)
-				seasonlist = []
+				seasonlist = {}
 				for subitem in sublisting:
 					if sublisting[subitem] == "Folder":
-						seasonlist.append(subitem)
-				self.tvshows[rootitem] = seasonlist
+						if subitem[:7] == "Season ":
+							seasonindex = ("000" + subitem[7:])[-2:]
+							seasonlist[seasonindex] = subitem
+						elif subitem[:7] == "Special":
+							seasonlist["000"] = subitem
+				orderedlist = []
+				for key in sorted(seasonlist, reverse = True):
+					orderedlist.append(seasonlist[key])
+				self.tvshows[rootitem] = orderedlist
 		FileSystem.unmountnetworkdrive(self.mountpoint)
 
 	# =========================================================================================
@@ -51,17 +58,8 @@ class DefineLibraryManager:
 
 	def gettvshowseasons(self, tvshowname):
 
-		outcome = []
 		if tvshowname in self.tvshows:
-			seasonlist = {}
-			for seasonname in self.tvshows[tvshowname]:
-				if seasonname[:7] == "Season ":
-					seasonindex = ("000" + seasonname[7:])[-2:]
-					seasonlist[seasonindex] = seasonname
-				elif seasonname[:7] == "Special":
-					seasonlist["000"] = seasonname
-			for key in sorted(seasonlist, reverse = True):
-				outcome.append(seasonlist[key])
+			outcome = self.tvshows[tvshowname]
 		else:
 			outcome = []
 		return outcome

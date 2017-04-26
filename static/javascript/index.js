@@ -35,8 +35,7 @@ function updateTorrentsList()
 function updateTorrentTile(dataitem)
 {
     tid = dataitem.torrentid
-    rerenderImage("StatusIcon-"+tid, dataitem.status);
+    rerenderImage("StatusIcon-"+tid, "status_"+dataitem.status);
     rerenderText("Progress-"+tid, dataitem.progress)
-    rerenderText("SizeEta-"+tid, "of "+dataitem.sizeeta)
 };
 

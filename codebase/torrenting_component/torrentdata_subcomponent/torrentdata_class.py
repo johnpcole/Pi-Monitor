@@ -133,13 +133,40 @@ class DefineTorrentItem:
 
 	def getprogress(self):
 
-		return self.progress
+		if self.progress == "100%":
+			outcome = ""
+		else:
+			outcome = self.progress
+		return outcome
 
 # =========================================================================================
 
 	def getfinished(self):
 
 		return self.finished
+
+
+# =========================================================================================
+
+	def getfullstatus(self):
+
+		if self.status == "queued":
+			if self.finished == True:
+				outcome = "seeding_queued"
+			else:
+				outcome = "downloading_queued"
+		elif self.status == "paused":
+			if self.finished == True:
+				outcome = "seeding_paused"
+			else:
+				outcome = "downloading_paused"
+		elif self.status == "downloading":
+			outcome = "downloading_active"
+		elif self.status == "seeding":
+			outcome = "seeding_active"
+		else:
+			outcome = self.status
+		return outcome
 
 # =========================================================================================
 
@@ -185,12 +212,14 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getsizeeta(self):
+	def getprogresssizeeta(self):
 
-		if self.status == "downloading":
-			outcome = self.size + " (~" + self.eta + ")"
-		else:
-			outcome = self.size
+		outcome = self.getprogress()
+		if outcome != "":
+			outcome = outcome + " of "
+		outcome = outcome + self.size
+		if self.getfullstatus() == "downloading_active":
+			outcome = outcome + " (~" + self.eta + ")"
 		return outcome
 
 # =========================================================================================
@@ -204,22 +233,46 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
+	def getheadlinename(self):
+
+		if self.torrenttype == "movie":
+			outcome = self.movieorshowname
+		elif self.torrenttype == "tvshow":
+			outcome = self.movieorshowname
+		else:
+			outcome = "New Unspecified Torrent"
+		return outcome
+
+# =========================================================================================
+
+	def getheadlinesubname(self):
+
+		if self.torrenttype == "movie":
+			outcome = self.seasonoryear
+		elif self.torrenttype == "tvshow":
+			outcome = self.seasonoryear
+		else:
+			outcome = ""
+		return outcome
+
+
+
+		# =========================================================================================
+
 	def getheadlinedata(self, datamode):
 
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
+						'torrenttitle': self.getheadlinename(),
+						'torrentsubtitle': self.getheadlinesubname(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
-						'status': self.status,
-						'progress': self.progress,
-						'finished': self.finished,
-						'sizeeta': self.getsizeeta()}
+						'status': self.getfullstatus(),
+						'progress': self.progress}
 		elif datamode == "refresh":
 			outcome = { 'torrentid': self.torrentid,
-						'status': self.status,
-						'progress': self.progress,
-						'finished': self.finished,
-						'sizeeta': self.getsizeeta()}
+						'status': self.getfullstatus(),
+						'progress': self.progress}
 		else:
 			assert 1==0, datamode
 		return outcome
@@ -230,22 +283,20 @@ class DefineTorrentItem:
 
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
+						'torrenttitle': self.getheadlinename(),
+						'torrentsubtitle': self.getheadlinesubname(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
-						'status': self.status,
-						'progress': self.progress,
-						'finished': self.finished,
-						'sizeeta': self.getsizeeta(),
-						'files': self.files,
-						'sanitisedname': self.getsanitisedname()}
+						'status': self.getfullstatus(),
+						'progress': self.getprogresssizeeta(),
+						'files': self.files}
 		elif datamode == "refresh":
-			outcome = { 'status': self.status,
-						'progress': self.progress,
-						'sizeeta': self.getsizeeta()}
+			outcome = { 'status': self.getfullstatus(),
+						'progress': self.getprogresssizeeta()}
 		elif datamode == "reconfigure":
-			outcome = { 'torrentname': self.torrentname,
-						'torrenttype': self.torrenttype,
-						'sanitisedname': self.getsanitisedname()}
+			outcome = { 'torrenttitle': self.getheadlinename(),
+						'torrentsubtitle': self.getheadlinesubname(),
+						'torrenttype': self.torrenttype}
 		else:
 			assert 1 == 0, datamode
 		return outcome
