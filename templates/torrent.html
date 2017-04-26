@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block javascript %}
-    <script src="/static/javascript/torrent.js"></script>
+    <script src="./static/javascript/torrent.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -18,53 +18,47 @@
 
 
 <div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
-    <div class="titlebox titleleftextended">
-        {{ selectedtorrent.torrenttitle }}
-    </div><div class="titlebox titlerightextended">
-        <img src="/static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" />
-        {{ selectedtorrent.torrentsubtitle }}
-    </div><div class="tilesplitter splitterextended"></div><div class="subtitlebox subtitleleftextended">
-        {{ selectedtorrent.torrentname }}
-    </div><div class="subtitlebox subtitlerightextended">
-        <img id="Status" src="/static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
+    <div class="titlebox titleleftextended readonlyfields">
+        <span id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</span>
+    </div><div class="titlebox titlerightextended readonlyfields">
+        <img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" />
+        <span id="TorrentSubtitle">{{ selectedtorrent.torrentsubtitle }}</span>
     </div>
-</div>
-
-
-
-
-<div style="display: none;">
-    <div class="tilesection tilenamebanner">
-        <p id="Sanitisedname">{{ selectedtorrent.sanitisedname }}</p>
-    </div><div class="editfields">
-        <div class="tilesection filespacer"></div>
-        <input type="button" name="MakeUnknown" onclick="javascript:changeTorrentType('unknown');" value="Unknown"/>
-        <input type="button" name="MakeMovie" onclick="javascript:changeTorrentType('movie');" value="Movie" />
-        <input type="button" name="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');" value="TV Show" />
-        <div class="tvshowonlyfields">
-            <select name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
+    <div class="editmodefields">
+        <div class="buttongroup">
+            <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');"><img src="./static/images/type_unknown.png" alt="unknown button" /></button><button type="button" id="MakeMovie" onclick="javascript:changeTorrentType('movie');"><img src="/static/images/type_movie.png" alt="movie button" /></button><button type="button" id="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');"><img src="/static/images/type_tvshow.png" alt="tv show button" /></button>
+        </div><div class="tvshowonlyfields">
+            <span class="fieldlabel">Name:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
                 {% for tvshowitem in tvshowlist %}
                 <option value="{{ tvshowitem }}">{{ tvshowitem }}</option>
                 {% endfor %}
-            </select>
-            <input type="button" name="AddTVShow" onclick="javascript:ConfigureTVShow('AddShow');" value="New Show" />
-            <select name="tvshowseasonselector"></select>
-            <input type="button" name="AddShowSeason" onclick="javascript:ConfigureTVShow('AddSeason');" value="New Season" />
+            </select><span class="fieldlabel">Season:</span><select class="tvshowseasonfield" name="tvshowseasonselector"></select>
         </div><div class="movieonlyfields">
-            <input type="text" name="moviename" value="" />
-            <input type="text" name="movieyear" value="" />
+            <span class="fieldlabel">Name:</span><input type="text" name="moviename" value="" class="movienamefield" /><span class="fieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
         </div>
+    </div>
+    <div class="tilesplitter splitterextended"></div><div class="subtitlebox subtitleleftextended">
+        {{ selectedtorrent.torrentname }}
+    </div><div class="subtitlebox subtitlerightextended">
+        <img id="Status" src="./static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
     </div>
 </div>
 
-{% for fileitem in selectedtorrent.files %}<div class="tile headlinetile">
+
+            <!--<input type="button" name="AddTVShow" onclick="javascript:ConfigureTVShow('AddShow');" value="New Show" />
+            <input type="button" name="AddShowSeason" onclick="javascript:ConfigureTVShow('AddSeason');" value="New Season" />-->
+
+
+
+
+{% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
     <div class="titlebox titlefullwidth">
         qwreqwre{{ fileitem.episode }}
-        <img src="/static/images/type_unknown.png" alt="unknown" />
+        <img src="./static/images/type_unknown.png" alt="unknown" />
     </div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
         {{ fileitem.shortpath }}
     </div><div class="subtitlebox fileright">
-        <img src="/static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />
+        <img src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />
         {{ fileitem.size }}
     </div>
 
@@ -105,7 +99,7 @@
 {% endblock %}
 
 
-                    <!--<img class="tilesubicon" src="/static/images/movie.png" alt="movie" />
+                    <!--<img class="tilesubicon" src="./static/images/movie.png" alt="movie" />
                     <label class="switch"><input type="checkbox" name="torrenttypeswitch"><div class="slider round"></div></label>
-                    <img class="tilesubicon" src="/static/images/tvshow.png" alt="tvshow" />-->
+                    <img class="tilesubicon" src="./static/images/tvshow.png" alt="tvshow" />-->
 

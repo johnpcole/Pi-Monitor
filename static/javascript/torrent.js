@@ -7,7 +7,7 @@ $(document).ready(function ()
     // Refresh the tiles every minute.
     setInterval(function()
     {
-        //updateTorrentState('Refresh');
+        updateTorrentState('Refresh');
     }, 10000);
 });
 
@@ -45,7 +45,6 @@ function updateTorrentConfig(action)
 function updateTVShowSeasons(selectedseason)
 {
     changeControlState('tvshowseasonselector', 'Hide');
-    changeControlState('AddShowSeason', 'Hide');
     var tvshowname = getFieldValue("tvshowselector");
     if (tvshowname != "") {
         $.getJSON('GetTVShowSeasons='+tvshowname)
@@ -57,7 +56,6 @@ function updateTVShowSeasons(selectedseason)
         updateTVShowSeasonsList("", selectedseason);
     };
     changeControlState('tvshowseasonselector', 'Show');
-    changeControlState('AddShowSeason', 'Show');
 };
 
 
@@ -85,7 +83,9 @@ function updateTorrentStateDisplay(dataitem)
 
 function updateTorrentConfigDisplay(dataitem)
 {
-    rerenderText("Sanitisedname", dataitem.sanitisedname);
+    rerenderText("TorrentTitle", dataitem.torrenttitle);
+    rerenderImage("TorrentType", "type_"+dataitem.torrenttype);
+    rerenderText("TorrentSubtitle", dataitem.torrentsubtitle);
 };
 
 
@@ -94,17 +94,9 @@ function updateTorrentConfigDisplay(dataitem)
 
 function editTorrentConfiguration()
 {
-    var itemdetails = getText('Sanitisedname');
-    var itemsplit = itemdetails.split("   (");
-    if (itemsplit.length > 1) {
-        var moviename = itemsplit[0];
-        var itemsubsplit = itemsplit[1].split(")");
-        var movieyear = itemsubsplit[0];
-    } else {
-        var moviename = itemdetails
-        var movieyear = ""
-    };
-    var torrenttypeimagelabel = getImageName('torrenttypeimage');
+    var moviename = getText('TorrentTitle')
+    var movieyear = getText('TorrentSubtitle')
+    var torrenttypeimagelabel = getImageName('TorrentType').substring(5);
     changeTorrentType(torrenttypeimagelabel);
     if (torrenttypeimagelabel == "movie") {
         setFieldValue('moviename', moviename);
@@ -113,7 +105,8 @@ function editTorrentConfiguration()
         setFieldValue('tvshowselector', moviename);
         updateTVShowSeasons(movieyear);
     };
-    changeAreasState('editfields', 'Show');
+    changeAreasState('editmodefields', 'Show');
+    changeAreasState('readonlyfields', 'Hide');
     changeControlState('Edit', 'Hide');
     changeControlState('Save', 'Show');
 };
@@ -126,9 +119,9 @@ function saveTorrentConfiguration()
     var moviename = ""
     var movieyear = ""
     var newtype = ""
-    if (getControlState('MakeTVShow') == 'Disabled') {
+    if (getButtonState('MakeTVShow') == 'Disabled') {
         newtype = "tvshow";
-    } else if (getControlState('MakeMovie') == 'Disabled') {
+    } else if (getButtonState('MakeMovie') == 'Disabled') {
         newtype = "movie";
     } else {
         newtype = "unknown";
@@ -144,8 +137,8 @@ function saveTorrentConfiguration()
         movieyear = "";
     };
     updateTorrentConfig(newtype+'|'+moviename+'|'+movieyear);
-    changeAreasState('editfields', 'Hide');
-    rerenderImage('torrenttypeimage', newtype);
+    changeAreasState('editmodefields', 'Hide');
+    changeAreasState('readonlyfields', 'Show');
     changeControlState('Edit', 'Show');
     changeControlState('Save', 'Hide');
 };
@@ -160,17 +153,17 @@ function changeTorrentType(newtype)
         setFieldValue('movieyear', '');
         changeAreasState('tvshowonlyfields', "Hide");
         changeAreasState('movieonlyfields', "Show");
-        changeControlState('MakeMovie', "Disable");
-        changeControlState('MakeTVShow', "Enable");
-        changeControlState('MakeUnknown', "Enable");
+        changeButtonState('MakeMovie', "Disable");
+        changeButtonState('MakeTVShow', "Enable");
+        changeButtonState('MakeUnknown', "Enable");
     } else if (newtype == "tvshow") {
         setFieldValue('tvshowselector', '');
         setFieldValue('tvshowseasonselector', '');
         changeAreasState('movieonlyfields', "Hide");
         changeAreasState('tvshowonlyfields', "Show");
-        changeControlState('MakeMovie', "Enable");
-        changeControlState('MakeTVShow', "Disable");
-        changeControlState('MakeUnknown', "Enable");
+        changeButtonState('MakeMovie', "Enable");
+        changeButtonState('MakeTVShow', "Disable");
+        changeButtonState('MakeUnknown', "Enable");
     } else {
         setFieldValue('moviename', '');
         setFieldValue('tvshowselector', '');
@@ -178,9 +171,9 @@ function changeTorrentType(newtype)
         setFieldValue('tvshowseasonselector', '');
         changeAreasState('tvshowonlyfields', "Hide");
         changeAreasState('movieonlyfields', "Hide");
-        changeControlState('MakeMovie', "Enable");
-        changeControlState('MakeTVShow', "Enable");
-        changeControlState('MakeUnknown', "Disable");
+        changeButtonState('MakeMovie', "Enable");
+        changeButtonState('MakeTVShow', "Enable");
+        changeButtonState('MakeUnknown', "Disable");
     };
 };
 

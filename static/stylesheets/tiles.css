@@ -49,6 +49,9 @@ a.tile:hover {
     background-color: #AA0000;
 }
 
+.file_all {
+    background-color: #AAAA00;
+}
 
 
 /* ===============================================================================
@@ -57,14 +60,6 @@ a.tile:hover {
 
 .bannertile {
     width: 954px;
-}
-
-.headlinetile {
-    width: 460px;
-}
-
-.torrenttile {
-    width: 860px;
 }
 
 
@@ -78,31 +73,6 @@ a.tile:hover {
     white-space: nowrap;
     display: inline-block;
     padding: 2px 3px 6px 3px;
-}
-
-.titleleft {
-    width: 337px;
-    text-align: left;
-}
-
-.titleright {
-    width: 110px;
-    text-align: right;
-}
-
-.titleleftextended {
-    width: 608px;
-    text-align: left;
-}
-
-.titlerightextended {
-    width: 240px;
-    text-align: right;
-}
-
-.titlefullwidth {
-    width: 454px;
-    text-align: left;
 }
 
 .titlebox img {
@@ -127,13 +97,6 @@ a.tile:hover {
     padding: 0;
 }
 
-.splitterline {
-    width: 452px;
-}
-
-.splitterextended {
-    width: 852px;
-}
 
 /* ===============================================================================
    TILE SUBTILE ROW
@@ -148,41 +111,6 @@ a.tile:hover {
     padding: 5px 4px 4px 4px;
 }
 
-.subtitleleft {
-    width: 396px;
-    text-align: left;
-}
-
-.subtitleright {
-    width: 47px;
-    text-align: right;
-}
-
-.subtitleleftextended {
-    width: 664px;
-    text-align: left;
-}
-
-.subtitlerightextended {
-    width: 180px;
-    text-align: right;
-}
-
-.subtitlefullwidth {
-    width: 452px;
-    text-align: left;
-}
-
-.fileleft {
-    width: 353px;
-    text-align: left;
-}
-
-.fileright {
-    width: 90px;
-    text-align: right;
-}
-
 .subtitlebox img {
     display: inline-block;
     height: 13px;
@@ -191,10 +119,3 @@ a.tile:hover {
     -webkit-filter: brightness(9) saturate(9);
     filter: brightness(9) saturate(9);
 }
-
-
-
-
-
-
-

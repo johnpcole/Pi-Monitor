@@ -9,7 +9,7 @@ function changeAreasState(areaname, displayvalue)
         if (displayvalue == 'Hide') {
             areaobject.style.display = "none";
         } else {
-            areaobject.style.display = "inline";
+            areaobject.style.display = "inline-block";
         };
     };
 };
@@ -52,7 +52,7 @@ function rerenderImage(fieldname, fieldimage)
 {
     var tileData = document.getElementById(fieldname);
     if (tileData != null) {
-        tileData.src = "/static/images/"+fieldimage+".png";
+        tileData.src = "./static/images/"+fieldimage+".png";
     } else {
         alert("rerenderImage: "+ fieldname);
     }

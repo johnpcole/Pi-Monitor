@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block javascript %}
-    <script src="/static/javascript/index.js"></script>
+    <script src="./static/javascript/index.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -9,12 +9,12 @@
     <div class="titlebox titleleft">
         {{ torrent.torrenttitle }}
     </div><div class="titlebox titleright">
-        <img src="/static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
+        <img src="./static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
         {{ torrent.torrentsubtitle }}
     </div><div class="tilesplitter splitterline"></div><div class="subtitlebox subtitleleft">
         {{ torrent.torrentname }}
     </div><div class="subtitlebox subtitleright">
-        <img id="StatusIcon-{{ torrent.torrentid }}" src="/static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
+        <img id="StatusIcon-{{ torrent.torrentid }}" src="./static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
     </div>
 </a>{% endfor %}
 {% endblock %}

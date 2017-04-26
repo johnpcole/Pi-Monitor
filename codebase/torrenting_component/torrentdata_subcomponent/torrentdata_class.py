@@ -289,15 +289,14 @@ class DefineTorrentItem:
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta(),
-						'files': self.files,
-						'sanitisedname': self.getsanitisedname()}
+						'files': self.files}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta()}
 		elif datamode == "reconfigure":
-			outcome = { 'torrentname': self.torrentname,
-						'torrenttype': self.torrenttype,
-						'sanitisedname': self.getsanitisedname()}
+			outcome = { 'torrenttitle': self.getheadlinename(),
+						'torrentsubtitle': self.getheadlinesubname(),
+						'torrenttype': self.torrenttype}
 		else:
 			assert 1 == 0, datamode
 		return outcome
