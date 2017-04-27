@@ -34,13 +34,13 @@
                 <img src="/static/images/type_tvshow.png" alt="tv show button" />
             </button>
         </div><div class="unknownonlyfields"><span class="fieldlabel">New Unspecified Torrent</span></div><div class="tvshowonlyfields">
-            <span class="fieldlabel">Name:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
+            <span class="fieldlabel">TV Show:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
                 {% for tvshowitem in tvshowlist %}
                 <option value="{{ tvshowitem }}">{{ tvshowitem }}</option>
                 {% endfor %}
             </select><span class="fieldlabel">Season:</span><select class="tvshowseasonfield" name="tvshowseasonselector"></select>
         </div><div class="movieonlyfields">
-            <span class="fieldlabel">Name:</span><input type="text" name="moviename" value="" class="movienamefield" /><span class="fieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
+            <span class="fieldlabel">Film:</span><input type="text" name="moviename" value="" class="movienamefield" /><span class="fieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
         </div>
     </div>
     <div class="tilesplitter splitterextended"></div><div class="subtitlebox subtitleleftextended">
