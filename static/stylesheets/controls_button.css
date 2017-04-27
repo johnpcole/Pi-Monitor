@@ -24,8 +24,8 @@ button {
 /* =================================================== */
 
 .buttongroup {
-    border: 0px solid #FFFFFF;
-    background-color: #FFFFFF;
+    border: 0px solid #000000;
+    background-color: #000000;
     margin: 0;
     padding: 0px 0px 0px 1px;
     display: inline-block;
@@ -39,8 +39,18 @@ div.buttongroup button {
     margin: 1px 1px 1px 0px;
 }
 
+div.buttongroup button:disabled {
+    cursor: default;
+}
+
 div.buttongroup img {
     width: 24px;
     height: 24px;
     margin: auto;
 }
+
+div.buttongroup button:disabled img {
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
+

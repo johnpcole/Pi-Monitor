@@ -15,7 +15,7 @@ class DefineFileItem:
 		self.filetype = "NOT PROCESSED"
 		self.updatefiletype()
 
-		self.episode = ""
+		self.episode = "ignore"
 
 # =========================================================================================
 

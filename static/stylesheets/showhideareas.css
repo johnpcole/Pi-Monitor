@@ -2,23 +2,16 @@
     margin: 0 0 5px 0;
     padding: 0;
     display: none;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 .readonlyfields {
     display: inline-block;
 }
 
-.tvshowonlyfields {
+.tvshowonlyfields, .movieonlyfields, .unknownonlyfields, .copyonlyfields, .ignoreonlyfields {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     display: none;
-}
-
-.movieonlyfields {
-    margin: 0;
-    padding: 0;
     overflow: hidden;
-    display: none;
 }

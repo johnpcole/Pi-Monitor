@@ -16,6 +16,19 @@ function changeAreasState(areaname, displayvalue)
 
 
 
+// Update area visibility
+
+function changeAreaState(areaname, displayvalue)
+{
+    var areaobject = document.getElementById(areaname);
+    if (displayvalue == 'Hide') {
+        areaobject.style.display = "none";
+    } else {
+        areaobject.style.display = "inline-block";
+    };
+};
+
+
 
 
 // Update the displayed text
