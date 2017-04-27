@@ -63,15 +63,16 @@
         <img src="./static/images/type_unknown.png" alt="unknown" />
     </div>
     <div class="editmodefields">{% if fileitem.filetype == "NONE" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
-        {% else %}<div class="buttongroup">
+        {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
             <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
                 <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
             </button><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
                 <img src="./static/images/fileaction_copy.png" alt="copy button" />
             </button>
-        </div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
+        </div></div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
         </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
-            <div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
+            <div class="unknownonlyfields"><span class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</span>
+            </div><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
             </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
                 {% for selectoritem in selectedtorrent.enumerations.episodes %}
                 <option value="{{ selectoritem }}">{{ selectoritem }}</option>
