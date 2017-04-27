@@ -69,9 +69,10 @@
             </button><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
                 <img src="./static/images/fileaction_copy.png" alt="copy button" />
             </button>
-        </div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Ignored File</span>
+        </div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
         </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
-            <div class="tvshowonlyfields"><span class="fieldlabel">Episode:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
+            <div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
+            </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
                 {% for selectoritem in selectedtorrent.enumerations.episodes %}
                 <option value="{{ selectoritem }}">{{ selectoritem }}</option>
                 {% endfor %}
