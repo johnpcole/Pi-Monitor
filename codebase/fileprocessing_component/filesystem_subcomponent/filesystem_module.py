@@ -4,7 +4,10 @@ def mountnetworkdrive(mountpoint, networkpath, username, password):
 	if concatenatepaths(" ", " ") == " / ":
 		OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
 	else:
-		OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
+		if username != "":
+			OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
+		else:
+			OperatingSystem.system('NET USE '+mountpoint+' '+networkpath)
 
 def unmountnetworkdrive(mountpoint):
 	if concatenatepaths(" ", " ") == " / ":

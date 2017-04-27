@@ -8,10 +8,33 @@ input[type=text], select {
     height: 30px;
     background-color: #999999;
     color: #FFFFFF;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #000000;
     margin: 0;
     padding: 0px 6px;
+
 }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /*-webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;*/
+    background-image: url(../images/dropdownarrow.png);
+    background-position: center right;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+select option {
+    border: 1px solid #000000;
+    color: #000000;
+    background-color: #999999;
+}
+
+/* =================================================== */
+/* Edit fields                                         */
+/* =================================================== */
 
 .movieyearfield {
     width: 60px;
@@ -27,4 +50,12 @@ input[type=text], select {
 
 .tvshowseasonfield {
     width: 150px;
+}
+
+.fileepisode {
+    width: 115px;
+}
+
+.filesubtitle {
+    width: 110px;
 }

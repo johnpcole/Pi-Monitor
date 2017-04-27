@@ -133,7 +133,7 @@ function saveTorrentConfiguration()
         moviename = getFieldValue("moviename");
         movieyear = getFieldValue('movieyear');
     } else {
-        moviename = "";
+        moviename = "New Unspecified Torrent";
         movieyear = "";
     };
     updateTorrentConfig(newtype+'|'+moviename+'|'+movieyear);
@@ -151,6 +151,7 @@ function changeTorrentType(newtype)
     if (newtype == "movie") {
         setFieldValue('moviename', '');
         setFieldValue('movieyear', '');
+        changeAreasState('unknownonlyfields', "Hide");
         changeAreasState('tvshowonlyfields', "Hide");
         changeAreasState('movieonlyfields', "Show");
         changeButtonState('MakeMovie', "Disable");
@@ -159,6 +160,7 @@ function changeTorrentType(newtype)
     } else if (newtype == "tvshow") {
         setFieldValue('tvshowselector', '');
         setFieldValue('tvshowseasonselector', '');
+        changeAreasState('unknownonlyfields', "Hide");
         changeAreasState('movieonlyfields', "Hide");
         changeAreasState('tvshowonlyfields', "Show");
         changeButtonState('MakeMovie', "Enable");
@@ -169,11 +171,30 @@ function changeTorrentType(newtype)
         setFieldValue('tvshowselector', '');
         setFieldValue('movieyear', '');
         setFieldValue('tvshowseasonselector', '');
+        changeAreasState('unknownonlyfields', "Show");
         changeAreasState('tvshowonlyfields', "Hide");
         changeAreasState('movieonlyfields', "Hide");
         changeButtonState('MakeMovie', "Enable");
         changeButtonState('MakeTVShow', "Enable");
         changeButtonState('MakeUnknown', "Disable");
+    };
+};
+
+// Change file designation
+
+function changeFileDesignation(fileid, newtype)
+{
+    if (newtype == "ignore") {
+        changeAreaState('copyconfig-'+fileid, "Hide");
+        changeAreaState('ignoreconfig-'+fileid, "Show");
+        changeButtonState('MakeIgnore-'+fileid, "Disable");
+        changeButtonState('MakeCopy-'+fileid, "Enable");
+
+    } else {
+        changeAreaState('ignoreconfig-'+fileid, "Hide");
+        changeAreaState('copyconfig-'+fileid, "Show");
+        changeButtonState('MakeCopy-'+fileid, "Disable");
+        changeButtonState('MakeIgnore-'+fileid, "Enable");
     };
 };
 

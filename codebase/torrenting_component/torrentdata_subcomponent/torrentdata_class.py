@@ -289,7 +289,8 @@ class DefineTorrentItem:
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta(),
-						'files': self.files}
+						'files': self.files,
+						'enumerations': self.getfileenumerations()}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta()}
@@ -331,5 +332,27 @@ class DefineTorrentItem:
 			else:
 				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]
 
+# =========================================================================================
 
+	def getfileenumerations(self):
 
+		outcome = {}
+		outcomeitem = []
+		for x in range(1, 41):
+			outcomeitem.append("Episode "+str(x))
+		outcome['episodes'] = outcomeitem
+		outcomeitem = []
+		for x in range(1, 40):
+			outcomeitem.append("Ep. "+str(x)+" & "+str(x+1))
+		outcome['doubleepisodes'] = outcomeitem
+		outcomeitem = []
+		for x in range(1, 100):
+			outcomeitem.append("Special "+str(x))
+		outcome['specials'] = outcomeitem
+		outcomeitem = []
+		outcomeitem.append("Standard")
+		outcomeitem.append("English")
+		outcomeitem.append("SDH")
+		outcomeitem.append("Eng-SDH")
+		outcome['subtitles'] = outcomeitem
+		return outcome
