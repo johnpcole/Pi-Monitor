@@ -101,6 +101,16 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
+	def updatefilepurpose(self, fileid, filepurpose):
+
+		existingfile = self.getfileobject(int(fileid))
+		if existingfile is not None:
+			existingfile.updatefilepurpose(filepurpose)
+		else:
+			print "Cannot identify file"
+
+# =========================================================================================
+
 	def getid(self):
 
 		return self.torrentid
@@ -151,12 +161,12 @@ class DefineTorrentItem:
 	def getfullstatus(self):
 
 		if self.status == "queued":
-			if self.finished == True:
+			if self.finished == "Completed":
 				outcome = "seeding_queued"
 			else:
 				outcome = "downloading_queued"
 		elif self.status == "paused":
-			if self.finished == True:
+			if self.finished == "Completed":
 				outcome = "seeding_paused"
 			else:
 				outcome = "downloading_paused"
@@ -241,6 +251,7 @@ class DefineTorrentItem:
 			outcome = self.movieorshowname
 		else:
 			outcome = "New Unspecified Torrent"
+		outcome = self.finished
 		return outcome
 
 # =========================================================================================
@@ -356,3 +367,17 @@ class DefineTorrentItem:
 		outcomeitem.append("Eng-SDH")
 		outcome['subtitles'] = outcomeitem
 		return outcome
+
+# =========================================================================================
+
+	def reconfiguretorrent(self, instructions):
+		actionlist = instructions.split("|")
+		# Set new torrent type, film/show name, and year/season
+		self.updateinfo({'torrenttype': actionlist[0], 'moviename': actionlist[1], 'year': actionlist[2]})
+
+		if len(actionlist) > 3:
+			index = 3
+			while index < len(actionlist):
+				self.updatefilepurpose(actionlist[index], actionlist[index+1])
+				index = index + 2
+

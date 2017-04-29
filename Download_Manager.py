@@ -59,10 +59,7 @@ def updatetorrentpage(torrentid):
 def updatetorrentconfiguration(torrentid, newdata):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
-		actionlist = newdata.split("|")
-		torrentobject.updateinfo({ 'torrenttype' : actionlist[0] })
-		torrentobject.updateinfo({ 'moviename' : actionlist[1] })
-		torrentobject.updateinfo({ 'year' : actionlist[2] })
+		torrentobject.reconfiguretorrent(newdata)
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
 	FileManager.saveconfigs(torrentmanager.getconfigs())

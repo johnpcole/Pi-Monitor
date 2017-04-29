@@ -59,7 +59,7 @@
 
 {% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
     <div class="titlebox titlefullwidth readonlyfields">
-        qwreqwre{{ fileitem.episode }}
+        <span id="filename-{{ fileitem.fileid }}">qwreqwre{{ fileitem.episode }}</span>
         <img src="./static/images/type_unknown.png" alt="unknown" />
     </div>
     <div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
@@ -91,7 +91,7 @@
     </div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
         {{ fileitem.shortpath }}
     </div><div class="subtitlebox fileright">
-        <img src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
+        <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
     </div>
 </div>{% endfor %}
 

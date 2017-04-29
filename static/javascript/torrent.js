@@ -21,7 +21,7 @@ function updateTorrentState(action)
     $.getJSON(action+'Torrent='+pathname.substring(9))
         .done(function (data)
         {
-                updateTorrentStateDisplay(data.selectedtorrent);
+            updateTorrentStateDisplay(data.selectedtorrent);
         });
 };
 
@@ -34,7 +34,7 @@ function updateTorrentConfig(action)
     $.getJSON('ReconfigureTorrent='+pathname.substring(9)+'='+action)
         .done(function (data)
         {
-                updateTorrentConfigDisplay(data.selectedtorrent);
+            updateTorrentConfigDisplay(data.selectedtorrent);
         });
 };
 
@@ -50,7 +50,7 @@ function updateTVShowSeasons(selectedseason)
         $.getJSON('GetTVShowSeasons='+tvshowname)
             .done(function (data)
             {
-                    updateTVShowSeasonsList(data.seasons, selectedseason);
+                updateTVShowSeasonsList(data.seasons, selectedseason);
             });
     } else {
         updateTVShowSeasonsList("", selectedseason);
@@ -116,8 +116,6 @@ function editTorrentConfiguration()
 
 function saveTorrentConfiguration()
 {
-    var moviename = ""
-    var movieyear = ""
     var newtype = ""
     if (getButtonState('MakeTVShow') == 'Disabled') {
         newtype = "tvshow";
@@ -126,17 +124,19 @@ function saveTorrentConfiguration()
     } else {
         newtype = "unknown";
     }
+    var newinstructions = newtype
     if (newtype == 'tvshow') {
-        moviename = getFieldValue("tvshowselector");
-        movieyear = getFieldValue('tvshowseasonselector');
+        newinstructions = newinstructions+"|"+getFieldValue("tvshowselector");
+        newinstructions = newinstructions+"|"+getFieldValue('tvshowseasonselector');
+        newinstructions = newinstructions+getFileInstructions("tvshow");
     } else if (newtype == 'movie') {
-        moviename = getFieldValue("moviename");
-        movieyear = getFieldValue('movieyear');
+        newinstructions = newinstructions+"|"+getFieldValue("moviename");
+        newinstructions = newinstructions+"|"+getFieldValue('movieyear');
+        newinstructions = newinstructions+getFileInstructions("movie");
     } else {
-        moviename = "New Unspecified Torrent";
-        movieyear = "";
+        newinstructions = newinstructions+"|New Unspecified Torrent|";
     };
-    updateTorrentConfig(newtype+'|'+moviename+'|'+movieyear);
+    updateTorrentConfig(newinstructions);
     changeAreasState('editmodefields', 'Hide');
     changeAreasState('readonlyfields', 'Show');
     changeControlState('Edit', 'Show');
@@ -198,31 +198,59 @@ function changeFileDesignation(fileid, newtype)
     };
 };
 
+// Get all File designations
 
-
-function repopulateEpisodeLists(listmode)
+function getFileDesignations()
 {
-    var newoptions = '';
-    var liindex = 0;
-    var liindexa = 0;
-    if (listmode == "tvshow") {
-        for (liindex = 1; liindex < 50; liindex++) {
-            newoptions = newoptions + '<option value=\"'+liindex+'\">'+liindex+'</option>'
-        }
-        for (liindex = 1; liindex < 49; liindex++) {
-            liindexa = liindex + 1
-            newoptions = newoptions + '<option value=\"'+liindex+'-'+liindexa+'\">'+liindex+'-'+liindexa+'</option>'
-        }
-    } else {
-        newoptions = newoptions + '<option value=\"Full\">Full</option>'
-        newoptions = newoptions + '<option value=\"Part 1\">Part 1</option>'
-        newoptions = newoptions + '<option value=\"Part 2\">Part 2</option>'
-        newoptions = newoptions + '<option value=\"Part 3\">Part 3</option>'
+    var fileinstructions = [];
+    var areaobjectlist = document.getElementsByClassName('copyonlyfields');
+    var areaindex;
+    var fileid;
+    var filetype;
+    var subflag;
+
+    for (areaindex = 0; areaindex < areaobjectlist.length; areaindex++) {
+        areaobject = areaobjectlist[areaindex];
+        fileid = (areaobject.id).substring(11);
+        if (getButtonState('MakeIgnore-'+fileid) == 'Disabled') {
+            fileinstructions.push([fileid, "ignore", "no-episode", "no-filetype", "no-subtitle"]);
+        } else {
+            filetype = (getImageName("filetype-"+fileid)).substring(9)
+            if (filetype == "subtitle") {
+                subflag = getFieldValue("subtitleselector-"+fileid)
+            } else {
+                subflag = "-"
+            }
+            fileinstructions.push([fileid, "copy", getFieldValue("episodeselector-"+fileid), filetype, subflag]);
+        };
     };
-    var ddobjectlist = document.getElementsByClass('episodeselector');
-    var ddindex;
-    for (ddindex = 0; ddindex < ddobjectlist.length; ddindex++) {
-        ddobject = ddobjectlist[ddindex];
-        ddobject.innerHTML = newoptions;
-    };
+    return fileinstructions
 };
+
+// Get sanitised tvshow & movie file designations
+
+function getFileInstructions(torrenttype)
+{
+    var rawdata = getFileDesignations();
+    var rawlength = rawdata.length;
+    var loopindex;
+    var currentitem;
+    var outcome = ""
+    for (loopindex = 0; loopindex < rawlength; loopindex++) {
+        currentitem = rawdata[loopindex]
+        outcome = outcome + "|" + currentitem[0]
+        if (torrenttype == "movie") {
+            currentitem[2] = "Film"
+        };
+        if ((currentitem[1] == "copy") && (currentitem[2] != "")) {
+            outcome = outcome + "|" + currentitem[2]
+            if ((currentitem[3] == "subtitle") && (currentitem[4] != "")) {
+                outcome = outcome + "_" + currentitem[4]
+            };
+        } else {
+            outcome = outcome + "|ignore"
+        };
+    };
+    return outcome;
+};
+
