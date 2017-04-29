@@ -85,7 +85,7 @@ class DefineFileItem:
 		elif extension == "mp4":
 			outcome = "VIDEO"
 
-		self.filetype = outcome
+		self.filetype = outcome.lower()
 
 	# =========================================================================================
 

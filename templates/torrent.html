@@ -62,7 +62,7 @@
         qwreqwre{{ fileitem.episode }}
         <img src="./static/images/type_unknown.png" alt="unknown" />
     </div>
-    <div class="editmodefields">{% if fileitem.filetype == "NONE" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
+    <div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
         {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
             <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
                 <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
@@ -83,7 +83,7 @@
                 {% for selectoritem in selectedtorrent.enumerations.specials %}
                 <option value="{{ selectoritem }}">{{ selectoritem }}</option>
                 {% endfor %}
-            </select></div>{% if fileitem.filetype == "SUBTITLE" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
+            </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
                 {% for selectoritem in selectedtorrent.enumerations.subtitles %}
                 <option value="{{ selectoritem }}">{{ selectoritem }}</option>
                 {% endfor %}
