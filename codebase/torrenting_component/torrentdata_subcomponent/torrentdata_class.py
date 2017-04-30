@@ -236,15 +236,6 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getsanitisedname(self):
-
-		outcome = self.movieorshowname
-		if self.seasonoryear != "":
-			outcome = outcome + "   (" + self.seasonoryear + ")"
-		return outcome
-
-# =========================================================================================
-
 	def getheadlinename(self):
 
 		if self.torrenttype == "movie":
@@ -304,7 +295,7 @@ class DefineTorrentItem:
 						'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta(),
 						'files': self.getextendedfiledata(datamode),
-						'enumerations': self.getfileenumerations()}
+						'enumerations': getfileenumerations()}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta()}
@@ -346,31 +337,6 @@ class DefineTorrentItem:
 				existingfile.updatefilepurpose(dataarray[2])
 			else:
 				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]
-
-# =========================================================================================
-
-	def getfileenumerations(self):
-
-		outcome = {}
-		outcomeitem = []
-		for x in range(1, 41):
-			outcomeitem.append("Episode "+str(x))
-		outcome['episodes'] = outcomeitem
-		outcomeitem = []
-		for x in range(1, 40):
-			outcomeitem.append("Ep. "+str(x)+" & "+str(x+1))
-		outcome['doubleepisodes'] = outcomeitem
-		outcomeitem = []
-		for x in range(1, 100):
-			outcomeitem.append("Special "+str(x))
-		outcome['specials'] = outcomeitem
-		outcomeitem = []
-		outcomeitem.append("Standard")
-		outcomeitem.append("English")
-		outcomeitem.append("SDH")
-		outcomeitem.append("Eng-SDH")
-		outcome['subtitles'] = outcomeitem
-		return outcome
 
 # =========================================================================================
 
@@ -435,4 +401,29 @@ def getsanitisedepisodesuffix(episodename):
 			outcome = splits[1] + " " + outcome
 	else:
 		outcome = "Video File"
+	return outcome
+
+# =========================================================================================
+
+def getfileenumerations():
+
+	outcome = {}
+	outcomeitem = []
+	for x in range(1, 41):
+		outcomeitem.append("Episode "+str(x))
+	outcome['episodes'] = outcomeitem
+	outcomeitem = []
+	for x in range(1, 40):
+		outcomeitem.append("Ep. "+str(x)+" & "+str(x+1))
+	outcome['doubleepisodes'] = outcomeitem
+	outcomeitem = []
+	for x in range(1, 100):
+		outcomeitem.append("Special "+str(x))
+	outcome['specials'] = outcomeitem
+	outcomeitem = []
+	outcomeitem.append("Standard")
+	outcomeitem.append("English")
+	outcomeitem.append("SDH")
+	outcomeitem.append("Eng-SDH")
+	outcome['subtitles'] = outcomeitem
 	return outcome

@@ -55,7 +55,7 @@
 
 {% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
     <div class="readonlyfields"><div class="titlebox titleleft" id="filename-{{ fileitem.fileid }}">{{ fileitem.description }}
-        </div><div class="titlebox titleright"><img class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
+        </div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
     </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
         {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
             <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">

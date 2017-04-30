@@ -86,6 +86,14 @@ function updateTorrentConfigDisplay(dataitem)
     rerenderText("TorrentTitle", dataitem.torrenttitle);
     rerenderText("TorrentSubtitle", dataitem.torrentsubtitle);
     rerenderImage("TorrentType", "type_"+dataitem.torrenttype);
+
+    var filelist = dataitem.files;
+    $.each(filelist, function(index)
+    {
+        rerenderText("filename-"+filelist[index].fileid, filelist[index].description);
+        rerenderImage("outcome-"+filelist[index].fileid, "fileaction_"+filelist[index].outcome);
+    });
+
 };
 
 
