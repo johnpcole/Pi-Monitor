@@ -12,12 +12,12 @@
    =============================================================================== */
 
 .titleleft {
-    width: 337px;
+    width: 427px;
     text-align: left;
 }
 
 .titleright {
-    width: 110px;
+    width: 20px;
     text-align: right;
 }
 
@@ -41,12 +41,12 @@
    =============================================================================== */
 
 .subtitleleft {
-    width: 396px;
+    width: 387px;
     text-align: left;
 }
 
 .subtitleright {
-    width: 47px;
+    width: 56px;
     text-align: right;
 }
 

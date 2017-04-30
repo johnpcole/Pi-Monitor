@@ -84,8 +84,8 @@ function updateTorrentStateDisplay(dataitem)
 function updateTorrentConfigDisplay(dataitem)
 {
     rerenderText("TorrentTitle", dataitem.torrenttitle);
-    rerenderImage("TorrentType", "type_"+dataitem.torrenttype);
     rerenderText("TorrentSubtitle", dataitem.torrentsubtitle);
+    rerenderImage("TorrentType", "type_"+dataitem.torrenttype);
 };
 
 
@@ -96,6 +96,9 @@ function editTorrentConfiguration()
 {
     var moviename = getText('TorrentTitle')
     var movieyear = getText('TorrentSubtitle')
+    if (movieyear.length > 3) {
+        movieyear = movieyear.substring(3);
+    };
     var torrenttypeimagelabel = getImageName('TorrentType').substring(5);
     changeTorrentType(torrenttypeimagelabel);
     if (torrenttypeimagelabel == "movie") {

@@ -57,7 +57,7 @@ class DefineFileItem:
 
 	def getsize(self):
 
-		return self.path
+		return self.size
 
 # =========================================================================================
 

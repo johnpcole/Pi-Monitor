@@ -1,5 +1,6 @@
 from filedata_subcomponent import filedata_module as FileData
 from ...functions_component import functions_module as Functions
+from operator import itemgetter, attrgetter, methodcaller
 
 
 class DefineTorrentItem:
@@ -98,6 +99,7 @@ class DefineTorrentItem:
 			if existingfile is None:
 				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'],
 																			Functions.sanitisesize(fileitem['size'])))
+		self.files = sorted(self.files, key=attrgetter('filetype', 'shortpath'), reverse=True)
 
 # =========================================================================================
 
@@ -251,7 +253,6 @@ class DefineTorrentItem:
 			outcome = self.movieorshowname
 		else:
 			outcome = "New Unspecified Torrent"
-		outcome = self.finished
 		return outcome
 
 # =========================================================================================
@@ -264,6 +265,8 @@ class DefineTorrentItem:
 			outcome = self.seasonoryear
 		else:
 			outcome = ""
+		if outcome != "":
+			outcome = " - " + outcome
 		return outcome
 
 
@@ -300,7 +303,7 @@ class DefineTorrentItem:
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta(),
-						'files': self.files,
+						'files': self.getextendedfiledata(datamode),
 						'enumerations': self.getfileenumerations()}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
@@ -308,7 +311,8 @@ class DefineTorrentItem:
 		elif datamode == "reconfigure":
 			outcome = { 'torrenttitle': self.getheadlinename(),
 						'torrentsubtitle': self.getheadlinesubname(),
-						'torrenttype': self.torrenttype}
+						'torrenttype': self.torrenttype,
+						'files': self.getextendedfiledata(datamode)}
 		else:
 			assert 1 == 0, datamode
 		return outcome
@@ -381,3 +385,54 @@ class DefineTorrentItem:
 				self.updatefilepurpose(actionlist[index], actionlist[index+1])
 				index = index + 2
 
+
+# =========================================================================================
+
+	def getextendedfiledata(self, datamode):
+		outcome = []
+		for file in self.files:
+			filedata = {}
+			filedata["fileid"] = file.getid()
+			if datamode == "initialise":
+				filedata["filename"] = file.getshortpath()
+				filedata["filetype"] = file.gettype()
+				filedata["size"] = file.getsize()
+			if file.getpurpose() == "ignore":
+				filedata["outcome"] = "ignore"
+				if file.gettype() == "none":
+					filedata["description"] = "Ignored File"
+				else:
+					filedata["description"] = "Ignored " + ((file.gettype())[:1]).upper() + file.gettype()[1:] + " File"
+			else:
+				filedata["outcome"] = "copy"
+				if self.torrenttype == "movie":
+					prefix = "Film"
+				else:
+					prefix = self.getseason() + " " + getsanitisedepisodename(file.getpurpose())
+				filedata["description"] = prefix + " " + getsanitisedepisodesuffix(file.getpurpose())
+			outcome.append(filedata)
+		return outcome
+
+# =========================================================================================
+
+def getsanitisedepisodename(episodename):
+
+	if episodename[:4] == "Ep. ":
+		rawstring = "Episodes " + episodename[4:]
+	else:
+		rawstring = episodename
+	outcome = rawstring.split("_")
+	return outcome[0]
+
+# =========================================================================================
+
+def getsanitisedepisodesuffix(episodename):
+
+	splits = episodename.split("_")
+	if len(splits) > 1:
+		outcome = "Subtitle File"
+		if splits[1] != "Standard":
+			outcome = splits[1] + " " + outcome
+	else:
+		outcome = "Video File"
+	return outcome

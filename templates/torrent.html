@@ -18,13 +18,9 @@
 
 
 <div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
-    <div class="titlebox titleleftextended readonlyfields">
-        <span id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</span>
-    </div><div class="titlebox titlerightextended readonlyfields">
-        <img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" />
-        <span id="TorrentSubtitle">{{ selectedtorrent.torrentsubtitle }}</span>
-    </div>
-    <div class="editmodefields">
+    <div class="readonlyfields">
+        <div class="titlebox titleleftextended"><span id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</span><span id="TorrentSubtitle">{{ selectedtorrent.torrentsubtitle }}</span></div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
+    </div><div class="editmodefields">
         <div class="buttongroup">
             <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
                 <img src="./static/images/type_unknown.png" alt="unknown button" />
@@ -58,11 +54,9 @@
 
 
 {% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
-    <div class="titlebox titlefullwidth readonlyfields">
-        <span id="filename-{{ fileitem.fileid }}">qwreqwre{{ fileitem.episode }}</span>
-        <img src="./static/images/type_unknown.png" alt="unknown" />
-    </div>
-    <div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
+    <div class="readonlyfields"><div class="titlebox titleleft" id="filename-{{ fileitem.fileid }}">{{ fileitem.description }}
+        </div><div class="titlebox titleright"><img class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
+    </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
         {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
             <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
                 <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
@@ -89,7 +83,7 @@
                 {% endfor %}
             </select></div>{% endif %}
     </div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
-        {{ fileitem.shortpath }}
+        {{ fileitem.filename }}
     </div><div class="subtitlebox fileright">
         <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
     </div>
