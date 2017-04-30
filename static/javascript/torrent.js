@@ -112,9 +112,11 @@ function editTorrentConfiguration()
     if (torrenttypeimagelabel == "movie") {
         setFieldValue('moviename', moviename);
         setFieldValue('movieyear', movieyear);
+        setFileConfigFields()
     } else if (torrenttypeimagelabel == "tvshow") {
         setFieldValue('tvshowselector', moviename);
         updateTVShowSeasons(movieyear);
+        setFileConfigFields();
     };
     changeAreasState('editmodefields', 'Show');
     changeAreasState('readonlyfields', 'Hide');
@@ -265,3 +267,26 @@ function getFileInstructions(torrenttype)
     return outcome;
 };
 
+
+
+// Setup file config field states
+
+function setFileConfigFields()
+{
+    var areaobjectlist = document.getElementsByClassName('copyonlyfields');
+    var areaindex;
+    var fileid;
+    var fieldvalue;
+
+    for (areaindex = 0; areaindex < areaobjectlist.length; areaindex++) {
+        areaobject = areaobjectlist[areaindex];
+        fileid = (areaobject.id).substring(11);
+        fieldvalue = getText("filename-"+fileid);
+        if (fieldvalue.substring(0, 6) == 'Ignore') {
+            changeFileDesignation(fileid,'ignore');
+        } else {
+            changeFileDesignation(fileid,'copy');
+
+        };
+    };
+};
