@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block javascript %}
-    <script src="./static/javascript/index.js"></script>
+    <script src="./static/javascript/index_refresh.js"></script>
 {% endblock %}
 
 {% block content %}
 {% for torrent in torrentlist %}<a class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
     <div class="titlebox titleleft">
-        {{ torrent.torrenttitle }}{{ torrent.torrentsubtitle }}
+        {{ torrent.torrenttitle }}{{ torrent.torrenttitleseparator }}{{ torrent.torrentsubtitle }}
     </div><div class="titlebox titleright">
         <img src="./static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
     </div><div class="tilesplitter splitterline"></div><div class="subtitlebox subtitleleft">

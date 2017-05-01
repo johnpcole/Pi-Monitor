@@ -94,3 +94,57 @@ class DefineFileItem:
 		outcome = str(self.getid()) + "|" + self.getpurpose()
 		return outcome
 
+# =========================================================================================
+
+	def getsanitisedtype(self):
+
+		if self.gettype() == "video":
+			outcome = " Video File"
+		elif self.gettype() == "subtitle":
+			outcome = " Subtitle File"
+		else:
+			outcome = "Ignored File"
+		return outcome
+
+# =========================================================================================
+
+	def getsanitisedepisode(self):
+
+		outcome = ""
+		if self.gettype() != "none":
+			if self.getpurpose() == "ignore":
+				outcome = "Ignored"
+			else:
+				episodename = self.getpurpose()
+				if episodename[:4] == "Ep. ":
+					rawstring = "Episodes " + episodename[4:]
+				else:
+					rawstring = episodename
+				outcome = rawstring.split("_")
+				outcome = outcome[0]
+		return outcome
+
+# =========================================================================================
+
+	def getsanitisedsubtitle(self):
+
+		outcome = ""
+		if (self.gettype() == "subtitle") and (self.getpurpose() != "ignore"):
+			rawstring = self.getpurpose()
+			stringsplit = rawstring.split("_")
+			if len(stringsplit) > 1:
+				outcome = " " + stringsplit[1]
+			else:
+				outcome = " Unknown"
+		return outcome
+
+		# =========================================================================================
+
+	def getsanitisedoutcome(self):
+
+		outcome = ""
+		if self.getpurpose() == "ignore":
+			outcome = "ignore"
+		else:
+			outcome = "copy"
+		return outcome
