@@ -77,9 +77,10 @@ a.tile:hover {
 
 .titlebox img {
     display: inline-block;
-    height: 16px;
-    width: 16px;
-    margin: -2px 5px -2px 5px;
+    height: 18px;
+    width: 18px;
+    /*margin: -2px 5px -2px 5px;*/
+    margin: -2px 0px -1px 0px;
     -webkit-filter: brightness(9) saturate(9);
     filter: brightness(9) saturate(9);
 }

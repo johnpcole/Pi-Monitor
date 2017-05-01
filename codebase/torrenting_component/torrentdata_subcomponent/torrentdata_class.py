@@ -1,5 +1,6 @@
 from filedata_subcomponent import filedata_module as FileData
 from ...functions_component import functions_module as Functions
+from operator import itemgetter, attrgetter, methodcaller
 
 
 class DefineTorrentItem:
@@ -98,6 +99,17 @@ class DefineTorrentItem:
 			if existingfile is None:
 				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'],
 																			Functions.sanitisesize(fileitem['size'])))
+		self.files = sorted(self.files, key=attrgetter('filetype', 'shortpath'), reverse=True)
+
+# =========================================================================================
+
+	def updatefilepurpose(self, fileid, filepurpose):
+
+		existingfile = self.getfileobject(int(fileid))
+		if existingfile is not None:
+			existingfile.updatefilepurpose(filepurpose)
+		else:
+			print "Cannot identify file"
 
 # =========================================================================================
 
@@ -151,12 +163,12 @@ class DefineTorrentItem:
 	def getfullstatus(self):
 
 		if self.status == "queued":
-			if self.finished == True:
+			if self.finished == "Completed":
 				outcome = "seeding_queued"
 			else:
 				outcome = "downloading_queued"
 		elif self.status == "paused":
-			if self.finished == True:
+			if self.finished == "Completed":
 				outcome = "seeding_paused"
 			else:
 				outcome = "downloading_paused"
@@ -224,20 +236,9 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getsanitisedname(self):
+	def gettorrenttitle(self):
 
-		outcome = self.movieorshowname
-		if self.seasonoryear != "":
-			outcome = outcome + "   (" + self.seasonoryear + ")"
-		return outcome
-
-# =========================================================================================
-
-	def getheadlinename(self):
-
-		if self.torrenttype == "movie":
-			outcome = self.movieorshowname
-		elif self.torrenttype == "tvshow":
+		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
 			outcome = self.movieorshowname
 		else:
 			outcome = "New Unspecified Torrent"
@@ -245,26 +246,33 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getheadlinesubname(self):
+	def gettorrentsubtitle(self):
 
-		if self.torrenttype == "movie":
-			outcome = self.seasonoryear
-		elif self.torrenttype == "tvshow":
+		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
 			outcome = self.seasonoryear
 		else:
 			outcome = ""
 		return outcome
 
+# =========================================================================================
 
+	def gettorrentsubtitleprefix(self):
 
-		# =========================================================================================
+		outcome = ""
+		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
+			if self.seasonoryear != "":
+				outcome = " - "
+		return outcome
+
+# =========================================================================================
 
 	def getheadlinedata(self, datamode):
 
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
-						'torrenttitle': self.getheadlinename(),
-						'torrentsubtitle': self.getheadlinesubname(),
+						'torrenttitle': self.gettorrenttitle(),
+						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
+						'torrentsubtitle': self.gettorrentsubtitle(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
@@ -283,21 +291,24 @@ class DefineTorrentItem:
 
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
-						'torrenttitle': self.getheadlinename(),
-						'torrentsubtitle': self.getheadlinesubname(),
+						'torrenttitle': self.gettorrenttitle(),
+						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
+						'torrentsubtitle': self.gettorrentsubtitle(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta(),
-						'files': self.files,
-						'enumerations': self.getfileenumerations()}
+						'files': self.getextendedfiledata(datamode),
+						'enumerations': getfileenumerations()}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta()}
 		elif datamode == "reconfigure":
-			outcome = { 'torrenttitle': self.getheadlinename(),
-						'torrentsubtitle': self.getheadlinesubname(),
-						'torrenttype': self.torrenttype}
+			outcome = { 'torrenttitle': self.gettorrenttitle(),
+						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
+						'torrentsubtitle': self.gettorrentsubtitle(),
+						'torrenttype': self.torrenttype,
+						'files': self.getextendedfiledata(datamode)}
 		else:
 			assert 1 == 0, datamode
 		return outcome
@@ -334,25 +345,85 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getfileenumerations(self):
+	def reconfiguretorrent(self, instructions):
+		actionlist = instructions.split("|")
+		# Set new torrent type, film/show name, and year/season
+		self.updateinfo({'torrenttype': actionlist[0], 'moviename': actionlist[1], 'year': actionlist[2]})
 
-		outcome = {}
-		outcomeitem = []
-		for x in range(1, 41):
-			outcomeitem.append("Episode "+str(x))
-		outcome['episodes'] = outcomeitem
-		outcomeitem = []
-		for x in range(1, 40):
-			outcomeitem.append("Ep. "+str(x)+" & "+str(x+1))
-		outcome['doubleepisodes'] = outcomeitem
-		outcomeitem = []
-		for x in range(1, 100):
-			outcomeitem.append("Special "+str(x))
-		outcome['specials'] = outcomeitem
-		outcomeitem = []
-		outcomeitem.append("Standard")
-		outcomeitem.append("English")
-		outcomeitem.append("SDH")
-		outcomeitem.append("Eng-SDH")
-		outcome['subtitles'] = outcomeitem
+		if len(actionlist) > 3:
+			index = 3
+			while index < len(actionlist):
+				self.updatefilepurpose(actionlist[index], actionlist[index+1])
+				index = index + 2
+
+
+# =========================================================================================
+
+	def getextendedfiledata(self, datamode):
+		outcome = []
+		for file in self.files:
+			filedata = {}
+			filedata["fileid"] = file.getid()
+			if datamode == "initialise":
+				filedata["filename"] = file.getshortpath()
+				filedata["filetype"] = file.gettype()
+				filedata["size"] = file.getsize()
+				filedata["filetypedescription"] = file.getsanitisedtype()
+			filedata["fileseason"] = self.getsanitisedseason(file)
+			filedata["fileepisode"] = file.getsanitisedepisode()
+			filedata["filesubtitle"] = file.getsanitisedsubtitle()
+			filedata["outcome"] = file.getsanitisedoutcome()
+			outcome.append(filedata)
 		return outcome
+
+		# =========================================================================================
+
+	def getsanitisedseason(self, fileobject):
+
+		outcome = ""
+		if self.gettype() == "tvshow":
+			if fileobject.gettype() != "none":
+				outcome = self.getseason()
+		if outcome != "":
+			outcome = outcome + " "
+		return outcome
+
+
+# =========================================================================================
+
+def getsanitisedepisodesuffix(episodename):
+
+	splits = episodename.split("_")
+	if len(splits) > 1:
+		outcome = "Subtitle File"
+		if splits[1] != "Standard":
+			outcome = splits[1] + " " + outcome
+	else:
+		outcome = "Video File"
+	return outcome
+
+# =========================================================================================
+
+def getfileenumerations():
+
+	outcome = {}
+	outcomeitem = []
+	for x in range(1, 41):
+		outcomeitem.append("Episode "+str(x))
+	outcome['episodes'] = outcomeitem
+	outcomeitem = []
+	for x in range(1, 40):
+		outcomeitem.append("Ep. "+str(x)+" & "+str(x+1))
+	outcome['doubleepisodes'] = outcomeitem
+	outcomeitem = []
+	for x in range(1, 100):
+		outcomeitem.append("Special "+str(x))
+	outcome['specials'] = outcomeitem
+	outcomeitem = []
+	outcomeitem.append("Standard")
+	outcomeitem.append("English")
+	outcomeitem.append("SDH")
+	outcomeitem.append("Eng-SDH")
+	outcome['subtitles'] = outcomeitem
+	return outcome
+
