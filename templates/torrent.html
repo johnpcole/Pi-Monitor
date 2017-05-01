@@ -23,7 +23,7 @@
 
 <div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
     <div class="readonlyfields">
-        <div class="titlebox titleleftextended"><span id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</span><span id="TorrentSubtitlePrefix">{{ selectedtorrent.torrenttitleseparator }}</span><span id="TorrentSubtitle">{{ selectedtorrent.torrentsubtitle }}</span></div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
+        <div class="titlebox titleleftextended"><span id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</span><span id="TorrentSubtitlePrefix">{{ selectedtorrent.torrenttitleseparator }}</span><span id="TorrentSubtitle">{{ selectedtorrent.torrentsubtitle }}</span><span id="TorrentSubtitleEnd">{{ selectedtorrent.torrentsubtitleend }}</span></div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
     </div><div class="editmodefields">
         <div class="buttongroup">
             <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">

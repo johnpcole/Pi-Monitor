@@ -273,6 +273,7 @@ class DefineTorrentItem:
 						'torrenttitle': self.gettorrenttitle(),
 						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
 						'torrentsubtitle': self.gettorrentsubtitle(),
+						'torrentsubtitleend': self.getsmartseason(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
@@ -294,6 +295,7 @@ class DefineTorrentItem:
 						'torrenttitle': self.gettorrenttitle(),
 						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
 						'torrentsubtitle': self.gettorrentsubtitle(),
+						'torrentsubtitleend': self.getsmartseason(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
@@ -307,6 +309,7 @@ class DefineTorrentItem:
 			outcome = { 'torrenttitle': self.gettorrenttitle(),
 						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
 						'torrentsubtitle': self.gettorrentsubtitle(),
+						'torrentsubtitleend': self.getsmartseason(),
 						'torrenttype': self.torrenttype,
 						'files': self.getextendedfiledata(datamode)}
 		else:
@@ -389,18 +392,27 @@ class DefineTorrentItem:
 		return outcome
 
 
-# =========================================================================================
+		# =========================================================================================
 
-def getsanitisedepisodesuffix(episodename):
+	def getsmartseason(self):
 
-	splits = episodename.split("_")
-	if len(splits) > 1:
-		outcome = "Subtitle File"
-		if splits[1] != "Standard":
-			outcome = splits[1] + " " + outcome
-	else:
-		outcome = "Video File"
-	return outcome
+		outcome = ""
+
+		if self.torrenttype == "tvshow":
+			for file in self.files:
+				episodename = file.getsanitisedepisode()
+				if ((episodename != "") and (episodename != "Ignored")):
+					if outcome == "":
+						outcome = episodename
+					else:
+						if outcome != episodename:
+							outcome = "(Multiple Episodes)"
+
+		if outcome != "":
+			outcome = " " + outcome
+
+		return outcome
+
 
 # =========================================================================================
 
