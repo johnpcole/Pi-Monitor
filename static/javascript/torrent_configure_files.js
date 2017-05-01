@@ -97,7 +97,6 @@ function setFileConfigFields(torrenttype)
                 } else {
                     episodeselection = episodevalue;
                 };
-                alert(episodeselection)
                 setFieldValue('episodeselector-'+fileid, episodeselection);
             };
             if (getImageName('filetype-'+fileid) == "subtitle") {

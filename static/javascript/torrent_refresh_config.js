@@ -19,6 +19,7 @@ function updateTorrentConfigDisplay(dataitem)
     rerenderText("TorrentTitle", dataitem.torrenttitle);
     rerenderText("TorrentSubtitlePrefix", dataitem.torrenttitleseparator);
     rerenderText("TorrentSubtitle", dataitem.torrentsubtitle);
+    rerenderText("TorrentSubtitleEnd", dataitem.torrentsubtitleend);
     rerenderImage("TorrentType", "type_"+dataitem.torrenttype);
 
     var filelist = dataitem.files;
