@@ -36,17 +36,13 @@ function saveTorrentConfiguration()
     } else {
         newtype = "unknown";
     }
-    var newinstructions = newtype
+    var newinstructions = {}
     if (newtype == 'tvshow') {
-        newinstructions = newinstructions+"|"+getFieldValue("tvshowselector");
-        newinstructions = newinstructions+"|"+getFieldValue('tvshowseasonselector');
-        newinstructions = newinstructions+getFileInstructions("tvshow");
+        newinstructions = { 'torrenttype' : newtype, 'tvshowname' : getFieldValue("tvshowselector"), 'season' : getFieldValue('tvshowseasonselector'), 'files' : getFileInstructions("tvshow") };
     } else if (newtype == 'movie') {
-        newinstructions = newinstructions+"|"+getFieldValue("moviename");
-        newinstructions = newinstructions+"|"+getFieldValue('movieyear');
-        newinstructions = newinstructions+getFileInstructions("movie");
+        newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename"), 'year' : getFieldValue('movieyear'), 'files' : getFileInstructions("movie") };
     } else {
-        newinstructions = newinstructions+"|New Unspecified Torrent|";
+        newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename") };
     };
     updateTorrentConfig(newinstructions);
     changeAreasState('editmodefields', 'Hide');

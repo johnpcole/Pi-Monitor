@@ -4,12 +4,18 @@
 function updateTorrentConfig(action)
 {
     var pathname = window.location.pathname;
-    $.getJSON('ReconfigureTorrent='+pathname.substring(9)+'='+action)
-        .done(function (data)
-        {
+    $.ajax({
+        url: 'ReconfigureTorrent='+pathname.substring(9),
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(action),
+        dataType:'json',
+        success: function(data){
             updateTorrentConfigDisplay(data.selectedtorrent);
-        });
+        }
+    });
 };
+
 
 
 // Update the displayed data for configured data

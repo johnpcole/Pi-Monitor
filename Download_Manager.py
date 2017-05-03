@@ -3,7 +3,7 @@ from codebase.fileprocessing_component import fileprocessing_module as FileManag
 from flask import Flask as Webserver
 from flask import render_template as Webpage
 from flask import jsonify as Jsondata
-#from flask import request as Webpost
+from flask import request as Webpost
 
 
 librarymanager = FileManager.createmanager(FileManager.getlibraryconnectionconfig())
@@ -55,11 +55,13 @@ def updatetorrentpage(torrentid):
 
 #-----------------------------------------------
 
-@website.route('/ReconfigureTorrent=<torrentid>=<newdata>')
-def updatetorrentconfiguration(torrentid, newdata):
+@website.route('/ReconfigureTorrent=<torrentid>', methods=['POST'])
+def updatetorrentconfiguration(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
-		torrentobject.reconfiguretorrent(newdata)
+		newinstructions = Webpost.get_json()
+		print newinstructions['torrenttype']
+		torrentobject.reconfiguretorrent(Webpost.get_json())
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
 	FileManager.saveconfigs(torrentmanager.getconfigs())
@@ -74,6 +76,13 @@ def updatetvshowseasonslist(showname):
 
 #-----------------------------------------------
 
+@website.route('/AddTorrent=<newurl>')
+def addnewtorrent(newurl):
+	torrentmanager.addtorrenttoclient(newurl)
+	torrentmanager.refreshtorrentlist()
+	return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
+
+#-----------------------------------------------
 
 
 

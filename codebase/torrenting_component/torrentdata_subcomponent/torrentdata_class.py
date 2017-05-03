@@ -349,15 +349,13 @@ class DefineTorrentItem:
 # =========================================================================================
 
 	def reconfiguretorrent(self, instructions):
-		actionlist = instructions.split("|")
-		# Set new torrent type, film/show name, and year/season
-		self.updateinfo({'torrenttype': actionlist[0], 'moviename': actionlist[1], 'year': actionlist[2]})
-
-		if len(actionlist) > 3:
-			index = 3
-			while index < len(actionlist):
-				self.updatefilepurpose(actionlist[index], actionlist[index+1])
-				index = index + 2
+		for indexkey in instructions:
+			if indexkey == "files":
+				files = instructions[indexkey]
+				for fileindexkey in files:
+					self.updatefilepurpose(fileindexkey, files[fileindexkey])
+			else:
+				self.updateinfo({indexkey: instructions[indexkey]})
 
 
 # =========================================================================================
