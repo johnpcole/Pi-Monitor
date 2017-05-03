@@ -77,3 +77,54 @@ class DefineDelugeInterface:
 				"active_time",
 				"seeding_time" ]
 
+
+# =========================================================================================
+
+	def addtorrentlink(self, linkstring):
+
+		if linkstring[:7] == "magnet:":
+			outcome = self.delugeinterface.call('add_torrent_magnet', linkstring)
+		else:
+			outcome = self.delugeinterface.call('add_torrent_url', linkstring)
+
+		return outcome
+
+# =========================================================================================
+
+	def rechecktorrent(self, torrentids):
+
+		return self.delugeinterface.call('force_recheck', torrentids)
+
+# =========================================================================================
+
+	def getfreespace(self):
+
+		return self.delugeinterface.call('get_free_space')
+
+# =========================================================================================
+
+	def pausetorrent(self, torrentids):
+
+		if torrentids == "ALL":
+			outcome = self.delugeinterface.call('pause_session')
+		else:
+			outcome = self.delugeinterface.call('pause_torrent', torrentids)
+		return outcome
+
+# =========================================================================================
+
+	def resumetorrent(self, torrentids):
+
+		if torrentids == "ALL":
+			outcome = self.delugeinterface.call('resume_session')
+		else:
+			outcome = self.delugeinterface.call('resume_torrent', torrentids)
+		return outcome
+
+# =========================================================================================
+
+	def deletetorrent(self, torrentid):
+
+		return self.delugeinterface.call('remove_torrent', torrentid, True)
+
+

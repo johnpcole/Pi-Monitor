@@ -43,7 +43,7 @@ function getFileDesignations()
             fileinstructions.push([fileid, "copy", getFieldValue("episodeselector-"+fileid), filetype, subflag]);
         };
     };
-    return fileinstructions
+    return fileinstructions;
 };
 
 // Get sanitised tvshow & movie file designations
@@ -54,21 +54,24 @@ function getFileInstructions(torrenttype)
     var rawlength = rawdata.length;
     var loopindex;
     var currentitem;
-    var outcome = ""
+    var outcome = {};
+    var idval;
+    var instructionval;
     for (loopindex = 0; loopindex < rawlength; loopindex++) {
-        currentitem = rawdata[loopindex]
-        outcome = outcome + "|" + currentitem[0]
+        currentitem = rawdata[loopindex];
+        idval = currentitem[0];
         if (torrenttype == "movie") {
-            currentitem[2] = "Film"
+            currentitem[2] = "Film";
         };
         if ((currentitem[1] == "copy") && (currentitem[2] != "")) {
-            outcome = outcome + "|" + currentitem[2]
+            instructionval = currentitem[2];
             if ((currentitem[3] == "subtitle") && (currentitem[4] != "")) {
-                outcome = outcome + "_" + currentitem[4]
+                instructionval = instructionval + "_" + currentitem[4];
             };
         } else {
-            outcome = outcome + "|ignore"
+            instructionval = "ignore";
         };
+        outcome[idval] = instructionval;
     };
     return outcome;
 };

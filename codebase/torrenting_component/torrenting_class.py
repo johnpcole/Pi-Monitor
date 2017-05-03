@@ -23,7 +23,7 @@ class DefineTorrentManager:
 			existingtorrent = self.gettorrentobject(torrentiditem)
 
 			if existingtorrent is None:
-				existingtorrent = self.addtorrent(torrentiditem)
+				existingtorrent = self.addtorrentobject(torrentiditem)
 
 			self.refreshtorrentdata(existingtorrent)
 
@@ -46,7 +46,7 @@ class DefineTorrentManager:
 
 # =========================================================================================
 
-	def addtorrent(self, torrentid):
+	def addtorrentobject(self, torrentid):
 
 		self.torrents.append(TorrentData.createitem(torrentid))
 		print "Adding Torrent ", torrentid
@@ -116,4 +116,13 @@ class DefineTorrentManager:
 				torrentobject.setsavedata(datavalues)
 			else:
 				print "Ignoring Saved Config for torrent ", datavalues[0]
+
+# =========================================================================================
+
+	def addtorrenttoclient(self, newurl):
+
+		#outcome = self.delugeclient.openconnection()
+		#addresponse = self.delugeclient.addtorrentlink(newurl)
+		outcome = self.delugeclient.closeconnection()
+		print ("<" + newurl + ">")
 
