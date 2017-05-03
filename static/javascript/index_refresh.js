@@ -7,7 +7,7 @@ $(document).ready(function ()
     setInterval(function()
     {
         //alert("hi")
-        updateTorrentsList();
+        updateTorrentsList('Refresh');
     }, 10000);
 });
 
@@ -15,9 +15,9 @@ $(document).ready(function ()
 
 // Ajax call for all torrent data
 
-function updateTorrentsList()
+function updateTorrentsList(bulkaction)
 {
-    $.getJSON('UpdateTorrentsList')
+    $.getJSON("UpdateTorrentsList="+bulkaction)
         .done(function (data)
         {
             var torrentlist = data.torrents;
