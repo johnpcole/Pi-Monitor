@@ -23,8 +23,10 @@ def initialiselistpage():
 
 #-----------------------------------------------
 
-@website.route('/UpdateTorrentsList=<bulkaction>')
-def updatelistpage(bulkaction):
+@website.route('/UpdateTorrentsList', methods=['POST'])
+def updatelistpage():
+	rawdata = Webpost.get_json()
+	bulkaction = rawdata["bulkaction"]
 	if (bulkaction == "Start") or (bulkaction == "Stop"):
 		torrentmanager.bulkprocessalltorrents(bulkaction)
 	elif bulkaction != "Refresh":
@@ -48,14 +50,20 @@ def initialisetorrentpage(torrentid):
 
 #-----------------------------------------------
 
-@website.route('/RefreshTorrent=<torrentid>')
+@website.route('/UpdateTorrent=<torrentid>', methods=['POST'])
 def updatetorrentpage(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
+		rawdata = Webpost.get_json()
+		torrentaction = rawdata['torrentaction']
+		if (torrentaction == "Start") or (torrentaction == "Stop"):
+			torrentmanager.processonetorrent(torrentid, torrentaction)
+		elif torrentaction != "Refresh":
+			print "Unknown Torrents List Update Action ", torrentaction
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
 	else:
-		print "Refreshing unknown torrent ", torrentid
+		print "Updating unknown torrent ", torrentid
 
 #-----------------------------------------------
 
@@ -63,7 +71,8 @@ def updatetorrentpage(torrentid):
 def updatetorrentconfiguration(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
-		torrentobject.reconfiguretorrent(Webpost.get_json())
+		rawdata = Webpost.get_json()
+		torrentobject.reconfiguretorrent(rawdata)
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
 	FileManager.saveconfigs(torrentmanager.getconfigs())
@@ -87,6 +96,6 @@ def addnewtorrent():
 #-----------------------------------------------
 
 if FileManager.getwebhostconfig() == True:
-	website.run(debug=True, host='0.0.0.0')
+	website.run(debug=False, host='0.0.0.0')
 else:
 	website.run(debug=True)

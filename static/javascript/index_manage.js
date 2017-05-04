@@ -9,7 +9,8 @@ function addTorrent()
         contentType: 'application/json',
         data: JSON.stringify({'newurl': getFieldValue('newurl')}),
         dataType:'json',
-        success: function(data){
+        success: function(data)
+        {
             window.location.replace("/Torrent="+data.newid);
         }
     });

@@ -18,11 +18,17 @@ $(document).ready(function ()
 function updateTorrentState(action)
 {
     var pathname = window.location.pathname;
-    $.getJSON(action+'Torrent='+pathname.substring(9))
-        .done(function (data)
+    $.ajax({
+        url: 'UpdateTorrent='+pathname.substring(9),
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({'torrentaction': action}),
+        dataType:'json',
+        success: function(data)
         {
             updateTorrentStateDisplay(data.selectedtorrent);
-        });
+        }
+    });
 };
 
 
