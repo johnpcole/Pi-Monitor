@@ -83,9 +83,9 @@ class DefineDelugeInterface:
 	def addtorrentlink(self, linkstring):
 
 		if linkstring[:7] == "magnet:":
-			outcome = self.delugeinterface.call('add_torrent_magnet', linkstring)
+			outcome = "NEW MAGNET LINK"
 		else:
-			outcome = self.delugeinterface.call('add_torrent_url', linkstring)
+			outcome = "NEW TORRENT LINK"
 
 		return outcome
 
@@ -106,9 +106,9 @@ class DefineDelugeInterface:
 	def pausetorrent(self, torrentids):
 
 		if torrentids == "ALL":
-			outcome = self.delugeinterface.call('pause_session')
+			outcome = ""
 		else:
-			outcome = self.delugeinterface.call('pause_torrent', torrentids)
+			outcome = ""
 		return outcome
 
 # =========================================================================================
@@ -116,9 +116,9 @@ class DefineDelugeInterface:
 	def resumetorrent(self, torrentids):
 
 		if torrentids == "ALL":
-			outcome = self.delugeinterface.call('resume_session')
+			outcome = ""
 		else:
-			outcome = self.delugeinterface.call('resume_torrent', torrentids)
+			outcome = ""
 		return outcome
 
 # =========================================================================================

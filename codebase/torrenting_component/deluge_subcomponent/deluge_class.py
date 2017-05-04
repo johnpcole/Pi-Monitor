@@ -80,9 +80,9 @@ class DefineDelugeInterface:
 	def addtorrentlink(self, linkstring):
 
 		if linkstring[:7] == "magnet:":
-			outcome = self.delugeinterface.call('add_torrent_magnet', linkstring)
+			outcome = self.delugeinterface.call('core.add_torrent_magnet', linkstring, {})
 		else:
-			outcome = self.delugeinterface.call('add_torrent_url', linkstring)
+			outcome = self.delugeinterface.call('core.add_torrent_url', linkstring, {})
 
 		return outcome
 
@@ -90,22 +90,22 @@ class DefineDelugeInterface:
 
 	def rechecktorrent(self, torrentids):
 
-		return self.delugeinterface.call('force_recheck', torrentids)
+		return self.delugeinterface.call('core.force_recheck', torrentids)
 
 # =========================================================================================
 
 	def getfreespace(self):
 
-		return self.delugeinterface.call('get_free_space')
+		return self.delugeinterface.call('core.get_free_space')
 
 # =========================================================================================
 
 	def pausetorrent(self, torrentids):
 
 		if torrentids == "ALL":
-			outcome = self.delugeinterface.call('pause_session')
+			outcome = self.delugeinterface.call('core.pause_all_torrents')
 		else:
-			outcome = self.delugeinterface.call('pause_torrent', torrentids)
+			outcome = self.delugeinterface.call('core.pause_torrent', torrentids)
 		return outcome
 
 # =========================================================================================
@@ -113,15 +113,15 @@ class DefineDelugeInterface:
 	def resumetorrent(self, torrentids):
 
 		if torrentids == "ALL":
-			outcome = self.delugeinterface.call('resume_session')
+			outcome = self.delugeinterface.call('core.resume_all_torrents')
 		else:
-			outcome = self.delugeinterface.call('resume_torrent', torrentids)
+			outcome = self.delugeinterface.call('core.resume_torrent', torrentids)
 		return outcome
 
 # =========================================================================================
 
 	def deletetorrent(self, torrentid):
 
-		return self.delugeinterface.call('remove_torrent', torrentid, True)
+		return self.delugeinterface.call('core.remove_torrent', torrentid, True)
 
 

@@ -23,8 +23,12 @@ def initialiselistpage():
 
 #-----------------------------------------------
 
-@website.route('/UpdateTorrentsList')
-def updatelistpage():
+@website.route('/UpdateTorrentsList=<bulkaction>')
+def updatelistpage(bulkaction):
+	if (bulkaction == "Start") or (bulkaction == "Stop"):
+		torrentmanager.bulkprocessalltorrents(bulkaction)
+	elif bulkaction != "Refresh":
+		print "Unknown Torrents List Update Action ", bulkaction
 	torrentmanager.refreshtorrentlist()
 	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"))
 
@@ -59,13 +63,10 @@ def updatetorrentpage(torrentid):
 def updatetorrentconfiguration(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
-		newinstructions = Webpost.get_json()
-		print newinstructions['torrenttype']
 		torrentobject.reconfiguretorrent(Webpost.get_json())
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
 	FileManager.saveconfigs(torrentmanager.getconfigs())
-	#torrentmanager.refreshtorrentdata(torrentobject)
 	return Jsondata(selectedtorrent=torrentobject.getextendeddata("reconfigure"))
 
 #-----------------------------------------------
@@ -76,15 +77,16 @@ def updatetvshowseasonslist(showname):
 
 #-----------------------------------------------
 
-@website.route('/AddTorrent=<newurl>')
-def addnewtorrent(newurl):
-	torrentmanager.addtorrenttoclient(newurl)
-	torrentmanager.refreshtorrentlist()
-	return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
+@website.route('/AddTorrent', methods=['POST'])
+def addnewtorrent():
+	rawdata = Webpost.get_json()
+	newidval = torrentmanager.addnewtorrenttoclient(rawdata['newurl'])
+	#torrentmanager.refreshtorrentlist()
+	return Jsondata(newid=newidval)
 
 #-----------------------------------------------
 
-
-
-
-website.run(debug=True)#, host='0.0.0.0')
+if FileManager.getwebhostconfig() == True:
+	website.run(debug=True, host='0.0.0.0')
+else:
+	website.run(debug=True)

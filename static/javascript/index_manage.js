@@ -3,6 +3,14 @@
 
 function addTorrent()
 {
-    var newurl = getFieldValue('newurl');
-    window.location.replace("/AddTorrent="+newurl);
+    $.ajax({
+        url: 'AddTorrent',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({'newurl': getFieldValue('newurl')}),
+        dataType:'json',
+        success: function(data){
+            window.location.replace("/Torrent="+data.newid);
+        }
+    });
 };
