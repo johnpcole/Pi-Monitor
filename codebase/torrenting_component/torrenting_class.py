@@ -123,10 +123,9 @@ class DefineTorrentManager:
 
 		outcome = self.delugeclient.openconnection()
 		newid = self.delugeclient.addtorrentlink(newurl)
-		outcome = self.delugeclient.closeconnection()
-
 		newobject = self.addtorrentobject(newid)
 		self.refreshtorrentdata(newobject)
+		outcome = self.delugeclient.closeconnection()
 
 		return newid
 
@@ -135,8 +134,12 @@ class DefineTorrentManager:
 	def bulkprocessalltorrents(self, bulkaction):
 
 		if bulkaction == "Stop":
+			outcome = self.delugeclient.openconnection()
 			self.delugeclient.pausetorrent("ALL")
+			outcome = self.delugeclient.closeconnection()
 		elif bulkaction == "Start":
+			outcome = self.delugeclient.openconnection()
 			self.delugeclient.resumetorrent("ALL")
+			outcome = self.delugeclient.closeconnection()
 		else:
 			print "Unknown Bulk Request ", bulkaction

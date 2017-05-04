@@ -38,4 +38,12 @@ def saveconfigs(outputlist):
 def loadconfigs():
 	return FileSystem.readfromdisk('./data/torrentconfigs.db')
 
+# =========================================================================================
 
+def getwebhostconfig():
+	publicmode = FileSystem.readfromdisk('./data/webhost.cfg')
+	if publicmode[0] == "Public":
+		outcome = True
+	else:
+		outcome = False
+	return outcome

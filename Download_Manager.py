@@ -84,6 +84,9 @@ def addnewtorrent():
 	#torrentmanager.refreshtorrentlist()
 	return Jsondata(newid=newidval)
 
+#-----------------------------------------------
 
-
-website.run(debug=True)#, host='0.0.0.0')
+if FileManager.getwebhostconfig() == True:
+	website.run(debug=True, host='0.0.0.0')
+else:
+	website.run(debug=True)
