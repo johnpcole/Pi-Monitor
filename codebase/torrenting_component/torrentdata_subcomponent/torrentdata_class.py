@@ -182,7 +182,7 @@ class DefineTorrentItem:
 
 # =========================================================================================
 
-	def getfiles(self):
+	def getfileobjects(self):
 
 		return self.files
 
@@ -190,25 +190,41 @@ class DefineTorrentItem:
 
 	def getmoviename(self):
 
-		return self.movieorshowname
+		if self.torrenttype == "movie":
+			outcome = self.movieorshowname
+		else:
+			outcome = ""
+		return outcome
 
 # =========================================================================================
 
 	def getshowname(self):
 
-		return self.movieorshowname
+		if self.torrenttype == "tvshow":
+			outcome = self.movieorshowname
+		else:
+			outcome = ""
+		return outcome
 
 # =========================================================================================
 
 	def getseason(self):
 
-		return self.seasonoryear
+		if self.torrenttype == "tvshow":
+			outcome = self.seasonoryear
+		else:
+			outcome = ""
+		return outcome
 
 # =========================================================================================
 
 	def getyear(self):
 
-		return self.seasonoryear
+		if self.torrenttype == "movie":
+			outcome = self.seasonoryear
+		else:
+			outcome = ""
+		return outcome
 
 # =========================================================================================
 
@@ -238,31 +254,58 @@ class DefineTorrentItem:
 
 	def gettorrenttitle(self):
 
-		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
-			outcome = self.movieorshowname
-		else:
+		outcome = self.getmoviename() + self.getshowname()
+		if outcome == "":
 			outcome = "New Unspecified Torrent"
+		suffix = self.getyear() + self.getseason()
+		if suffix != "":
+			outcome = outcome + " - " + suffix
+
+		suffix = ""
+		if self.gettype() == "tvshow":
+			for file in self.files:
+				if file.getoutcome() == "copy":
+					episodename = file.getepisodepart(0)
+					if episodename != "":
+						if suffix == "":
+							suffix = episodename
+						else:
+							if suffix != episodename:
+								suffix = "(Multiple Episodes)"
+		if suffix != "":
+			outcome = outcome + " " + suffix
+
 		return outcome
 
-# =========================================================================================
-
-	def gettorrentsubtitle(self):
-
-		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
-			outcome = self.seasonoryear
-		else:
-			outcome = ""
-		return outcome
-
-# =========================================================================================
-
-	def gettorrentsubtitleprefix(self):
-
-		outcome = ""
-		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
-			if self.seasonoryear != "":
-				outcome = " - "
-		return outcome
+# # =========================================================================================
+#
+# 	def gettorrenttilename(self):
+#
+# 		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
+# 			outcome = self.movieorshowname
+# 		else:
+# 			outcome = "New Unspecified Torrent"
+# 		return outcome
+#
+# # =========================================================================================
+#
+# 	def gettorrenttileseasonyear(self):
+#
+# 		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
+# 			outcome = self.seasonoryear
+# 		else:
+# 			outcome = ""
+# 		return outcome
+#
+# # =========================================================================================
+#
+# 	def gettorrenttileseasonyearjoiner(self):
+#
+# 		outcome = ""
+# 		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
+# 			if self.seasonoryear != "":
+# 				outcome = " - "
+# 		return outcome
 
 # =========================================================================================
 
@@ -271,9 +314,6 @@ class DefineTorrentItem:
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
 						'torrenttitle': self.gettorrenttitle(),
-						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
-						'torrentsubtitle': self.gettorrentsubtitle(),
-						'torrentsubtitleend': self.getsmartseason(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
@@ -293,58 +333,69 @@ class DefineTorrentItem:
 		if datamode == "initialise":
 			outcome = { 'torrentid': self.torrentid,
 						'torrenttitle': self.gettorrenttitle(),
-						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
-						'torrentsubtitle': self.gettorrentsubtitle(),
-						'torrentsubtitleend': self.getsmartseason(),
 						'torrentname': self.torrentname,
 						'torrenttype': self.torrenttype,
 						'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta(),
-						'files': self.getextendedfiledata(datamode),
-						'enumerations': getfileenumerations()}
+						'files': self.getextendedfiledata(datamode)}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
 						'progress': self.getprogresssizeeta()}
 		elif datamode == "reconfigure":
 			outcome = { 'torrenttitle': self.gettorrenttitle(),
-						'torrenttitleseparator': self.gettorrentsubtitleprefix(),
-						'torrentsubtitle': self.gettorrentsubtitle(),
-						'torrentsubtitleend': self.getsmartseason(),
 						'torrenttype': self.torrenttype,
+						'files': self.getextendedfiledata(datamode)}
+		elif datamode == "prepareedit":
+			outcome = { 'moviename': self.getmoviename(),
+						'movieyear': self.getyear(),
+						'tvshowname': self.getshowname(),
+						'tvshowseason': self.getseason(),
+						'torrenttype': self.gettype(),
 						'files': self.getextendedfiledata(datamode)}
 		else:
 			assert 1 == 0, datamode
 		return outcome
 
-# =========================================================================================
-
-	def getsavedata(self):
-
-		outcome = self.getid() + "|-"
-		outcome = outcome + "|" + self.getname()
-		outcome = outcome + "|" + self.gettype()
-		outcome = outcome + "|" + self.getmoviename()
-		outcome = outcome + "|" + self.getyear()
-		outcomelist = []
-		outcomelist.append(outcome)
-		for fileitem in self.files:
-			outcome = self.getid() + "|" + fileitem.getsavedata()
-			outcomelist.append(outcome)
-		return outcomelist
 
 # =========================================================================================
 
-	def setsavedata(self, dataarray):
+	def getextendedfiledata(self, datamode):
+		outcome = []
+		for file in self.files:
+			if (file.gettype() != "none") or (datamode != "prepareedit"):
+				filedata = {}
+				filedata["fileid"] = file.getid()
+				if datamode == "initialise":
+					filedata["filename"] = file.getshortpath()
+					filedata["filetype"] = file.gettype()
+					filedata["size"] = file.getsize()
+					filedata["filetitle"] = self.getfiletitle(file)
+					filedata["outcome"] = file.getoutcome()
+				elif datamode == "reconfigure":
+					filedata["filetitle"] = self.getfiletitle(file)
+					filedata["outcome"] = file.getoutcome()
+				elif datamode == "prepareedit":
+					filedata["outcome"] = file.getoutcome()
+					filedata["filetype"] = file.gettype()
+					filedata["episodeselector"] = file.getepisodepart(0)
+					filedata["subtitleselector"] = file.getepisodepart(1)
+				else:
+					assert 1 == 0, datamode
+				outcome.append(filedata)
+		return outcome
 
-		if dataarray[1] == "-":
-			self.updateinfo({"name": dataarray[2], "torrenttype": dataarray[3], "moviename": dataarray[4],
-																								"year": dataarray[5]})
-		else:
-			existingfile = self.getfileobject(int(dataarray[1]))
-			if existingfile is not None:
-				existingfile.updatefilepurpose(dataarray[2])
-			else:
-				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]
+		# =========================================================================================
+
+	def getfiletitle(self, fileobject):
+
+		outcome = fileobject.gettitle()
+		if self.gettype() == "tvshow":
+			if outcome[:6] != "Ignore":
+				prefix = self.getseason()
+				if prefix != "":
+					outcome = prefix + " " + outcome
+		return outcome
+
 
 # =========================================================================================
 
@@ -357,83 +408,30 @@ class DefineTorrentItem:
 			else:
 				self.updateinfo({indexkey: instructions[indexkey]})
 
+# =========================================================================================
+
+	def getsavedata(self):
+
+		outcome = self.getid() + "|-"
+		outcome = outcome + "|" + self.gettype()
+		outcome = outcome + "|" + self.getmoviename() + self.getshowname()
+		outcome = outcome + "|" + self.getyear() + self.getseason()
+		outcomelist = []
+		outcomelist.append(outcome)
+		for fileitem in self.files:
+			outcome = self.getid() + "|" + fileitem.getsavedata()
+			outcomelist.append(outcome)
+		return outcomelist
 
 # =========================================================================================
 
-	def getextendedfiledata(self, datamode):
-		outcome = []
-		for file in self.files:
-			filedata = {}
-			filedata["fileid"] = file.getid()
-			if datamode == "initialise":
-				filedata["filename"] = file.getshortpath()
-				filedata["filetype"] = file.gettype()
-				filedata["size"] = file.getsize()
-				filedata["filetypedescription"] = file.getsanitisedtype()
-			filedata["fileseason"] = self.getsanitisedseason(file)
-			filedata["fileepisode"] = file.getsanitisedepisode()
-			filedata["filesubtitle"] = file.getsanitisedsubtitle()
-			filedata["outcome"] = file.getsanitisedoutcome()
-			outcome.append(filedata)
-		return outcome
+	def setsavedata(self, dataarray):
 
-		# =========================================================================================
-
-	def getsanitisedseason(self, fileobject):
-
-		outcome = ""
-		if self.gettype() == "tvshow":
-			if fileobject.gettype() != "none":
-				outcome = self.getseason()
-		if outcome != "":
-			outcome = outcome + " "
-		return outcome
-
-
-		# =========================================================================================
-
-	def getsmartseason(self):
-
-		outcome = ""
-
-		if self.torrenttype == "tvshow":
-			for file in self.files:
-				episodename = file.getsanitisedepisode()
-				if ((episodename != "") and (episodename != "Ignored")):
-					if outcome == "":
-						outcome = episodename
-					else:
-						if outcome != episodename:
-							outcome = "(Multiple Episodes)"
-
-		if outcome != "":
-			outcome = " " + outcome
-
-		return outcome
-
-
-# =========================================================================================
-
-def getfileenumerations():
-
-	outcome = {}
-	outcomeitem = []
-	for x in range(1, 41):
-		outcomeitem.append("Episode "+str(x))
-	outcome['episodes'] = outcomeitem
-	outcomeitem = []
-	for x in range(1, 40):
-		outcomeitem.append("Ep. "+str(x)+" & "+str(x+1))
-	outcome['doubleepisodes'] = outcomeitem
-	outcomeitem = []
-	for x in range(1, 100):
-		outcomeitem.append("Special "+str(x))
-	outcome['specials'] = outcomeitem
-	outcomeitem = []
-	outcomeitem.append("Standard")
-	outcomeitem.append("English")
-	outcomeitem.append("SDH")
-	outcomeitem.append("Eng-SDH")
-	outcome['subtitles'] = outcomeitem
-	return outcome
-
+		if dataarray[1] == "-":
+			self.updateinfo({"torrenttype": dataarray[2], "moviename": dataarray[3], "year": dataarray[4]})
+		else:
+			existingfile = self.getfileobject(int(dataarray[1]))
+			if existingfile is not None:
+				existingfile.updatefilepurpose(dataarray[2])
+			else:
+				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]

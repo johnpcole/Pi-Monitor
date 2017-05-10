@@ -43,7 +43,7 @@ def initialisetorrentpage(torrentid):
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"),
-										tvshowlist = librarymanager.gettvshows())
+										)
 	else:
 		torrentmanager.refreshtorrentlist()
 		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
@@ -68,7 +68,7 @@ def updatetorrentpage(torrentid):
 #-----------------------------------------------
 
 @website.route('/ReconfigureTorrent=<torrentid>', methods=['POST'])
-def updatetorrentconfiguration(torrentid):
+def reconfiguretorrentconfiguration(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
 		rawdata = Webpost.get_json()
@@ -77,6 +77,16 @@ def updatetorrentconfiguration(torrentid):
 		print "Reconfiguring unknown torrent ", torrentid
 	FileManager.saveconfigs(torrentmanager.getconfigs())
 	return Jsondata(selectedtorrent=torrentobject.getextendeddata("reconfigure"))
+
+#-----------------------------------------------
+
+@website.route('/EditTorrent=<torrentid>')
+def edittorrentconfiguration(torrentid):
+	torrentobject = torrentmanager.gettorrentobject(torrentid)
+	if torrentobject is None:
+		print "Edit unknown torrent ", torrentid
+	return Jsondata(selectedtorrent=torrentobject.getextendeddata("prepareedit"),
+													listitems=librarymanager.getdropdownlists())
 
 #-----------------------------------------------
 
