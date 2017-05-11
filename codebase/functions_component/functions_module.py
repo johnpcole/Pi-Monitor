@@ -28,34 +28,41 @@ def sanitisetime(rawtime):
 	return outcome
 
 
-def minifyseasonepisode(seasonname, episodename):
 
-	if seasonname[:7] == "Season ":
-		outcome = "00" + seasonname[7:]
-		outcome = "S" + outcome[-2:]
-	elif seasonname[:7] == "Special":
-		outcome = "S00"
-	else:
-		outcome = "-"
+def minifyseason(seasonname, episodename):
 
-	prefix = episodename[:4]
-	if prefix == "Epis":
-		suffix = "00" + episodename[9:]
-		outcome = outcome + "E" + suffix[-2:]
-	elif prefix == "Ep. ":
-		doublet = episodename[5:]
-		doubletsplit = doublet.split(" & ")
-		suffix = "00" + doublet[0]
-		outcome = outcome + "E" + suffix[-2:]
-		suffix = "00" + doublet[1]
-		outcome = outcome + "E" + suffix[-2:]
-	elif prefix == "Spec":
-		suffix = "00" + episodename[9:]
-		outcome = "S00E" + suffix[-2:]
+	episodesplit = episodename.split(" ")
+
+	if episodesplit[0] == "Special":
+		outcome = "s00"
 	else:
-		outcome = outcome + "-"
+		seasonsplit = seasonname.split(" ")
+		if seasonsplit[0] == "Season":
+			s = "00" + seasonsplit[1]
+			outcome = "s" + s[-2:]
+		elif seasonname[:7] == "Special":
+			outcome = "s00"
+		else:
+			outcome = "-"
 
 	return outcome
 
 
+
+def minifyepisode(episodename):
+
+	episodesplit = episodename.split(" ")
+	if len(episodesplit) > 1:
+		if episodesplit[0] == "Ep.":
+			f = "00" + episodesplit[1]
+			f = "e" + f[-2:]
+			g = "00" + episodesplit[3]
+			g = "e" + g[-2:]
+			e = f + g
+		else:
+			e = "00" + episodesplit[1]
+			e = "e" + e[-2:]
+	else:
+		e = episodename
+	return e
 

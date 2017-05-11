@@ -257,55 +257,27 @@ class DefineTorrentItem:
 		outcome = self.getmoviename() + self.getshowname()
 		if outcome == "":
 			outcome = "New Unspecified Torrent"
-		suffix = self.getyear() + self.getseason()
+		if self.gettype() == "tvshow":
+			episodeoutcome = ""
+			for file in self.files:
+				if file.getoutcome() == "copy":
+					episodename = Functions.minifyepisode(file.getepisodepart(0))
+					if episodename != "":
+						if episodeoutcome == "":
+							episodeoutcome = episodename
+						else:
+							if episodeoutcome != episodename:
+								episodeoutcome = "(Multiple Episodes)"
+			if (episodeoutcome != "") and (episodeoutcome != "(Multiple Episodes)"):
+				suffix = Functions.minifyseason(self.getseason(), episodeoutcome) + Functions.minifyepisode(episodeoutcome)
+			else:
+				suffix = self.getseason()
+		else:
+			suffix = self.getyear()
 		if suffix != "":
 			outcome = outcome + " - " + suffix
 
-		suffix = ""
-		if self.gettype() == "tvshow":
-			for file in self.files:
-				if file.getoutcome() == "copy":
-					episodename = file.getepisodepart(0)
-					if episodename != "":
-						if suffix == "":
-							suffix = episodename
-						else:
-							if suffix != episodename:
-								suffix = "(Multiple Episodes)"
-		if suffix != "":
-			outcome = outcome + " " + suffix
-
 		return outcome
-
-# # =========================================================================================
-#
-# 	def gettorrenttilename(self):
-#
-# 		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
-# 			outcome = self.movieorshowname
-# 		else:
-# 			outcome = "New Unspecified Torrent"
-# 		return outcome
-#
-# # =========================================================================================
-#
-# 	def gettorrenttileseasonyear(self):
-#
-# 		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
-# 			outcome = self.seasonoryear
-# 		else:
-# 			outcome = ""
-# 		return outcome
-#
-# # =========================================================================================
-#
-# 	def gettorrenttileseasonyearjoiner(self):
-#
-# 		outcome = ""
-# 		if (self.torrenttype == "movie") or (self.torrenttype == "tvshow"):
-# 			if self.seasonoryear != "":
-# 				outcome = " - "
-# 		return outcome
 
 # =========================================================================================
 
@@ -391,9 +363,7 @@ class DefineTorrentItem:
 		outcome = fileobject.gettitle()
 		if self.gettype() == "tvshow":
 			if outcome[:6] != "Ignore":
-				prefix = self.getseason()
-				if prefix != "":
-					outcome = prefix + " " + outcome
+				outcome = Functions.minifyseason(self.getseason(), fileobject.getepisodepart(0)) + outcome
 		return outcome
 
 

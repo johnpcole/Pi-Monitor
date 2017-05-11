@@ -1,3 +1,4 @@
+from ....functions_component import functions_module as Functions
 
 class DefineFileItem:
 
@@ -103,18 +104,10 @@ class DefineFileItem:
 			if self.getpurpose() == "ignore":
 				outcome = "Ignored"
 			else:
-				rawstring = self.getpurpose()
-				rawsplit = rawstring.split("_")
-				episodename = rawsplit[0]
-				if episodename[:4] == "Ep. ":
-					outcome = "Episodes " + episodename[4:]
-				else:
-					outcome = episodename
-				if len(rawsplit) > 1:
-					if rawsplit[1] == "":
-						outcome = outcome + " Unknown"
-					else:
-						outcome = outcome + " " + rawsplit[1]
+				outcome = Functions.minifyepisode(self.getepisodepart(0))
+				subtitle = self.getepisodepart(1)
+				if subtitle != "":
+					outcome = outcome + " " + subtitle
 			if self.gettype() == "video":
 				outcome = outcome + " Video File"
 			elif self.gettype() == "subtitle":
