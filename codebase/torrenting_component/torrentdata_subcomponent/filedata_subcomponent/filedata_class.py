@@ -62,10 +62,21 @@ class DefineFileItem:
 
 # =========================================================================================
 
-	def updatefiletype(self):
+	def getextension(self):
 
 		filenamesplit = self.shortpath.split('.')
-		extension = filenamesplit[len(filenamesplit)-1]
+		if len(filenamesplit) > 1:
+			extension = filenamesplit[len(filenamesplit)-1]
+		else:
+			extension = ""
+
+		return extension
+
+# =========================================================================================
+
+	def updatefiletype(self):
+
+		extension = self.getextension()
 		outcome = "NONE"
 
 		if extension == "srt":

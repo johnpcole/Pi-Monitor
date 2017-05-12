@@ -47,3 +47,13 @@ def getwebhostconfig():
 	else:
 		outcome = False
 	return outcome
+
+# =========================================================================================
+
+def buildpath(nodelist):
+	outcome = "-"
+	for node in nodelist:
+		outcome = FileSystem.concatenatepaths(outcome, node)
+
+	return outcome[2:]
+

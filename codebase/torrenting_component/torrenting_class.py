@@ -55,6 +55,16 @@ class DefineTorrentManager:
 
 # =========================================================================================
 
+	def validatetorrentid(self, torrentid):
+
+		outcome = False
+		for existingtorrent in self.torrents:
+			if existingtorrent.getid() == torrentid:
+				outcome = True
+		return outcome
+
+# =========================================================================================
+
 	def gettorrentobject(self, torrentid):
 
 		outcome = None
@@ -66,22 +76,17 @@ class DefineTorrentManager:
 
 # =========================================================================================
 
-	def refreshtorrentdata(self, torrentobject):
+	def refreshtorrentdata(self, torrentid):
 
+		torrentobject = self.gettorrentobject(torrentid)
 		outcome = self.delugeclient.openconnection()
 
-		torrentdata = self.delugeclient.gettorrentdata(torrentobject.getid())
+		torrentdata = self.delugeclient.gettorrentdata(torrentid)
 		torrentobject.updateinfo(torrentdata)
 
 		outcome = self.delugeclient.closeconnection()
 		#print "Connection closure attempted - Connection State = ", outcome
 
-
-	# =========================================================================================
-
-	def configuretorrent(self, torrentid, stuff):
-
-		temp = stuff
 
 # =========================================================================================
 
@@ -93,6 +98,21 @@ class DefineTorrentManager:
 			outcome.append(torrentitem.getheadlinedata(datamode))
 
 		return outcome
+
+# =========================================================================================
+
+	def gettorrentdata(self, torrentid, datamode):
+
+		torrentobject = self.gettorrentobject(torrentid)
+
+		return torrentobject.getextendeddata(datamode)
+
+# =========================================================================================
+
+	def reconfiguretorrent(self, torrentid, newconfig):
+
+		torrentobject = self.gettorrentobject(torrentid)
+		torrentobject.reconfiguretorrent(newconfig)
 
 # =========================================================================================
 
@@ -158,3 +178,15 @@ class DefineTorrentManager:
 			outcome = self.delugeclient.closeconnection()
 		else:
 			print "Unknown Single Torrent Request ", action
+
+# =========================================================================================
+
+	def getcopyactions(self, torrentid, copymode = 'Real'):
+
+		torrentobject = self.gettorrentobject(torrentid)
+		if (torrentobject.getfinished() == True) or (copymode == 'Test'):
+			outcome = torrentobject.getcopyactions()
+		else:
+			outcome = []
+
+		return outcome

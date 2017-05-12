@@ -91,8 +91,6 @@ class DefineLibraryManager:
 		for x in range(1, 100):
 			self.episodes.append("Special "+str(x))
 
-
-
 # =========================================================================================
 
 	def discoversubtitles(self):
@@ -102,3 +100,4 @@ class DefineLibraryManager:
 		self.subtitles.append("SDH")
 		self.subtitles.append("Eng-SDH")
 
+# =========================================================================================
