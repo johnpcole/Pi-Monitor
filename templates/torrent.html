@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 
 {% block javascript %}
-    <script src="./static/javascript/torrent_refresh_state.js"></script>
-    <script src="./static/javascript/torrent_refresh_config.js"></script>
-    <script src="./static/javascript/torrent_refresh_seasons.js"></script>
-    <script src="./static/javascript/torrent_configure_files.js"></script>
-    <script src="./static/javascript/torrent_configure_torrent.js"></script>
+    <script src="./static/javascript/torrent_change_tvshow.js"></script>
+    <script src="./static/javascript/torrent_change_torrenttype.js"></script>
+    <script src="./static/javascript/torrent_change_fileoutcome.js"></script>
+    <script src="./static/javascript/torrent_save_config.js"></script>
+    <script src="./static/javascript/torrent_edit_config.js"></script>
+    <script src="./static/javascript/torrent_update_state.js"></script>
 {% endblock %}
 
 {% block content %}
 <div class="tile bannertile"></div>
 <div>
-    <input type="button" name="Stop" onclick="javascript:updateTorrent('Stop');" value="Stop" />
-    <input type="button" name="Start" onclick="javascript:updateTorrent('Start');" value="Start" />
+    <input type="button" name="Stop" onclick="javascript:updateTorrentState('Stop');" value="Stop" />
+    <input type="button" name="Start" onclick="javascript:updateTorrentState('Start');" value="Start" />
     <input type="button" name="Edit" onclick="javascript:editTorrentConfiguration();" value="Edit" />
     <input type="button" name="Save" onclick="javascript:saveTorrentConfiguration();" value="Save" />
     <input type="button" name="Copy" onclick="javascript:updateTorrent('Copy');" value="Copy" />
@@ -23,7 +24,7 @@
 
 <div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
     <div class="readonlyfields">
-        <div class="titlebox titleleftextended"><span id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</span><span id="TorrentSubtitlePrefix">{{ selectedtorrent.torrenttitleseparator }}</span><span id="TorrentSubtitle">{{ selectedtorrent.torrentsubtitle }}</span><span id="TorrentSubtitleEnd">{{ selectedtorrent.torrentsubtitleend }}</span></div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
+        <div class="titlebox titleleftextended" id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
     </div><div class="editmodefields">
         <div class="buttongroup">
             <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
@@ -35,9 +36,6 @@
             </button>
         </div><div class="unknownonlyfields"><span class="fieldlabel">New Unspecified Torrent</span></div><div class="tvshowonlyfields">
             <span class="fieldlabel">TV Show:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
-                {% for tvshowitem in tvshowlist %}
-                <option value="{{ tvshowitem }}">{{ tvshowitem }}</option>
-                {% endfor %}
             </select><span class="fieldlabel">Season:</span><select class="tvshowseasonfield" name="tvshowseasonselector"></select>
         </div><div class="movieonlyfields">
             <span class="fieldlabel">Film:</span><input type="text" name="moviename" value="" class="movienamefield" /><span class="fieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
@@ -58,7 +56,7 @@
 
 
 {% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
-    <div class="readonlyfields"><div class="titlebox titleleft"><span id="fileseason-{{ fileitem.fileid }}">{{ fileitem.fileseason }}</span><span id="fileepisode-{{ fileitem.fileid }}">{{ fileitem.fileepisode }}</span><span id="filesubtitle-{{ fileitem.fileid }}">{{ fileitem.filesubtitle }}</span><span>{{ fileitem.filetypedescription }}</span></div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
+    <div class="readonlyfields"><div class="titlebox titleleft" id="filetitle-{{ fileitem.fileid }}">{{ fileitem.filetitle }}</div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
     </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
         {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
             <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
@@ -71,19 +69,7 @@
             <div class="unknownonlyfields"><span class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</span>
             </div><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
             </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
-                {% for selectoritem in selectedtorrent.enumerations.episodes %}
-                <option value="{{ selectoritem }}">{{ selectoritem }}</option>
-                {% endfor %}
-                {% for selectoritem in selectedtorrent.enumerations.doubleepisodes %}
-                <option value="{{ selectoritem }}">{{ selectoritem }}</option>
-                {% endfor %}
-                {% for selectoritem in selectedtorrent.enumerations.specials %}
-                <option value="{{ selectoritem }}">{{ selectoritem }}</option>
-                {% endfor %}
             </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
-                {% for selectoritem in selectedtorrent.enumerations.subtitles %}
-                <option value="{{ selectoritem }}">{{ selectoritem }}</option>
-                {% endfor %}
             </select></div>{% endif %}
     </div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
         {{ fileitem.filename }}

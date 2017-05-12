@@ -6,6 +6,10 @@ class DefineLibraryManager:
 
 		self.tvshows = {}
 
+		self.episodes = []
+
+		self.subtitles = []
+
 		self.mountpoint = mountpoint
 
 		self.networkpath = networkpath
@@ -15,6 +19,8 @@ class DefineLibraryManager:
 		self.password = password
 
 		self.discovertvshows()
+		self.discoverepisodes()
+		self.discoversubtitles()
 
 	# =========================================================================================
 
@@ -54,6 +60,16 @@ class DefineLibraryManager:
 
 		return sorted(self.tvshows.keys())
 
+# =========================================================================================
+
+	def getdropdownlists(self):
+
+		outcome = {}
+		outcome['tvshows'] = self.gettvshows()
+		outcome['episodes'] = self.episodes
+		outcome['subtitles'] = self.subtitles
+		return outcome
+
 	# =========================================================================================
 
 	def gettvshowseasons(self, tvshowname):
@@ -63,4 +79,26 @@ class DefineLibraryManager:
 		else:
 			outcome = []
 		return outcome
+
+# =========================================================================================
+
+	def discoverepisodes(self):
+
+		for x in range(1, 41):
+			self.episodes.append("Episode "+str(x))
+		for x in range(1, 40):
+			self.episodes.append("Ep. "+str(x)+" & "+str(x+1))
+		for x in range(1, 100):
+			self.episodes.append("Special "+str(x))
+
+
+
+# =========================================================================================
+
+	def discoversubtitles(self):
+
+		self.subtitles.append("Standard")
+		self.subtitles.append("English")
+		self.subtitles.append("SDH")
+		self.subtitles.append("Eng-SDH")
 

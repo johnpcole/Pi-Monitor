@@ -17,15 +17,28 @@ $(document).ready(function ()
 
 function updateTorrentsList(bulkaction)
 {
-    $.getJSON("UpdateTorrentsList="+bulkaction)
-        .done(function (data)
+    $.ajax({
+        url: 'UpdateTorrentsList',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({'bulkaction': bulkaction}),
+        dataType:'json',
+        success: function(data)
         {
-            var torrentlist = data.torrents;
-            $.each(torrentlist, function(index)
-            {
-                updateTorrentTile(torrentlist[index]);
-            });
-        });
+            updateAllTorrentTiles(data.torrents);
+        }
+    });
+};
+
+
+
+
+function updateAllTorrentTiles(torrentdatalist)
+{
+    $.each(torrentdatalist, function(index)
+    {
+        updateTorrentTile(torrentdatalist[index]);
+    });
 };
 
 

@@ -142,4 +142,19 @@ class DefineTorrentManager:
 			self.delugeclient.resumetorrent("ALL")
 			outcome = self.delugeclient.closeconnection()
 		else:
-			print "Unknown Bulk Request ", bulkaction
+			print "Unknown Bulk Torrent Request ", bulkaction
+
+# =========================================================================================
+
+	def processonetorrent(self, torrentid, action):
+
+		if action == "Stop":
+			outcome = self.delugeclient.openconnection()
+			self.delugeclient.pausetorrent([torrentid])
+			outcome = self.delugeclient.closeconnection()
+		elif action == "Start":
+			outcome = self.delugeclient.openconnection()
+			self.delugeclient.resumetorrent([torrentid])
+			outcome = self.delugeclient.closeconnection()
+		else:
+			print "Unknown Single Torrent Request ", action

@@ -1,3 +1,4 @@
+from ....functions_component import functions_module as Functions
 
 class DefineFileItem:
 
@@ -87,7 +88,7 @@ class DefineFileItem:
 
 		self.filetype = outcome.lower()
 
-	# =========================================================================================
+# =========================================================================================
 
 	def getsavedata(self):
 
@@ -96,51 +97,28 @@ class DefineFileItem:
 
 # =========================================================================================
 
-	def getsanitisedtype(self):
-
-		if self.gettype() == "video":
-			outcome = " Video File"
-		elif self.gettype() == "subtitle":
-			outcome = " Subtitle File"
-		else:
-			outcome = "Ignored File"
-		return outcome
-
-# =========================================================================================
-
-	def getsanitisedepisode(self):
+	def gettitle(self):
 
 		outcome = ""
 		if self.gettype() != "none":
 			if self.getpurpose() == "ignore":
 				outcome = "Ignored"
 			else:
-				episodename = self.getpurpose()
-				if episodename[:4] == "Ep. ":
-					rawstring = "Episodes " + episodename[4:]
-				else:
-					rawstring = episodename
-				outcome = rawstring.split("_")
-				outcome = outcome[0]
+				outcome = Functions.minifyepisode(self.getepisodepart(0))
+				subtitle = self.getepisodepart(1)
+				if subtitle != "":
+					outcome = outcome + " " + subtitle
+			if self.gettype() == "video":
+				outcome = outcome + " Video File"
+			elif self.gettype() == "subtitle":
+				outcome = outcome + " Subtitle File"
+		else:
+			outcome = "Ignored File"
 		return outcome
 
 # =========================================================================================
 
-	def getsanitisedsubtitle(self):
-
-		outcome = ""
-		if (self.gettype() == "subtitle") and (self.getpurpose() != "ignore"):
-			rawstring = self.getpurpose()
-			stringsplit = rawstring.split("_")
-			if len(stringsplit) > 1:
-				outcome = " " + stringsplit[1]
-			else:
-				outcome = " Unknown"
-		return outcome
-
-		# =========================================================================================
-
-	def getsanitisedoutcome(self):
+	def getoutcome(self):
 
 		outcome = ""
 		if self.getpurpose() == "ignore":
@@ -148,3 +126,21 @@ class DefineFileItem:
 		else:
 			outcome = "copy"
 		return outcome
+
+# =========================================================================================
+
+	def getepisodepart(self, part):
+
+		outcome = ""
+		rawstring = self.getpurpose()
+		rawsplit = rawstring.split("_")
+		if part == 0:
+			outcome = rawsplit[0]
+		elif (part == 1) and (self.gettype() == "subtitle"):
+			outcome = "Unknown"
+			if len(rawsplit) > 1:
+				if rawsplit[1] != "":
+					outcome = rawsplit[1]
+		return outcome
+
+

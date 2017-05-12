@@ -26,3 +26,43 @@ def sanitisetime(rawtime):
 		outcome = "-"
 
 	return outcome
+
+
+
+def minifyseason(seasonname, episodename):
+
+	episodesplit = episodename.split(" ")
+
+	if episodesplit[0] == "Special":
+		outcome = "s00"
+	else:
+		seasonsplit = seasonname.split(" ")
+		if seasonsplit[0] == "Season":
+			s = "00" + seasonsplit[1]
+			outcome = "s" + s[-2:]
+		elif seasonname[:7] == "Special":
+			outcome = "s00"
+		else:
+			outcome = "-"
+
+	return outcome
+
+
+
+def minifyepisode(episodename):
+
+	episodesplit = episodename.split(" ")
+	if len(episodesplit) > 1:
+		if episodesplit[0] == "Ep.":
+			f = "00" + episodesplit[1]
+			f = "e" + f[-2:]
+			g = "00" + episodesplit[3]
+			g = "e" + g[-2:]
+			e = f + g
+		else:
+			e = "00" + episodesplit[1]
+			e = "e" + e[-2:]
+	else:
+		e = episodename
+	return e
+

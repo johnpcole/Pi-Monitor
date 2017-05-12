@@ -23,8 +23,10 @@ def initialiselistpage():
 
 #-----------------------------------------------
 
-@website.route('/UpdateTorrentsList=<bulkaction>')
-def updatelistpage(bulkaction):
+@website.route('/UpdateTorrentsList', methods=['POST'])
+def updatelistpage():
+	rawdata = Webpost.get_json()
+	bulkaction = rawdata["bulkaction"]
 	if (bulkaction == "Start") or (bulkaction == "Stop"):
 		torrentmanager.bulkprocessalltorrents(bulkaction)
 	elif bulkaction != "Refresh":
@@ -41,33 +43,50 @@ def initialisetorrentpage(torrentid):
 	if torrentobject is not None:
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Webpage('torrent.html', selectedtorrent = torrentobject.getextendeddata("initialise"),
-										tvshowlist = librarymanager.gettvshows())
+										)
 	else:
 		torrentmanager.refreshtorrentlist()
 		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
 
 #-----------------------------------------------
 
-@website.route('/RefreshTorrent=<torrentid>')
+@website.route('/UpdateTorrent=<torrentid>', methods=['POST'])
 def updatetorrentpage(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
+		rawdata = Webpost.get_json()
+		torrentaction = rawdata['torrentaction']
+		if (torrentaction == "Start") or (torrentaction == "Stop"):
+			torrentmanager.processonetorrent(torrentid, torrentaction)
+		elif torrentaction != "Refresh":
+			print "Unknown Torrents List Update Action ", torrentaction
 		torrentmanager.refreshtorrentdata(torrentobject)
 		return Jsondata(selectedtorrent=torrentobject.getextendeddata("refresh"))
 	else:
-		print "Refreshing unknown torrent ", torrentid
+		print "Updating unknown torrent ", torrentid
 
 #-----------------------------------------------
 
 @website.route('/ReconfigureTorrent=<torrentid>', methods=['POST'])
-def updatetorrentconfiguration(torrentid):
+def reconfiguretorrentconfiguration(torrentid):
 	torrentobject = torrentmanager.gettorrentobject(torrentid)
 	if torrentobject is not None:
-		torrentobject.reconfiguretorrent(Webpost.get_json())
+		rawdata = Webpost.get_json()
+		torrentobject.reconfiguretorrent(rawdata)
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
 	FileManager.saveconfigs(torrentmanager.getconfigs())
 	return Jsondata(selectedtorrent=torrentobject.getextendeddata("reconfigure"))
+
+#-----------------------------------------------
+
+@website.route('/EditTorrent=<torrentid>')
+def edittorrentconfiguration(torrentid):
+	torrentobject = torrentmanager.gettorrentobject(torrentid)
+	if torrentobject is None:
+		print "Edit unknown torrent ", torrentid
+	return Jsondata(selectedtorrent=torrentobject.getextendeddata("prepareedit"),
+													listitems=librarymanager.getdropdownlists())
 
 #-----------------------------------------------
 
@@ -87,6 +106,6 @@ def addnewtorrent():
 #-----------------------------------------------
 
 if FileManager.getwebhostconfig() == True:
-	website.run(debug=True, host='0.0.0.0')
+	website.run(debug=False, host='0.0.0.0')
 else:
 	website.run(debug=True)

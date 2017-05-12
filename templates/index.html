@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block javascript %}
-    <script src="./static/javascript/index_refresh.js"></script>
-    <script src="./static/javascript/index_manage.js"></script>
+    <script src="./static/javascript/index_update_torrents.js"></script>
+    <script src="./static/javascript/index_add_torrent.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
 
 {% for torrent in torrentlist %}<a class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
     <div class="titlebox titleleft">
-        {{ torrent.torrenttitle }}{{ torrent.torrenttitleseparator }}{{ torrent.torrentsubtitle }}{{ torrent.torrentsubtitleend }}
+        {{ torrent.torrenttitle }}
     </div><div class="titlebox titleright">
         <img src="./static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
     </div><div class="tilesplitter splitterline"></div><div class="subtitlebox subtitleleft">
