@@ -15,8 +15,9 @@ function saveTorrentConfiguration()
     updateTorrentConfig(newinstructions);
     changeAreasState('editmodefields', 'Hide');
     changeAreasState('readonlyfields', 'Show');
-    changeControlState('Edit', 'Show');
-    changeControlState('Save', 'Hide');
+    changeButtonState('Edit', 'Show');
+    changeButtonState('Save', 'Hide');
+    changeButtonState('Cancel', 'Hide');
 };
 
 

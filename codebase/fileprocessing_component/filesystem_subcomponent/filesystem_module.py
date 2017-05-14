@@ -167,6 +167,7 @@ def getname(filename):
 # ---------------------------------------------
 
 def writetodisk(filename, outputlist):
+
 	newlist = []
 	for originalitem in outputlist:
 		newlist.append(originalitem)
@@ -182,3 +183,17 @@ def writetodisk(filename, outputlist):
 	except:
 		# Print an error if the file cannot be written
 		print "Cannot write file - ", filename
+
+
+# ---------------------------------------------
+# Copies a file
+# ---------------------------------------------
+
+def copyfile(source, target):
+	if concatenatepaths(" ", " ") == " / ":
+		OperatingSystem.system(
+			'sudo mount -t cifs -o username=' + username + ',password=' + password + ' ' + networkpath + ' ' + mountpoint)
+	else:
+		if username != "":
+			OperatingSystem.system(
+				'NET USE ' + mountpoint + ' ' + networkpath + ' ' + password + ' ' + '/USER:' + username + ' /PERSISTENT:NO')

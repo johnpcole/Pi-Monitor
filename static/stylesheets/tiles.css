@@ -1,3 +1,12 @@
+.tilesgroup {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    overflow: hidden;
+    width: 990px;
+    vertical-align: top;
+}
+
 .tile {
     display: inline-block;
     overflow: hidden;
@@ -5,7 +14,7 @@
     padding: 7px 10px;
     color: #FFFFFF;
     border-style: none;
-    box-shadow: 5px 5px 2px #AAAAAA;
+    box-shadow: 3px 3px 2px #AAAAAA;
     outline: 0;
 }
 
@@ -53,14 +62,6 @@ a.tile:hover {
     background-color: #AAAA00;
 }
 
-
-/* ===============================================================================
-   TILES
-   =============================================================================== */
-
-.bannertile {
-    width: 954px;
-}
 
 
 /* ===============================================================================

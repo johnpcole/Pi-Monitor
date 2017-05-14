@@ -20,12 +20,11 @@ class DefineTorrentManager:
 
 		torrentidlist = self.delugeclient.gettorrentlist()
 		for torrentiditem in torrentidlist:
-			existingtorrent = self.gettorrentobject(torrentiditem)
 
-			if existingtorrent is None:
-				existingtorrent = self.addtorrentobject(torrentiditem)
+			if self.validatetorrentid(torrentiditem) == False:
+				newtorrentobject = self.addtorrentobject(torrentiditem)
 
-			self.refreshtorrentdata(existingtorrent)
+			self.refreshtorrentdata(torrentiditem)
 
 		outcome = self.delugeclient.closeconnection()
 		#print "Connection closure attempted - Connection State = ", outcome

@@ -12,9 +12,14 @@ torrentmanager.refreshtorrentlist()
 torrentmanager.setconfigs(FileManager.loadconfigs())
 
 
+
 website = Webserver(__name__)
 
-#-----------------------------------------------
+
+
+#===============================================================================================
+# Load the Torrents List as new page
+#===============================================================================================
 
 @website.route('/')
 def initialiselistpage():
@@ -22,7 +27,11 @@ def initialiselistpage():
 	torrentmanager.refreshtorrentlist()
 	return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
 
-#-----------------------------------------------
+
+
+#===============================================================================================
+# Refresh Torrents List on existing page, after performing a bulk action if required
+#===============================================================================================
 
 @website.route('/UpdateTorrentsList', methods=['POST'])
 def updatelistpage():
@@ -36,7 +45,11 @@ def updatelistpage():
 	torrentmanager.refreshtorrentlist()
 	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"))
 
-#-----------------------------------------------
+
+
+#===============================================================================================
+# Load a Torrent with Network & Configuration Data as new page
+#===============================================================================================
 
 @website.route('/Torrent=<torrentid>')
 def initialisetorrentpage(torrentid):
@@ -48,7 +61,11 @@ def initialisetorrentpage(torrentid):
 		torrentmanager.refreshtorrentlist()
 		return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
 
-#-----------------------------------------------
+
+
+#===============================================================================================
+# Refresh an existing Torrent page with Network Data, after performing an action if required
+#===============================================================================================
 
 @website.route('/UpdateTorrent=<torrentid>', methods=['POST'])
 def updatetorrentpage(torrentid):
@@ -67,7 +84,11 @@ def updatetorrentpage(torrentid):
 	else:
 		print "Updating unknown torrent ", torrentid
 
-#-----------------------------------------------
+
+
+# ===============================================================================================
+# Refresh an existing Torrent page with Configuration Data, after saving new instructions
+# ===============================================================================================
 
 @website.route('/ReconfigureTorrent=<torrentid>', methods=['POST'])
 def reconfiguretorrentconfiguration(torrentid):
@@ -80,24 +101,36 @@ def reconfiguretorrentconfiguration(torrentid):
 	FileManager.saveconfigs(torrentmanager.getconfigs())
 	return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "reconfigure"))
 
-#-----------------------------------------------
+
+
+# ===============================================================================================
+# Refresh an existing Torrent page with Configuration Data used to populate edit fields
+# ===============================================================================================
 
 @website.route('/EditTorrent=<torrentid>')
 def edittorrentconfiguration(torrentid):
 
-	if torrentmanager.validatetorrentid(torrentid) == True:
+	if torrentmanager.validatetorrentid(torrentid) == False:
 		print "Edit unknown torrent ", torrentid
 	return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "prepareedit"),
 													listitems=librarymanager.getdropdownlists())
 
-#-----------------------------------------------
+
+
+# ===============================================================================================
+# Refresh an existing Torrent page with Configuration Data used to populate the Season edit field
+# ===============================================================================================
 
 @website.route('/GetTVShowSeasons=<showname>')
 def updatetvshowseasonslist(showname):
 
 	return Jsondata(seasons=librarymanager.gettvshowseasons(showname))
 
-#-----------------------------------------------
+
+
+# ===============================================================================================
+# Performs a Torrent Addition, and returns the new Torrent Data (to be displayed on a new Page)
+# ===============================================================================================
 
 @website.route('/AddTorrent', methods=['POST'])
 def addnewtorrent():

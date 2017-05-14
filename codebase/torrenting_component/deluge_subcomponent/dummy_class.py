@@ -30,11 +30,21 @@ class DefineDelugeInterface:
 
 	def gettorrentdata(self, torrentid):
 
+		print torrentid
 		return ({'total_size': 1767583673,
 				'state': 'Downloading',
 				'save_path': '/Torrents/In Progress',
 				'progress': 34.4671020508,
-				'files': ({'index': 0, 'path': torrentid + '/Hd.mp4', 'offset': 0, 'size': 1767473159}, {'index': 1, 'path': 'Housebound (2014) [1080p]/WWW.YTS.RE.srt', 'offset': 1767473159, 'size': 110514}, {'index': 22, 'path': 'Housebound (2014) [1080p]/WWW.YTS.RE.jpg', 'offset': 1767473159, 'size': 110514}),
+				'files': ({'index': 0,
+						   'path': torrentid + '/Hd.mp4',
+						   'offset': 0, 'size': 1767473159},
+						  {'index': 1,
+						   'path': 'Housebound (2014) [1080p]/WWW.YTS.RE.srt',
+						   'offset': 1767473159,
+						   'size': 110514},
+						  {'index': 22,
+						   'path': 'Housebound (2014) [1080p]/WWW.YTS.RE.jpg',
+						   'offset': 1767473159, 'size': 110514}),
 				'name': 'Housebound (2014) [1080p]',
 				'eta': 824,
 				'is_finished': False})

@@ -1,22 +1,19 @@
 /* =================================================== */
-/* Button                                              */
+/* Generic Button                                      */
 /* =================================================== */
 
 button {
     font-family: 'Open Sans', sans-serif;
-    width: 50px;
-    height: 50px;
-    background-color: #999999;
+    background-color: #660000;
     border: 0px solid #FFFFFF;
     padding: 0px;
-    margin: 1px;
-    text-align: center;
-    /*-webkit-border-radius: 10px;
-       -moz-border-radius: 10px;
-            border-radius: 10px;*/
-    /*display: none;*/
+    margin: 0px;
     cursor: pointer;
     overflow: hidden;
+}
+
+button:disabled {
+    cursor: default;
 }
 
 /* =================================================== */
@@ -37,10 +34,7 @@ div.buttongroup button {
     height: 28px;
     background-color: #999999;
     margin: 1px 1px 1px 0px;
-}
-
-div.buttongroup button:disabled {
-    cursor: default;
+    box-shadow: none;
 }
 
 div.buttongroup img {
@@ -50,6 +44,44 @@ div.buttongroup img {
 }
 
 div.buttongroup button:disabled img {
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
+
+
+/* =================================================== */
+/* Button in actiongroup                               */
+/* =================================================== */
+
+.actionbuttonsgroup {
+    box-shadow: none;
+    width: 60px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    /*background-color: #000000;*/
+}
+
+div.actionbuttonsgroup button {
+    width: 50px;
+    height: 50px;
+    background-color: #999999;
+    margin: 7px 0px 7px 4px;
+    box-shadow: 3px 3px 2px #AAAAAA;
+    overflow: hidden;
+    display: inline-block;
+}
+
+div.actionbuttonsgroup img {
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    display: inline-block;
+}
+
+div.actionbuttonsgroup button:disabled img {
     -webkit-filter: brightness(9) saturate(9);
     filter: brightness(9) saturate(9);
 }
