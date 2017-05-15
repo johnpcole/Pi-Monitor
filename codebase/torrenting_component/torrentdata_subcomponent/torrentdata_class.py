@@ -51,7 +51,8 @@ class DefineTorrentItem:
 				self.status = temp.lower()
 
 			elif dataitem == "save_path":
-				self.location = datalist[dataitem]
+				path = datalist[dataitem]
+				self.location = path.split('/')
 
 			elif dataitem == "progress":
 				self.progress = str(int(datalist[dataitem])) + "%"
@@ -99,7 +100,7 @@ class DefineTorrentItem:
 			if existingfile is None:
 				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'],
 																			Functions.sanitisesize(fileitem['size'])))
-		self.files = sorted(self.files, key=attrgetter('filetype', 'shortpath'), reverse=True)
+		self.files = sorted(self.files, key=attrgetter('filetype'), reverse=True)
 
 # =========================================================================================
 
@@ -356,7 +357,7 @@ class DefineTorrentItem:
 				outcome.append(filedata)
 		return outcome
 
-		# =========================================================================================
+# =========================================================================================
 
 	def getfiletitle(self, fileobject):
 
@@ -405,3 +406,64 @@ class DefineTorrentItem:
 				existingfile.updatefilepurpose(dataarray[2])
 			else:
 				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]
+
+# =========================================================================================
+
+	def getdestinationfilename(self, fileobject):
+
+		rawfilename = self.getfiletitle(fileobject)
+		filename = ""
+		rawsplit = rawfilename.split(" ")
+		if rawsplit[0] != "Ignored":
+			if rawsplit[0] == "Film":
+				filename = self.getmoviename()
+				if self.getyear() != "":
+					filename = filename + " (" + self.getyear() + ")"
+			else:
+				filename = rawsplit[0]
+			if rawsplit[len(rawsplit)-2] == "Subtitle":
+				if rawsplit[len(rawsplit)-3] != "Standard":
+					filename = filename + " - " + rawsplit[len(rawsplit)-3]
+			filename = filename + "." + fileobject.getextension()
+
+		return filename
+
+# =========================================================================================
+
+	def getdestinationfolder(self):
+
+		folders = []
+		if self.gettype() == "movie":
+			folders.append("Movies")
+			folders.append(Functions.getinitial(self.getmoviename()))
+
+		elif self.gettype() == "tvshow":
+			folders.append("TV Shows")
+			folders.append(self.getshowname())
+			if self.getseason() != "":
+				folders.append(self.getseason())
+
+		return folders
+
+# =========================================================================================
+
+	def getdestination(self, fileobject):
+
+		if (self.gettype() != "none") and (fileobject.getoutcome() == "copy"):
+			outcome = self.getdestinationfolder()
+			outcome.append(self.getdestinationfilename(fileobject))
+		else:
+			outcome = []
+		return outcome
+
+# =========================================================================================
+
+	def getcopyactions(self):
+
+		outcome = []
+		for file in self.files:
+			filedestination = self.getdestination(file)
+			if filedestination != []:
+				instruction = {'source': self.getlocation() + file.getpath(), 'target': filedestination}
+				outcome.append(instruction)
+		return outcome

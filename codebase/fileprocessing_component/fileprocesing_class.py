@@ -22,7 +22,7 @@ class DefineLibraryManager:
 		self.discoverepisodes()
 		self.discoversubtitles()
 
-	# =========================================================================================
+# =========================================================================================
 
 	def discovertvshows(self):
 
@@ -48,13 +48,13 @@ class DefineLibraryManager:
 				self.tvshows[rootitem] = orderedlist
 		FileSystem.unmountnetworkdrive(self.mountpoint)
 
-	# =========================================================================================
+# =========================================================================================
 
 	def gettvshowlists(self):
 
 		return self.tvshows
 
-	# =========================================================================================
+# =========================================================================================
 
 	def gettvshows(self):
 
@@ -70,7 +70,7 @@ class DefineLibraryManager:
 		outcome['subtitles'] = self.subtitles
 		return outcome
 
-	# =========================================================================================
+# =========================================================================================
 
 	def gettvshowseasons(self, tvshowname):
 
@@ -91,8 +91,6 @@ class DefineLibraryManager:
 		for x in range(1, 100):
 			self.episodes.append("Special "+str(x))
 
-
-
 # =========================================================================================
 
 	def discoversubtitles(self):
@@ -102,3 +100,16 @@ class DefineLibraryManager:
 		self.subtitles.append("SDH")
 		self.subtitles.append("Eng-SDH")
 
+# =========================================================================================
+
+	def copyfiles(self, copyactions):
+
+		if copyactions == []:
+			print "No copy actions to perform this time"
+		else:
+			FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
+			for action in copyactions:
+				source = FileSystem.createpathfromlist(action['source'])
+				target = FileSystem.concatenatepaths(self.mountpoint, FileSystem.createpathfromlist(action['target']))
+				FileSystem.copyfile(source, target)
+			FileSystem.unmountnetworkdrive(self.mountpoint)

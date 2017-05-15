@@ -6,82 +6,71 @@
     <script src="./static/javascript/torrent_change_fileoutcome.js"></script>
     <script src="./static/javascript/torrent_save_config.js"></script>
     <script src="./static/javascript/torrent_edit_config.js"></script>
+    <script src="./static/javascript/torrent_cancel_config.js"></script>
     <script src="./static/javascript/torrent_update_state.js"></script>
 {% endblock %}
 
 {% block content %}
-<div class="tile bannertile"></div>
-<div>
-    <input type="button" name="Stop" onclick="javascript:updateTorrentState('Stop');" value="Stop" />
-    <input type="button" name="Start" onclick="javascript:updateTorrentState('Start');" value="Start" />
-    <input type="button" name="Edit" onclick="javascript:editTorrentConfiguration();" value="Edit" />
-    <input type="button" name="Save" onclick="javascript:saveTorrentConfiguration();" value="Save" />
-    <input type="button" name="Copy" onclick="javascript:updateTorrent('Copy');" value="Copy" />
-    <input type="button" name="Delete" onclick="javascript:updateTorrent('Delete');" value="Delete" />
-</div>
-
-
-
-<div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
-    <div class="readonlyfields">
-        <div class="titlebox titleleftextended" id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
-    </div><div class="editmodefields">
-        <div class="buttongroup">
-            <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
-                <img src="./static/images/type_unknown.png" alt="unknown button" />
-            </button><button type="button" id="MakeMovie" onclick="javascript:changeTorrentType('movie');">
-                <img src="/static/images/type_movie.png" alt="movie button" />
-            </button><button type="button" id="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');">
-                <img src="/static/images/type_tvshow.png" alt="tv show button" />
-            </button>
-        </div><div class="unknownonlyfields"><span class="fieldlabel">New Unspecified Torrent</span></div><div class="tvshowonlyfields">
-            <span class="fieldlabel">TV Show:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
-            </select><span class="fieldlabel">Season:</span><select class="tvshowseasonfield" name="tvshowseasonselector"></select>
-        </div><div class="movieonlyfields">
-            <span class="fieldlabel">Film:</span><input type="text" name="moviename" value="" class="movienamefield" /><span class="fieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
+<div class="tilesgroup">
+    <div class="tile torrenttile torrent_{{ selectedtorrent.status }}">
+        <div class="readonlyfields">
+            <div class="titlebox titleleftextended" id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</div><div class="titlebox titlerightextended"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
+        </div><div class="editmodefields">
+            <div class="buttongroup">
+                <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
+                    <img src="./static/images/type_unknown.png" alt="unknown button" />
+                </button><button type="button" id="MakeMovie" onclick="javascript:changeTorrentType('movie');">
+                    <img src="/static/images/type_movie.png" alt="movie button" />
+                </button><button type="button" id="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');">
+                    <img src="/static/images/type_tvshow.png" alt="tv show button" />
+                </button>
+            </div><div class="unknownonlyfields"><span class="fieldlabel">New Unspecified Torrent</span></div><div class="tvshowonlyfields">
+                <span class="fieldlabel">TV Show:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
+                </select><span class="fieldlabel">Season:</span><select class="tvshowseasonfield" name="tvshowseasonselector"></select>
+            </div><div class="movieonlyfields">
+                <span class="fieldlabel">Film:</span><input type="text" name="moviename" value="" class="movienamefield" /><span class="fieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
+            </div>
         </div>
-    </div>
-    <div class="tilesplitter splitterextended"></div><div class="subtitlebox subtitleleftextended">
-        {{ selectedtorrent.torrentname }}
-    </div><div class="subtitlebox subtitlerightextended">
-        <img id="Status" src="./static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
-    </div>
+        <div class="tilesplitter splitterextended"></div><div class="subtitlebox subtitleleftextended">
+            {{ selectedtorrent.torrentname }}
+        </div><div class="subtitlebox subtitlerightextended">
+            <img id="Status" src="./static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
+        </div>
+    </div>{% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
+        <div class="readonlyfields"><div class="titlebox titleleft" id="filetitle-{{ fileitem.fileid }}">{{ fileitem.filetitle }}</div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
+        </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
+            {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
+                <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
+                    <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
+                </button><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
+                    <img src="./static/images/fileaction_copy.png" alt="copy button" />
+                </button>
+            </div></div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
+            </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
+                <div class="unknownonlyfields"><span class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</span>
+                </div><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
+                </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
+                </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
+                </select></div>{% endif %}
+        </div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
+            {{ fileitem.filename }}
+        </div><div class="subtitlebox fileright">
+            <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
+        </div>
+    </div>{% endfor %}</div><div class="actionbuttonsgroup">
+    <button type="button" id="Exit" onclick="javascript:window.location.replace('/');"><img src="./static/images/torrentaction_exit.png" alt="exit button" />
+    </button><button type="button" id="Stop" onclick="javascript:updateTorrentState('Stop');"><img src="./static/images/torrentaction_stop.png" alt="stop button" />
+    </button><button type="button" id="Start" onclick="javascript:updateTorrentState('Start');"><img src="./static/images/torrentaction_start.png" alt="start button" />
+    </button><button type="button" id="Edit" onclick="javascript:editTorrentConfiguration();"><img src="./static/images/torrentaction_edit.png" alt="edit button" />
+    </button><button type="button" id="Save" onclick="javascript:saveTorrentConfiguration();"><img src="./static/images/torrentaction_commit.png" alt="commit button" />
+    </button><button type="button" id="Cancel" onclick="javascript:cancelTorrentConfiguration();"><img src="./static/images/torrentaction_cancel.png" alt="commit button" />
+    </button><button type="button" id="Copy" onclick="javascript:updateTorrentState('Copy');">Copy
+    </button><button type="button" id="Delete" onclick="javascript:updateTorrent('Delete');">Delete
+    </button>
 </div>
-
-
-            <!--<input type="button" name="AddTVShow" onclick="javascript:ConfigureTVShow('AddShow');" value="New Show" />
-            <input type="button" name="AddShowSeason" onclick="javascript:ConfigureTVShow('AddSeason');" value="New Season" />-->
-
-
-
-
-{% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
-    <div class="readonlyfields"><div class="titlebox titleleft" id="filetitle-{{ fileitem.fileid }}">{{ fileitem.filetitle }}</div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
-    </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
-        {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
-            <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
-                <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
-            </button><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
-                <img src="./static/images/fileaction_copy.png" alt="copy button" />
-            </button>
-        </div></div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
-        </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
-            <div class="unknownonlyfields"><span class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</span>
-            </div><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
-            </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
-            </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
-            </select></div>{% endif %}
-    </div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
-        {{ fileitem.filename }}
-    </div><div class="subtitlebox fileright">
-        <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
-    </div>
-</div>{% endfor %}
-
-{% endblock %}
-
 
                     <!--<img class="tilesubicon" src="./static/images/movie.png" alt="movie" />
                     <label class="switch"><input type="checkbox" name="torrenttypeswitch"><div class="slider round"></div></label>
                     <img class="tilesubicon" src="./static/images/tvshow.png" alt="tvshow" />-->
 
+    {% endblock %}

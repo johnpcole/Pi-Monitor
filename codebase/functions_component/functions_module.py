@@ -66,3 +66,18 @@ def minifyepisode(episodename):
 		e = episodename
 	return e
 
+
+def getinitial(name):
+
+	namesplit = name.split(" ")
+	if len(namesplit) > 1:
+		firstword = namesplit[0]
+		firstword = firstword.lower()
+		if (firstword == "the") or (firstword == "a") :
+			noun = namesplit[1]
+		else:
+			noun = namesplit[0]
+	else:
+		noun = name
+	outcome = noun[:1]
+	return outcome.upper()
