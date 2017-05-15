@@ -125,3 +125,5 @@ class DefineDelugeInterface:
 		return self.delugeinterface.call('core.remove_torrent', torrentid, True)
 
 
+
+

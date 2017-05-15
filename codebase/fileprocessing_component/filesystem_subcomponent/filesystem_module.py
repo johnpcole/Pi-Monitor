@@ -109,12 +109,19 @@ def getfolderlisting(folderpath):
 # ---------------------------------------------
 
 def concatenatepaths(path1, path2):
-	prefix = path1
-	if len(path1) == 2:
-		if path1[1:2] == ":":
-			prefix = path1 + "\\"
 
-	return OperatingSystem.path.join(prefix, path2)
+	if path1 == "":
+		prefix = " "
+		outcome = OperatingSystem.path.join(prefix, path2)
+		outcome = outcome[1:]
+	else:
+		prefix = path1
+		if len(path1) == 2:
+			if path1[1:2] == ":":
+				prefix = path1 + "\\"
+		outcome = OperatingSystem.path.join(prefix, path2)
+
+	return outcome
 
 
 
@@ -185,15 +192,32 @@ def writetodisk(filename, outputlist):
 		print "Cannot write file - ", filename
 
 
+
+# ---------------------------------------------
+# Returns a path based on a list of subfolders
+# ---------------------------------------------
+
+def createpathfromlist(pathlist):
+
+	outcome = ""
+	for pathitem in pathlist:
+		outcome = concatenatepaths(outcome, pathitem)
+
+	return outcome
+
+
+
 # ---------------------------------------------
 # Copies a file
 # ---------------------------------------------
 
 def copyfile(source, target):
+	print "======================================================================"
+	print "Source: ", source
+	print "Target: ", target
+	print "======================================================================"
+
 	if concatenatepaths(" ", " ") == " / ":
-		OperatingSystem.system(
-			'sudo mount -t cifs -o username=' + username + ',password=' + password + ' ' + networkpath + ' ' + mountpoint)
+		OperatingSystem.system('cp "' + source + '" "' + target + '"')
 	else:
-		if username != "":
-			OperatingSystem.system(
-				'NET USE ' + mountpoint + ' ' + networkpath + ' ' + password + ' ' + '/USER:' + username + ' /PERSISTENT:NO')
+		OperatingSystem.system('copy "' + source + '" "' + target + '"')

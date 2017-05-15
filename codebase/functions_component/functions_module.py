@@ -80,3 +80,4 @@ def getinitial(name):
 	else:
 		noun = name
 	outcome = noun[:1]
+	return outcome.upper()

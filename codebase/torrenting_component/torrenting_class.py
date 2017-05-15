@@ -183,9 +183,11 @@ class DefineTorrentManager:
 	def getcopyactions(self, torrentid, copymode = 'Real'):
 
 		torrentobject = self.gettorrentobject(torrentid)
-		if (torrentobject.getfinished() == True) or (copymode == 'Test'):
+		if (torrentobject.getfinished() == 'Completed') or (copymode == 'Test'):
+			print "Performing Copy for ", torrentid
 			outcome = torrentobject.getcopyactions()
 		else:
 			outcome = []
 
 		return outcome
+

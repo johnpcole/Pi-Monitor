@@ -75,10 +75,10 @@ def updatetorrentpage(torrentid):
 		torrentaction = rawdata['torrentaction']
 		if (torrentaction == "Start") or (torrentaction == "Stop"):
 			torrentmanager.processonetorrent(torrentid, torrentaction)
-		if torrentaction == "Copy":
-			librarymanager.copyfiles(torrentmanager.getcopyactions(torrentid))
+		elif torrentaction == "Copy":
+			librarymanager.copyfiles(torrentmanager.getcopyactions(torrentid, "Test"))
 		elif torrentaction != "Refresh":
-			print "Unknown Torrents List Update Action ", torrentaction
+			print "Unknown Torrent Update Action ", torrentaction
 		torrentmanager.refreshtorrentdata(torrentid)
 		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "refresh"))
 	else:
@@ -96,10 +96,10 @@ def reconfiguretorrentconfiguration(torrentid):
 	if torrentmanager.validatetorrentid(torrentid) == True:
 		rawdata = Webpost.get_json()
 		torrentmanager.reconfiguretorrent(torrentid, rawdata)
+		FileManager.saveconfigs(torrentmanager.getconfigs())
+		return Jsondata(selectedtorrent = torrentmanager.gettorrentdata(torrentid, "reconfigure"))
 	else:
 		print "Reconfiguring unknown torrent ", torrentid
-	FileManager.saveconfigs(torrentmanager.getconfigs())
-	return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "reconfigure"))
 
 
 
@@ -110,10 +110,11 @@ def reconfiguretorrentconfiguration(torrentid):
 @website.route('/EditTorrent=<torrentid>')
 def edittorrentconfiguration(torrentid):
 
-	if torrentmanager.validatetorrentid(torrentid) == False:
-		print "Edit unknown torrent ", torrentid
-	return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "prepareedit"),
+	if torrentmanager.validatetorrentid(torrentid) == True:
+		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "prepareedit"),
 													listitems=librarymanager.getdropdownlists())
+	else:
+		print "Edit unknown torrent ", torrentid
 
 
 
@@ -136,9 +137,9 @@ def updatetvshowseasonslist(showname):
 def addnewtorrent():
 
 	rawdata = Webpost.get_json()
-	newidval = torrentmanager.addnewtorrenttoclient(rawdata['newurl'])
+	newid = torrentmanager.addnewtorrenttoclient(rawdata['newurl'])
 	#torrentmanager.refreshtorrentlist()
-	return Jsondata(newid=newidval)
+	return Jsondata(newid=newid)
 
 #-----------------------------------------------
 

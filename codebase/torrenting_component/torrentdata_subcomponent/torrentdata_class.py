@@ -51,7 +51,8 @@ class DefineTorrentItem:
 				self.status = temp.lower()
 
 			elif dataitem == "save_path":
-				self.location = datalist[dataitem]
+				path = datalist[dataitem]
+				self.location = path.split('/')
 
 			elif dataitem == "progress":
 				self.progress = str(int(datalist[dataitem])) + "%"
@@ -99,7 +100,7 @@ class DefineTorrentItem:
 			if existingfile is None:
 				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'],
 																			Functions.sanitisesize(fileitem['size'])))
-		self.files = sorted(self.files, key=attrgetter('filetype', 'shortpath'), reverse=True)
+		self.files = sorted(self.files, key=attrgetter('filetype'), reverse=True)
 
 # =========================================================================================
 
@@ -463,6 +464,6 @@ class DefineTorrentItem:
 		for file in self.files:
 			filedestination = self.getdestination(file)
 			if filedestination != []:
-				instruction = {'source': file.getpath, 'target': filedestination}
+				instruction = {'source': self.getlocation() + file.getpath(), 'target': filedestination}
 				outcome.append(instruction)
 		return outcome

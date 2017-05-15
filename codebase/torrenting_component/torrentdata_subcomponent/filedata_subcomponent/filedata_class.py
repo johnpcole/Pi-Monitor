@@ -6,10 +6,7 @@ class DefineFileItem:
 
 		self.fileid = fileid
 
-		self.path = path
-
-		pathsplit = self.path.split('/')
-		self.shortpath = pathsplit[len(pathsplit)-1]
+		self.path = path.split('/')
 
 		self.size = size
 
@@ -52,7 +49,8 @@ class DefineFileItem:
 
 	def getshortpath(self):
 
-		return self.shortpath
+		pathsplit = self.path
+		return pathsplit[len(pathsplit)-1]
 
 # =========================================================================================
 
@@ -64,7 +62,8 @@ class DefineFileItem:
 
 	def getextension(self):
 
-		filenamesplit = self.shortpath.split('.')
+		shortpath = self.getshortpath()
+		filenamesplit = shortpath.split('.')
 		if len(filenamesplit) > 1:
 			extension = filenamesplit[len(filenamesplit)-1]
 		else:
