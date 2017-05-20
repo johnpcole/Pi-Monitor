@@ -110,16 +110,20 @@ def getfolderlisting(folderpath):
 
 def concatenatepaths(path1, path2):
 
+	suffix = path2
+	if path2 != "":
+		if path2[0:1] == "/":
+			suffix = path2[1:]
 	if path1 == "":
 		prefix = " "
-		outcome = OperatingSystem.path.join(prefix, path2)
+		outcome = OperatingSystem.path.join(prefix, suffix)
 		outcome = outcome[1:]
 	else:
 		prefix = path1
 		if len(path1) == 2:
 			if path1[1:2] == ":":
 				prefix = path1 + "\\"
-		outcome = OperatingSystem.path.join(prefix, path2)
+		outcome = OperatingSystem.path.join(prefix, suffix)
 
 	return outcome
 

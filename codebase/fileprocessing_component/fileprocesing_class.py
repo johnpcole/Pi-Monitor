@@ -109,7 +109,7 @@ class DefineLibraryManager:
 		else:
 			FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
 			for action in copyactions:
-				source = FileSystem.createpathfromlist(action['source'])
-				target = FileSystem.concatenatepaths(self.mountpoint, FileSystem.createpathfromlist(action['target']))
-				FileSystem.copyfile(source, target)
+				copysource = FileSystem.createpathfromlist(action['source'])
+				copytarget = FileSystem.concatenatepaths(self.mountpoint, FileSystem.createpathfromlist(action['target']))
+				FileSystem.copyfile(copysource, copytarget)
 			FileSystem.unmountnetworkdrive(self.mountpoint)
