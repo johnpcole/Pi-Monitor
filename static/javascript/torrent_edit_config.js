@@ -6,6 +6,9 @@ function editTorrentConfiguration()
     changeAreasState('editmodefields', 'Show');
     changeAreasState('readonlyfields', 'Hide');
     changeButtonState('Edit', 'Hide');
+    changeButtonState('Exit', 'Hide');
+    changeButtonState('Copy', 'Hide');
+    changeButtonState('Delete', 'Hide');
     changeButtonState('Save', 'Show');
     changeButtonState('Cancel', 'Show');
 };
