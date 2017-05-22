@@ -26,9 +26,9 @@ function changeTorrentType(newtype)
         setFieldValue('tvshowselector', '');
         setFieldValue('movieyear', '');
         setFieldValue('tvshowseasonselector', '');
-        changeAreasState('unknownonlyfields', "Show");
         changeAreasState('tvshowonlyfields', "Hide");
         changeAreasState('movieonlyfields', "Hide");
+        changeAreasState('unknownonlyfields', "Show");
         changeButtonState('MakeMovie', "Enable");
         changeButtonState('MakeTVShow', "Enable");
         changeButtonState('MakeUnknown', "Disable");

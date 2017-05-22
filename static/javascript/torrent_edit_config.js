@@ -38,14 +38,14 @@ function updateTorrentConfigFields(editinfo, listitems)
     $.each(filelist, function(index)
     {
         var currentfile = filelist[index]
-        changeFileDesignation(index, currentfile.outcome);
-        populateFileDropDownLists(currentfile.filetype, index, listitems)
+        changeFileDesignation(currentfile.fileid, currentfile.outcome);
+        populateFileDropDownLists(currentfile.filetype, currentfile.fileid, listitems)
         if (currentfile.outcome == "copy") {
             if (editinfo.torrenttype == "tvshow") {
-                setDropDownValue('episodeselector-'+index, currentfile.episodeselector);
+                setDropDownValue('episodeselector-'+currentfile.fileid, currentfile.episodeselector);
             };
             if (currentfile.filetype == "subtitle") {
-                setDropDownValue('subtitleselector-'+index, currentfile.subtitleselector);
+                setDropDownValue('subtitleselector-'+currentfile.fileid, currentfile.subtitleselector);
             };
         };
     });

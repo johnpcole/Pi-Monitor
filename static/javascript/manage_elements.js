@@ -21,13 +21,16 @@ function changeAreasState(areaname, displayvalue)
 function changeAreaState(areaname, displayvalue)
 {
     var areaobject = document.getElementById(areaname);
-    if (displayvalue == 'Hide') {
-        areaobject.style.display = "none";
+    if (areaobject != null) {
+        if (displayvalue == 'Hide') {
+            areaobject.style.display = "none";
+        } else {
+            areaobject.style.display = "inline-block";
+        };
     } else {
-        areaobject.style.display = "inline-block";
+        alert("changeAreaState: "+areaname);
     };
 };
-
 
 
 

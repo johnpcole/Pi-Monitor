@@ -15,7 +15,7 @@
 </div>
 
 
-{% for torrent in torrentlist %}<a class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
+{% for torrent in torrentlist %}<a id="Torrent-{{ torrent.torrentid }}" class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
     <div class="titlebox titleleft">
         {{ torrent.torrenttitle }}
     </div><div class="titlebox titleright">

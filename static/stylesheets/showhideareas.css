@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.tvshowonlyfields, .movieonlyfields, .unknownonlyfields, .copyonlyfields, .ignoreonlyfields {
+.tvshowonlyfields, .movieonlyfields, .unknownonlyfields, .ignoreonlyfields, .copyonlyfields {
     margin: 0;
     padding: 0;
     display: none;

@@ -36,7 +36,7 @@
         </div><div class="subtitlebox subtitlerightextended">
             <img id="Status" src="./static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
         </div>
-    </div>{% for fileitem in selectedtorrent.files %}<div class="tile headlinetile file_all">
+    </div>{% for fileitem in selectedtorrent.files %}<div id="File-{{ fileitem.fileid }}" class="tile headlinetile file_all">
         <div class="readonlyfields"><div class="titlebox titleleft" id="filetitle-{{ fileitem.fileid }}">{{ fileitem.filetitle }}</div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
         </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
             {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
