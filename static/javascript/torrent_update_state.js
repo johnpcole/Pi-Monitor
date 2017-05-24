@@ -6,6 +6,7 @@ $(document).ready(function ()
     changeButtonState('Save', 'Hide');
     changeButtonState('Cancel', 'Hide');
     updateStartStopButtons(getImageName('Status').substr(8));
+    $('.ajaxloader').hide();
 
     // Refresh the tiles every minute.
     setInterval(function()
@@ -21,11 +22,12 @@ $(document).ready(function ()
 function updateTorrentState(action)
 {
     var pathname = window.location.pathname;
+    var torrentid = pathname.substring(9)
     $.ajax({
-        url: 'UpdateTorrent='+pathname.substring(9),
+        url: 'UpdateTorrent',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({'torrentaction': action}),
+        data: JSON.stringify({'torrentid':torrentid, 'torrentaction':action}),
         dataType:'json',
         success: function(data)
         {

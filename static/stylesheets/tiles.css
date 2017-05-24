@@ -1,4 +1,4 @@
-.tilesgroup {
+div.tilesgroup {
     margin: 0;
     padding: 0;
     display: inline-block;
@@ -7,7 +7,7 @@
     vertical-align: top;
 }
 
-.tile {
+div.tile, a.tile {
     display: inline-block;
     overflow: hidden;
     margin: 7px;
@@ -68,7 +68,7 @@ a.tile:hover {
    TILE TITLE ROW
    =============================================================================== */
 
-.titlebox {
+div.titlebox {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -76,7 +76,7 @@ a.tile:hover {
     padding: 2px 3px 6px 3px;
 }
 
-.titlebox img {
+div.titlebox img {
     display: inline-block;
     height: 18px;
     width: 18px;
@@ -90,7 +90,7 @@ a.tile:hover {
    TITLE SEPARATOR LINE
    =============================================================================== */
 
-.tilesplitter {
+div.tilesplitter {
     height: 2px;
     border-style: solid;
     border-width: 0px 0px 1px 0px;
@@ -104,7 +104,7 @@ a.tile:hover {
    TILE SUBTILE ROW
    =============================================================================== */
 
-.subtitlebox {
+div.subtitlebox {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -113,7 +113,7 @@ a.tile:hover {
     padding: 5px 4px 4px 4px;
 }
 
-.subtitlebox img {
+div.subtitlebox img {
     display: inline-block;
     height: 13px;
     width: 13px;

@@ -10,9 +10,12 @@ input[type=text], select {
     color: #FFFFFF;
     border: 1px solid #000000;
     margin: 0;
-    padding: 0px 6px;
-
 }
+
+input[type=text] {
+    padding: 0px 6px;
+}
+
 
 select {
     -webkit-appearance: none;
@@ -24,6 +27,7 @@ select {
     background-position: center right;
     background-repeat: no-repeat;
     cursor: pointer;
+    padding: 0px 2px;
 }
 
 select option {
@@ -36,26 +40,26 @@ select option {
 /* Edit fields                                         */
 /* =================================================== */
 
-.movieyearfield {
+input.movieyearfield {
     width: 60px;
 }
 
-.movienamefield {
+input.movienamefield {
     width: 682px;
 }
 
-.tvshownamefield {
+select.tvshownamefield {
     width: 540px;
 }
 
-.tvshowseasonfield {
+select.tvshowseasonfield {
     width: 150px;
 }
 
-.fileepisode {
+select.fileepisode {
     width: 115px;
 }
 
-.filesubtitle {
+select.filesubtitle {
     width: 110px;
 }

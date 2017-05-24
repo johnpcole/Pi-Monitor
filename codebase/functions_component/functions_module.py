@@ -73,7 +73,7 @@ def getinitial(name):
 	if len(namesplit) > 1:
 		firstword = namesplit[0]
 		firstword = firstword.lower()
-		if (firstword == "the") or (firstword == "a") :
+		if (firstword == "the") or (firstword == "a") or (firstword == "an"):
 			noun = namesplit[1]
 		else:
 			noun = namesplit[0]

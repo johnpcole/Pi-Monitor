@@ -2,7 +2,7 @@
    TILE CONTAINER
    =============================================================================== */
 
-.torrenttile {
+div.torrenttile {
     width: 954px;
 }
 
@@ -11,12 +11,12 @@
    TILE TITLE ROW
    =============================================================================== */
 
-.titleleftextended {
+div.titleleftextended {
     width: 922px;
     text-align: left;
 }
 
-.titlerightextended {
+div.titlerightextended {
     width: 20px;
     text-align: right;
 }
@@ -26,7 +26,7 @@
    TITLE SEPARATOR LINE
    =============================================================================== */
 
-.splitterextended {
+div.splitterextended {
     width: 946px;
 }
 
@@ -35,12 +35,12 @@
    TILE SUBTILE ROW
    =============================================================================== */
 
-.subtitleleftextended {
+div.subtitleleftextended {
     width: 758px;
     text-align: left;
 }
 
-.subtitlerightextended {
+div.subtitlerightextended {
     width: 180px;
     text-align: right;
 }

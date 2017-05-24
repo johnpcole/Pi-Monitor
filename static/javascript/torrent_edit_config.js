@@ -19,11 +19,23 @@ function editTorrentConfiguration()
 function getTorrentConfig()
 {
     var pathname = window.location.pathname;
-    $.getJSON('EditTorrent='+pathname.substring(9))
-        .done(function (data)
-        {
+    var torrentid = pathname.substring(9)
+    $.ajax({
+        url: 'EditTorrent',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({'torrentid':torrentid}),
+        dataType:'json',
+        beforeSend: function() {
+            $('.ajaxloader').show();
+        },
+        success: function(data){
             updateTorrentConfigFields(data.selectedtorrent, data.listitems);
-        });
+        },
+        complete: function(){
+            $('.ajaxloader').hide();
+        }
+    });
 };
 
 

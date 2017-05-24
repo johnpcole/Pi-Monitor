@@ -6,11 +6,22 @@ function updateTVShowSeasons(selectedseason)
     changeControlState('tvshowseasonselector', 'Hide');
     var tvshowname = getFieldValue("tvshowselector");
     if (tvshowname != "") {
-        $.getJSON('GetTVShowSeasons='+tvshowname)
-            .done(function (data)
-            {
+        $.ajax({
+            url: 'GetTVShowSeasons',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({'tvshow':tvshowname}),
+            dataType:'json',
+            beforeSend: function() {
+                $('.ajaxloader').show();
+            },
+            success: function(data){
                 updateTVShowSeasonsList(data.seasons, selectedseason);
-            });
+            },
+            complete: function(){
+                $('.ajaxloader').hide();
+            }
+        });
     } else {
         updateTVShowSeasonsList("", selectedseason);
     };

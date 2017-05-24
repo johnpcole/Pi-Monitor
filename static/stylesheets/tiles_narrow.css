@@ -2,7 +2,7 @@
    TILE CONTAINER
    =============================================================================== */
 
-.headlinetile {
+a.headlinetile, div.headlinetile {
     width: 460px;
 }
 
@@ -11,17 +11,17 @@
    TILE TITLE ROW
    =============================================================================== */
 
-.titleleft {
+div.titleleft {
     width: 427px;
     text-align: left;
 }
 
-.titleright {
+div.titleright {
     width: 20px;
     text-align: right;
 }
 
-.titlefullwidth {
+div.titlefullwidth {
     width: 454px;
     text-align: left;
 }
@@ -31,7 +31,7 @@
    TITLE SEPARATOR LINE
    =============================================================================== */
 
-.splitterline {
+div.splitterline {
     width: 452px;
 }
 
@@ -40,27 +40,27 @@
    TILE SUBTILE ROW
    =============================================================================== */
 
-.subtitleleft {
+div.subtitleleft {
     width: 387px;
     text-align: left;
 }
 
-.subtitleright {
+div.subtitleright {
     width: 56px;
     text-align: right;
 }
 
-.subtitlefullwidth {
+div.subtitlefullwidth {
     width: 452px;
     text-align: left;
 }
 
-.fileleft {
+div.fileleft {
     width: 353px;
     text-align: left;
 }
 
-.fileright {
+div.fileright {
     width: 90px;
     text-align: right;
 }

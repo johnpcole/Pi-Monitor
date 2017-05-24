@@ -1,0 +1,9 @@
+div.ajaxloader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('../images/status_seeding_paused.png') scroll no-repeat 50% 50% transparent;
+    background-color: rgba(100,100,100,0.75);
+    width: 100%;
+    height: 100%;
+}

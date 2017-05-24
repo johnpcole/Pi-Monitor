@@ -67,11 +67,12 @@ def initialisetorrentpage(torrentid):
 # Refresh an existing Torrent page with Network Data, after performing an action if required
 #===============================================================================================
 
-@website.route('/UpdateTorrent=<torrentid>', methods=['POST'])
-def updatetorrentpage(torrentid):
+@website.route('/UpdateTorrent', methods=['POST'])
+def updatetorrentpage():
 
+	rawdata = Webpost.get_json()
+	torrentid = rawdata['torrentid']
 	if torrentmanager.validatetorrentid(torrentid) == True:
-		rawdata = Webpost.get_json()
 		torrentaction = rawdata['torrentaction']
 		if (torrentaction == "Start") or (torrentaction == "Stop"):
 			torrentmanager.processonetorrent(torrentid, torrentaction)
@@ -90,12 +91,13 @@ def updatetorrentpage(torrentid):
 # Refresh an existing Torrent page with Configuration Data, after saving new instructions
 # ===============================================================================================
 
-@website.route('/ReconfigureTorrent=<torrentid>', methods=['POST'])
-def reconfiguretorrentconfiguration(torrentid):
+@website.route('/ReconfigureTorrent', methods=['POST'])
+def reconfiguretorrentconfiguration():
 
+	rawdata = Webpost.get_json()
+	torrentid = rawdata['torrentid']
 	if torrentmanager.validatetorrentid(torrentid) == True:
-		rawdata = Webpost.get_json()
-		torrentmanager.reconfiguretorrent(torrentid, rawdata)
+		torrentmanager.reconfiguretorrent(torrentid, rawdata['newconfiguration'])
 		FileManager.saveconfigs(torrentmanager.getconfigs())
 		return Jsondata(selectedtorrent = torrentmanager.gettorrentdata(torrentid, "reconfigure"))
 	else:
@@ -107,9 +109,11 @@ def reconfiguretorrentconfiguration(torrentid):
 # Refresh an existing Torrent page with Configuration Data used to populate edit fields
 # ===============================================================================================
 
-@website.route('/EditTorrent=<torrentid>')
-def edittorrentconfiguration(torrentid):
+@website.route('/EditTorrent', methods=['POST'])
+def edittorrentconfiguration():
 
+	rawdata = Webpost.get_json()
+	torrentid = rawdata['torrentid']
 	if torrentmanager.validatetorrentid(torrentid) == True:
 		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "prepareedit"),
 													listitems=librarymanager.getdropdownlists())
@@ -122,10 +126,11 @@ def edittorrentconfiguration(torrentid):
 # Refresh an existing Torrent page with Configuration Data used to populate the Season edit field
 # ===============================================================================================
 
-@website.route('/GetTVShowSeasons=<showname>')
-def updatetvshowseasonslist(showname):
+@website.route('/GetTVShowSeasons', methods=['POST'])
+def updatetvshowseasonslist():
 
-	return Jsondata(seasons=librarymanager.gettvshowseasons(showname))
+	rawdata = Webpost.get_json()
+	return Jsondata(seasons=librarymanager.gettvshowseasons(rawdata['tvshow']))
 
 
 

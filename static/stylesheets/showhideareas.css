@@ -1,16 +1,16 @@
-.editmodefields {
+div.editmodefields {
     margin: 0 0 5px 0;
     padding: 0;
     display: none;
     overflow: hidden;
 }
 
-.readonlyfields {
+div.readonlyfields {
     display: inline-block;
     overflow: hidden;
 }
 
-.tvshowonlyfields, .movieonlyfields, .unknownonlyfields, .ignoreonlyfields, .copyonlyfields {
+div.tvshowonlyfields, div.movieonlyfields, div.unknownonlyfields, div.ignoreonlyfields, div.copyonlyfields {
     margin: 0;
     padding: 0;
     display: none;
