@@ -6,13 +6,14 @@ $(document).ready(function ()
     changeButtonState('Save', 'Hide');
     changeButtonState('Cancel', 'Hide');
     updateStartStopButtons(getImageName('Status').substr(8));
-    $('.ajaxloader').hide();
 
     // Refresh the tiles every minute.
     setInterval(function()
     {
         updateTorrentState('Refresh');
     }, 10000);
+
+    $('.ajaxloader').hide();
 });
 
 

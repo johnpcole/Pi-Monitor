@@ -96,6 +96,7 @@ def reconfiguretorrentconfiguration():
 
 	rawdata = Webpost.get_json()
 	torrentid = rawdata['torrentid']
+	wastetime()
 	if torrentmanager.validatetorrentid(torrentid) == True:
 		torrentmanager.reconfiguretorrent(torrentid, rawdata['newconfiguration'])
 		FileManager.saveconfigs(torrentmanager.getconfigs())
@@ -115,8 +116,10 @@ def edittorrentconfiguration():
 	rawdata = Webpost.get_json()
 	torrentid = rawdata['torrentid']
 	if torrentmanager.validatetorrentid(torrentid) == True:
-		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "prepareedit"),
-													listitems=librarymanager.getdropdownlists())
+		wastetime()
+		torrentdata = torrentmanager.gettorrentdata(torrentid, "prepareedit")
+		return Jsondata(selectedtorrent=torrentdata,
+									listitems=librarymanager.getdropdownlists(torrentdata['tvshowname']))
 	else:
 		print "Edit unknown torrent ", torrentid
 
@@ -130,6 +133,7 @@ def edittorrentconfiguration():
 def updatetvshowseasonslist():
 
 	rawdata = Webpost.get_json()
+	wastetime()
 	return Jsondata(seasons=librarymanager.gettvshowseasons(rawdata['tvshow']))
 
 
@@ -143,10 +147,18 @@ def addnewtorrent():
 
 	rawdata = Webpost.get_json()
 	newid = torrentmanager.addnewtorrenttoclient(rawdata['newurl'])
+	wastetime()
 	#torrentmanager.refreshtorrentlist()
 	return Jsondata(newid=newid)
 
 #-----------------------------------------------
+
+
+def wastetime():
+	for i in range(0, 1000):
+		print i
+		for j in range(0, 100000):
+			pass
 
 
 
@@ -154,3 +166,4 @@ if FileManager.getwebhostconfig() == True:
 	website.run(debug=False, host='0.0.0.0')
 else:
 	website.run(debug=True)
+

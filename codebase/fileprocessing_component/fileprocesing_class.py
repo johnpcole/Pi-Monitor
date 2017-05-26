@@ -62,12 +62,13 @@ class DefineLibraryManager:
 
 # =========================================================================================
 
-	def getdropdownlists(self):
+	def getdropdownlists(self, tvshowname):
 
 		outcome = {}
 		outcome['tvshows'] = self.gettvshows()
 		outcome['episodes'] = self.episodes
 		outcome['subtitles'] = self.subtitles
+		outcome['tvshowseasons'] = self.gettvshowseasons(tvshowname)
 		return outcome
 
 # =========================================================================================

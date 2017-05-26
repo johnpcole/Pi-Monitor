@@ -3,14 +3,6 @@
 function editTorrentConfiguration()
 {
     getTorrentConfig()
-    changeAreasState('editmodefields', 'Show');
-    changeAreasState('readonlyfields', 'Hide');
-    changeButtonState('Edit', 'Hide');
-    changeButtonState('Exit', 'Hide');
-    changeButtonState('Copy', 'Hide');
-    changeButtonState('Delete', 'Hide');
-    changeButtonState('Save', 'Show');
-    changeButtonState('Cancel', 'Show');
 };
 
 
@@ -31,6 +23,7 @@ function getTorrentConfig()
         },
         success: function(data){
             updateTorrentConfigFields(data.selectedtorrent, data.listitems);
+            displayEditMode();
         },
         complete: function(){
             $('.ajaxloader').hide();
@@ -48,7 +41,7 @@ function updateTorrentConfigFields(editinfo, listitems)
     setFieldValue('movieyear', editinfo.movieyear);
     repopulateDropDownList('tvshowselector', listitems.tvshows)
     setDropDownValue('tvshowselector', editinfo.tvshowname);
-    updateTVShowSeasons(editinfo.tvshowseason);
+    updateTVShowSeasonsList(listitems.tvshowseasons, editinfo.tvshowseason);
     var filelist = editinfo.files;
     $.each(filelist, function(index)
     {
@@ -77,4 +70,19 @@ function populateFileDropDownLists(filetype, fileindex, listitems)
             repopulateDropDownList('subtitleselector-'+fileindex, listitems.subtitles)
         };
     };
+};
+
+
+// Show & Hide Areas
+
+function displayEditMode()
+{
+    changeAreasState('readonlyfields', 'Hide');
+    changeAreasState('editmodefields', 'Show');
+    changeButtonState('Edit', 'Hide');
+    changeButtonState('Exit', 'Hide');
+    changeButtonState('Copy', 'Hide');
+    changeButtonState('Delete', 'Hide');
+    changeButtonState('Save', 'Show');
+    changeButtonState('Cancel', 'Show');
 };

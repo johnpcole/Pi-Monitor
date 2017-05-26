@@ -13,14 +13,6 @@ function saveTorrentConfiguration()
         newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename") };
     };
     updateTorrentConfig(newinstructions);
-    changeAreasState('editmodefields', 'Hide');
-    changeAreasState('readonlyfields', 'Show');
-    changeButtonState('Edit', 'Show');
-    changeButtonState('Save', 'Hide');
-    changeButtonState('Cancel', 'Hide');
-    changeButtonState('Exit', 'Show');
-    changeButtonState('Copy', 'Show');
-    changeButtonState('Delete', 'Show');
 };
 
 
@@ -41,6 +33,7 @@ function updateTorrentConfig(action)
         },
         success: function(data){
             updateTorrentConfigDisplay(data.selectedtorrent);
+            displayReadMode();
         },
         complete: function(){
             $('.ajaxloader').hide();
@@ -144,3 +137,18 @@ function getFileInstructions(torrenttype)
     return outcome;
 };
 
+
+
+// Show & Hide Areas
+
+function displayReadMode()
+{
+    changeAreasState('editmodefields', 'Hide');
+    changeAreasState('readonlyfields', 'Show');
+    changeButtonState('Save', 'Hide');
+    changeButtonState('Cancel', 'Hide');
+    changeButtonState('Edit', 'Show');
+    changeButtonState('Exit', 'Show');
+    changeButtonState('Copy', 'Show');
+    changeButtonState('Delete', 'Show');
+};

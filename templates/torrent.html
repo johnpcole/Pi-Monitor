@@ -47,7 +47,7 @@
                 </button>
             </div></div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
             </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
-                <div class="unknownonlyfields"><span class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</span>
+                <div class="unknownonlyfields"><div class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</div>
                 </div><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
                 </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
                 </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
@@ -69,10 +69,14 @@
     </button>
 </div>
 
-                    <!--<img class="tilesubicon" src="./static/images/movie.png" alt="movie" />
-                    <label class="switch"><input type="checkbox" name="torrenttypeswitch"><div class="slider round"></div></label>
-                    <img class="tilesubicon" src="./static/images/tvshow.png" alt="tvshow" />-->
-
-<div id="ajaxloader" class="ajaxloader"></div>
+<div id="ajaxloader" class="ajaxloader">
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+</div>
 
     {% endblock %}

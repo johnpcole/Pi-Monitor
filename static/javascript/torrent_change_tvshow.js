@@ -3,7 +3,6 @@
 
 function updateTVShowSeasons(selectedseason)
 {
-    changeControlState('tvshowseasonselector', 'Hide');
     var tvshowname = getFieldValue("tvshowselector");
     if (tvshowname != "") {
         $.ajax({
@@ -25,8 +24,8 @@ function updateTVShowSeasons(selectedseason)
     } else {
         updateTVShowSeasonsList("", selectedseason);
     };
-    changeControlState('tvshowseasonselector', 'Show');
 };
+
 
 
 // Update the list of seasons in the dropdown list
