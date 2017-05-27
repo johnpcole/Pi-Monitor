@@ -76,8 +76,6 @@ def updatetorrentpage():
 		torrentaction = rawdata['torrentaction']
 		if (torrentaction == "Start") or (torrentaction == "Stop"):
 			torrentmanager.processonetorrent(torrentid, torrentaction)
-		elif torrentaction == "Copy":
-			librarymanager.copyfiles(torrentmanager.getcopyactions(torrentid, "Test"))
 		elif torrentaction != "Refresh":
 			print "Unknown Torrent Update Action ", torrentaction
 		torrentmanager.refreshtorrentdata(torrentid)
@@ -95,16 +93,18 @@ def updatetorrentpage():
 def copytorrent():
 
 	rawdata = Webpost.get_json()
-	instruction = rawdata['copymode']
-	if instruction == "Start Copy":
-		torrentid = rawdata['torrentid']
+	torrentid = rawdata['copyinstruction']
+	if torrentid != "!!! CONTINUE EXISTING COPY PROCESS !!!":
 		if torrentmanager.validatetorrentid(torrentid) == True:
-			copyactions = torrentmanager.getcopyactions(torrentid, "Test")
-			return Jsondata(copyactions=copyactions)
+			librarymanager.queuefilecopy(torrentmanager.getcopyactions(torrentid, "Test"))
 		else:
 			print "Copying unknown torrent ", torrentid
+		refreshmode = True
 	else:
-		pass
+		wastetime()
+		refreshmode = librarymanager.processfilecopy()
+	return Jsondata(copydata = librarymanager.getcopystate(), refreshmode = refreshmode)
+
 
 
 # ===============================================================================================
@@ -175,9 +175,9 @@ def addnewtorrent():
 
 
 def wastetime():
-	for i in range(0, 1000):
+	for i in range(0, 100):
 		print i
-		for j in range(0, 100000):
+		for j in range(0, 1000000):
 			pass
 
 

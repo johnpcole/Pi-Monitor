@@ -18,6 +18,10 @@ class DefineLibraryManager:
 
 		self.password = password
 
+		self.copyactions = []
+
+		self.connectionstatus = 0
+
 		self.discovertvshows()
 		self.discoverepisodes()
 		self.discoversubtitles()
@@ -103,14 +107,73 @@ class DefineLibraryManager:
 
 # =========================================================================================
 
-	def copyfiles(self, copyactions):
+	def queuefilecopy(self, copyactions):
 
 		if copyactions == []:
 			print "No copy actions to perform this time"
 		else:
-			FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
+#			FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
 			for action in copyactions:
 				copysource = FileSystem.createpathfromlist(action['source'])
-				copytarget = FileSystem.concatenatepaths(self.mountpoint, FileSystem.createpathfromlist(action['target']))
-				FileSystem.copyfile(copysource, copytarget)
-			FileSystem.unmountnetworkdrive(self.mountpoint)
+				rawtarget = FileSystem.createpathfromlist(action['target'])
+				copytarget = FileSystem.concatenatepaths(self.mountpoint, rawtarget)
+				copyinstruction = {'source': copysource, 'target': copytarget, 'description': rawtarget, 'status': 'Queued'}
+				self.copyactions.append(copyinstruction)
+#				FileSystem.copyfile(copysource, copytarget)
+#			FileSystem.unmountnetworkdrive(self.mountpoint)
+
+
+# =========================================================================================
+
+	def getcopystate(self):
+
+		copystates = []
+		if self.connectionstatus < 0:
+			description = "Connected to File Server"
+		else:
+			description = "Connecting to File Server..."
+		copystate = {'description': description, 'status': "("+str(self.connectionstatus)+")"}
+		copystates.append(copystate)
+		for copyaction in self.copyactions:
+			copystate = {'description': copyaction['description'], 'status': copyaction['status']}
+			copystates.append(copystate)
+		copystate = {'description': "Disconnect File Server", 'status': "-"}
+		copystates.append(copystate)
+
+		return copystates
+
+
+
+# =========================================================================================
+
+	def processfilecopy(self):
+
+		outcome = False
+		if self.connectionstatus > -1:
+			self.attempttomount()
+			outcome = True
+		else:
+			for copyitem in self.copyactions:
+				if copyitem['status'] == "Copying...":
+					copyitem['status'] = "Copied!"
+			anycopy = False
+			for copyitem in self.copyactions:
+				if anycopy == False:
+					if copyitem['status'] == "Queued":
+						anycopy = True
+						copyitem['status'] = "Copying..."
+						FileSystem.copyfile(copyitem['source'], copyitem['target'])
+			if anycopy == False:
+				FileSystem.unmountnetworkdrive(self.mountpoint)
+			else:
+				outcome = True
+		return outcome
+
+
+	def attempttomount(self):
+
+		self.connectionstatus = self.connectionstatus + 1
+		outcome = FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
+		if outcome == 0:
+			self.connectionstatus = 0 - self.connectionstatus
+

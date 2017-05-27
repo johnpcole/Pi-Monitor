@@ -92,3 +92,23 @@ function getImageName(fieldname)
     }
     return outcome
 };
+
+
+
+// Get Area Hidden/Displayed state
+
+function getAreaState(areaid)
+{
+    var controlobject = document.getElementById(areaid);
+    if (controlobject != null) {
+        if (controlobject.style.display == 'none') {
+            return "Hidden";
+        } else {
+            return "Displayed";
+        };
+    } else {
+    alert("Cant find area: "+areaid)
+    };
+};
+
+

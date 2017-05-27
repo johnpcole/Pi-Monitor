@@ -10,7 +10,9 @@ $(document).ready(function ()
     // Refresh the tiles every minute.
     setInterval(function()
     {
-        updateTorrentState('Refresh');
+        if (getAreaState('copydialog') == 'Hidden') {
+            updateTorrentState('Refresh');
+        };
     }, 10000);
 
     $('#ajaxloader').hide();
