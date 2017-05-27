@@ -95,20 +95,16 @@ def updatetorrentpage():
 def copytorrent():
 
 	rawdata = Webpost.get_json()
-	torrentid = rawdata['torrentid']
-	if torrentmanager.validatetorrentid(torrentid) == True:
-		torrentaction = rawdata['torrentaction']
-		if (torrentaction == "Start") or (torrentaction == "Stop"):
-			torrentmanager.processonetorrent(torrentid, torrentaction)
-		elif torrentaction == "Copy":
-			librarymanager.copyfiles(torrentmanager.getcopyactions(torrentid, "Test"))
-		elif torrentaction != "Refresh":
-			print "Unknown Torrent Update Action ", torrentaction
-		torrentmanager.refreshtorrentdata(torrentid)
-		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "refresh"))
+	instruction = rawdata['copymode']
+	if instruction == "Start Copy":
+		torrentid = rawdata['torrentid']
+		if torrentmanager.validatetorrentid(torrentid) == True:
+			copyactions = torrentmanager.getcopyactions(torrentid, "Test")
+			return Jsondata(copyactions=copyactions)
+		else:
+			print "Copying unknown torrent ", torrentid
 	else:
-		print "Updating unknown torrent ", torrentid
-
+		pass
 
 
 # ===============================================================================================

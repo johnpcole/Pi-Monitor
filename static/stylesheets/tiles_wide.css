@@ -3,17 +3,28 @@
    =============================================================================== */
 
 div.torrenttile {
-    width: 954px;
+    width: 460px;
 }
 
+@media screen and (min-width: 1070px) {
+    div.torrenttile {
+        width: 954px;
+    }
+}
 
 /* ===============================================================================
    TILE TITLE ROW
    =============================================================================== */
 
 div.titleleftextended {
-    width: 922px;
+    width: 427px;
     text-align: left;
+}
+
+@media screen and (min-width: 1070px) {
+    div.titleleftextended {
+        width: 922px;
+    }
 }
 
 div.titlerightextended {
@@ -27,21 +38,44 @@ div.titlerightextended {
    =============================================================================== */
 
 div.splitterextended {
-    width: 946px;
+    width: 452px;
 }
 
+@media screen and (min-width: 1070px) {
+    div.splitterextended {
+        width: 946px;
+    }
+}
 
 /* ===============================================================================
    TILE SUBTILE ROW
    =============================================================================== */
 
 div.subtitleleftextended {
-    width: 758px;
+    width: 452px;
     text-align: left;
 }
 
+@media screen and (min-width: 1070px) {
+    div.subtitleleftextended {
+        width: 758px;
+    }
+}
+
 div.subtitlerightextended {
-    width: 180px;
+    width: 452px;
     text-align: right;
+}
+
+@media screen and (min-width: 1070px) {
+    div.subtitlerightextended {
+        width: 180px;
+    }
+}
+
+@media screen and (max-width: 1069px) {
+    div.subtitlerightextended {
+        padding-top: 0px;
+    }
 }
 

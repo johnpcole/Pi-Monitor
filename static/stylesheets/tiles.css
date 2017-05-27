@@ -3,8 +3,15 @@ div.tilesgroup {
     padding: 0;
     display: inline-block;
     overflow: hidden;
-    width: 990px;
+    width: 496px;
     vertical-align: top;
+    /*background-color: #aa6666*/;
+}
+
+@media screen and (min-width: 1070px) {
+    div.tilesgroup{
+        width: 990px;
+    }
 }
 
 div.tile, a.tile {
