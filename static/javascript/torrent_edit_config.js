@@ -19,14 +19,14 @@ function getTorrentConfig()
         data: JSON.stringify({'torrentid':torrentid}),
         dataType:'json',
         beforeSend: function() {
-            $('.ajaxloader').show();
+            $('#ajaxloader').show();
         },
         success: function(data){
             updateTorrentConfigFields(data.selectedtorrent, data.listitems);
             displayEditMode();
         },
         complete: function(){
-            $('.ajaxloader').hide();
+            $('#ajaxloader').hide();
         }
     });
 };

@@ -39,20 +39,21 @@
     </div>{% for fileitem in selectedtorrent.files %}<div id="File-{{ fileitem.fileid }}" class="tile headlinetile file_all">
         <div class="readonlyfields"><div class="titlebox titleleft" id="filetitle-{{ fileitem.fileid }}">{{ fileitem.filetitle }}</div><div class="titlebox titleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
         </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox titlefullwidth buttongroupequivalent">Ignored File</div>
-            {% else %}<div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
+            {% else %}<div class="unknownonlyfields"><div class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</div>
+                </div><div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
                 <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
                     <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
                 </button><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
                     <img src="./static/images/fileaction_copy.png" alt="copy button" />
                 </button>
-            </div></div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
+            </div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
             </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
-                <div class="unknownonlyfields"><div class="titlebox titlefullwidth buttongroupequivalent">Do Not Save</div>
-                </div><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
+                <!--<div class="unknownonlyfields"><div class="titlebox titlefullwidth buttongroupequivalent">UNKNOWN STATE</div>
+                </div>--><div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
                 </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
                 </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
                 </select></div>{% endif %}
-        </div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
+        </div></div>{% endif %}</div><div class="tilesplitter splitterline"></div><div class="subtitlebox fileleft">
             {{ fileitem.filename }}
         </div><div class="subtitlebox fileright">
             <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
@@ -69,14 +70,7 @@
     </button>
 </div>
 
-<div id="ajaxloader" class="ajaxloader">
-    <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-    </div>
-</div>
+<div id="ajaxloader" class="screenblock"><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div>
+<div id="copydialog" class="screenblock" style="display: none;"></div>
 
     {% endblock %}

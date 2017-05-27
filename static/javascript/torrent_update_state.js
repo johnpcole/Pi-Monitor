@@ -13,7 +13,7 @@ $(document).ready(function ()
         updateTorrentState('Refresh');
     }, 10000);
 
-    $('.ajaxloader').hide();
+    $('#ajaxloader').hide();
 });
 
 

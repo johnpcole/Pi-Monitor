@@ -87,6 +87,30 @@ def updatetorrentpage():
 
 
 
+#===============================================================================================
+# Copies Files
+#===============================================================================================
+
+@website.route('/CopyTorrent', methods=['POST'])
+def copytorrent():
+
+	rawdata = Webpost.get_json()
+	torrentid = rawdata['torrentid']
+	if torrentmanager.validatetorrentid(torrentid) == True:
+		torrentaction = rawdata['torrentaction']
+		if (torrentaction == "Start") or (torrentaction == "Stop"):
+			torrentmanager.processonetorrent(torrentid, torrentaction)
+		elif torrentaction == "Copy":
+			librarymanager.copyfiles(torrentmanager.getcopyactions(torrentid, "Test"))
+		elif torrentaction != "Refresh":
+			print "Unknown Torrent Update Action ", torrentaction
+		torrentmanager.refreshtorrentdata(torrentid)
+		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "refresh"))
+	else:
+		print "Updating unknown torrent ", torrentid
+
+
+
 # ===============================================================================================
 # Refresh an existing Torrent page with Configuration Data, after saving new instructions
 # ===============================================================================================

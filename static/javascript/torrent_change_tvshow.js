@@ -12,13 +12,13 @@ function updateTVShowSeasons(selectedseason)
             data: JSON.stringify({'tvshow':tvshowname}),
             dataType:'json',
             beforeSend: function() {
-                $('.ajaxloader').show();
+                $('#ajaxloader').show();
             },
             success: function(data){
                 updateTVShowSeasonsList(data.seasons, selectedseason);
             },
             complete: function(){
-                $('.ajaxloader').hide();
+                $('#ajaxloader').hide();
             }
         });
     } else {
