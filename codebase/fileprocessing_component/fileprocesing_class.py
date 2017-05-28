@@ -112,15 +112,12 @@ class DefineLibraryManager:
 		if copyactions == []:
 			print "No copy actions to perform this time"
 		else:
-#			FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
 			for action in copyactions:
 				copysource = FileSystem.createpathfromlist(action['source'])
 				rawtarget = FileSystem.createpathfromlist(action['target'])
 				copytarget = FileSystem.concatenatepaths(self.mountpoint, rawtarget)
-				copyinstruction = {'source': copysource, 'target': copytarget, 'description': rawtarget, 'status': 'Queued'}
+				copyinstruction = {'source': copysource, 'target': copytarget, 'description': rawtarget, 'status': 'queued'}
 				self.copyactions.append(copyinstruction)
-#				FileSystem.copyfile(copysource, copytarget)
-#			FileSystem.unmountnetworkdrive(self.mountpoint)
 
 
 # =========================================================================================
@@ -128,11 +125,12 @@ class DefineLibraryManager:
 	def getcopystate(self):
 
 		copystates = []
+		description = "Connect to File Server" + "     ("+str(abs(self.connectionstatus+1))+"/10 attempts)"
 		if self.connectionstatus < 0:
-			description = "Connected to File Server"
+			status = "copied"
 		else:
-			description = "Connecting to File Server..."
-		copystate = {'description': description, 'status': "("+str(self.connectionstatus)+")"}
+			status = "copying"
+		copystate = {'description': description, 'status': status}
 		copystates.append(copystate)
 		for copyaction in self.copyactions:
 			copystate = {'description': copyaction['description'], 'status': copyaction['status']}
@@ -154,26 +152,30 @@ class DefineLibraryManager:
 			outcome = True
 		else:
 			for copyitem in self.copyactions:
-				if copyitem['status'] == "Copying...":
-					copyitem['status'] = "Copied!"
+				if copyitem['status'] == "copying":
+					copyitem['status'] = "copied"
+					outcome = True
 			anycopy = False
 			for copyitem in self.copyactions:
 				if anycopy == False:
-					if copyitem['status'] == "Queued":
+					if copyitem['status'] == "queued":
 						anycopy = True
-						copyitem['status'] = "Copying..."
+						copyitem['status'] = "copying"
 						FileSystem.copyfile(copyitem['source'], copyitem['target'])
+						outcome = True
 			if anycopy == False:
 				FileSystem.unmountnetworkdrive(self.mountpoint)
-			else:
 				outcome = True
 		return outcome
 
+
+
+# =========================================================================================
 
 	def attempttomount(self):
 
 		self.connectionstatus = self.connectionstatus + 1
 		outcome = FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
 		if outcome == 0:
-			self.connectionstatus = 0 - self.connectionstatus
+			self.connectionstatus = 0 - 1 - self.connectionstatus
 

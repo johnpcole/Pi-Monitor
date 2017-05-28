@@ -2,19 +2,20 @@ import os as OperatingSystem
 
 def mountnetworkdrive(mountpoint, networkpath, username, password):
 	if concatenatepaths(" ", " ") == " / ":
-		OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
+		outcome = OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
 	else:
 		if username != "":
-			OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
+			outcome = OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
 		else:
-			OperatingSystem.system('NET USE '+mountpoint+' '+networkpath)
+			outcome = OperatingSystem.system('NET USE '+mountpoint+' '+networkpath)
+	return outcome
 
 def unmountnetworkdrive(mountpoint):
 	if concatenatepaths(" ", " ") == " / ":
-		OperatingSystem.system('sudo umount '+mountpoint)
+		outcome = OperatingSystem.system('sudo umount '+mountpoint)
 	else:
-		OperatingSystem.system('NET USE '+mountpoint+' /DELETE')
-
+		outcome = OperatingSystem.system('NET USE '+mountpoint+' /DELETE')
+	return outcome
 
 # ---------------------------------------------
 # Reads a file from disk and returns a list,

@@ -23,18 +23,18 @@ function interactTorrentCopy(torrentid)
             var copydata = data.copydata
             if (data.refreshmode == true) {
                 interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!")
-                var outputtext = ""
+                var outputtext = '<div class="dialogtitle">Copying Files...</div><div class="dialogsplitter"></div>'
                 $.each(copydata, function(index)
                 {
                     var currentitem = copydata[index]
-                    outputtext = outputtext + "<p>" + currentitem.description + "</p>"
-                    outputtext = outputtext + "<p>" + currentitem.status + "</p>"
+                    outputtext = outputtext + '<div class="dialogitemleft dialogitem">' + currentitem.description + '</div>'
+                    outputtext = outputtext + '<div class="dialogitemright dialogitem"><img src="./static/images/copy_'
+                    outputtext = outputtext + currentitem.status + '.png" alt="copy" /></div>'
                 });
-                rerenderText('copydialog', outputtext)
+                rerenderText('dialogcontent', outputtext)
             } else {
-                $('#copydialog').hide()
+                //$('#copydialog').hide()
             };
         }
     });
 };
-

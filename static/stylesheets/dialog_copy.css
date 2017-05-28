@@ -1,3 +1,64 @@
 div.copydialog {
+    margin: 100px auto;
+    padding: 7px 10px;
+    width: 500px;
+    /*height: 280px;*/
+    background-color: #FFFFCC;
+    overflow: hidden;
+    border-style: none;
+    vertical-align: top;
+    color: #000033;
+    /*box-shadow: 3px 3px 2px #AAAAAA;*/
+    outline: 0;
+}
 
+div.dialogsplitter {
+    height: 2px;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #000000;
+    margin: 0 auto;
+    padding: 0;
+    width: 490px;
+}
+
+div.dialogtitle {
+    width: 100%;
+    text-align: center;
+    padding: 2px 3px 6px 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+div.dialogitem {
+    font-size: 75%;
+    padding: 5px 4px 4px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #FFFFFF;
+}
+
+div.dialogitemleft {
+    width: 460px;
+    text-align: left;
+    /*background-color: #440000*/;
+}
+
+div.dialogitemright {
+    width: 24px;
+    text-align: right;
+    /*background-color: #004400*/;
+}
+
+div.dialogitem img {
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+    margin: -2px 0px 0px 0px;
 }
