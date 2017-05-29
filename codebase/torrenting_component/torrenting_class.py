@@ -184,7 +184,6 @@ class DefineTorrentManager:
 
 		torrentobject = self.gettorrentobject(torrentid)
 		if torrentobject.getfinished() == 'Completed':
-			print "Performing Copy for ", torrentid
 			outcome = torrentobject.getcopyactions()
 		else:
 			outcome = []

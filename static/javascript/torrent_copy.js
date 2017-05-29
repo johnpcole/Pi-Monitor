@@ -6,6 +6,7 @@ function copyTorrent()
     var torrentid = pathname.substring(9);
     changeButtonState('CloseCopy',"Disable");
     $('#copydialog').show();
+    var copycounter = setInterval(function() { updateCopyProgress(); }, 1000);
     interactTorrentCopy(torrentid);
 };
 
@@ -66,24 +67,43 @@ function updateCopyDialog(copydata)
                 outputtext = outputtext + '(Attempt ' + currentitem.progress + ")"
             };
         };
-
         if (currentitem.status == "copying") {
             if ((currentitem.description != "Connect File Server") && (currentitem.description != "Disconnect File Server")) {
-                outputtext = outputtext + '(~' + currentitem.progress + "%)"
+                rerenderText('copyprogress', 0);
+                rerenderText('copystep', (parseInt(110000000000 / currentitem.progress)).toFixed(0));
+                outputtext = outputtext + '(~<span id="progressoutput">0</span>%)'
             };
         };
-
         outputtext = outputtext + '&nbsp;<img src="./static/images/copy_' + currentitem.status + '.png" />';
         rerenderText(currentobject, outputtext);
     });
 };
 
 
+// Close torrent copy dialog
+
+function updateCopyProgress()
+{
+    var tileData = document.getElementById('progressoutput');
+    if (tileData != null) {
+        var currentprogress = parseInt(getText('copyprogress'));
+        var progressstep = parseInt(getText('copystep'));
+        currentprogress = currentprogress + progressstep;
+        if (currentprogress > 10000) { currentprogress = 10000};
+        rerenderText('copyprogress', currentprogress);
+        tileData.innerHTML = (currentprogress/100).toFixed(0);
+    };
+};
 
 
 // Close torrent copy dialog
 
 function closeCopyDialog()
 {
+    //clearInterval(copycounter);
     $('#copydialog').hide();
 };
+
+
+
+
