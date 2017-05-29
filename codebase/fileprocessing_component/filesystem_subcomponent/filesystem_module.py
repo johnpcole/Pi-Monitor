@@ -223,6 +223,8 @@ def copyfile(source, target):
 	print "======================================================================"
 
 	if concatenatepaths(" ", " ") == " / ":
-		OperatingSystem.system('cp "' + source + '" "' + target + '"')
+		outcome = OperatingSystem.system('cp "' + source + '" "' + target + '"')
 	else:
-		OperatingSystem.system('copy "' + source + '" "' + target + '"')
+		outcome = OperatingSystem.system('copy "' + source + '" "' + target + '"')
+
+	return outcome
