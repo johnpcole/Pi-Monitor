@@ -112,17 +112,20 @@ class DefineLibraryManager:
 		else:
 			self.copyactions = []
 
-			copyinstruction = {'source': '[CONNECT]', 'target': 0, 'description': 'Connect File Server', 'status': 'queued'}
+			copyinstruction = {'source': '[CONNECT]', 'target': '', 'description': 'Connect File Server',
+																					'status': 'queued', 'progress': 0}
 			self.copyactions.append(copyinstruction)
 
 			for action in copyactions:
 				copysource = FileSystem.createpathfromlist(action['source'])
 				rawtarget = FileSystem.createpathfromlist(action['target'])
 				copytarget = FileSystem.concatenatepaths(self.mountpoint, rawtarget)
-				copyinstruction = {'source': copysource, 'target': copytarget, 'description': rawtarget, 'status': 'queued'}
+				copyinstruction = {'source': copysource, 'target': copytarget, 'description': rawtarget,
+																		'status': 'queued', 'progress': action['size']}
 				self.copyactions.append(copyinstruction)
 
-			copyinstruction = {'source': '[DISCONNECT]', 'target': 0, 'description': 'Disconnect File Server', 'status': 'queued'}
+			copyinstruction = {'source': '[DISCONNECT]', 'target': '', 'description': 'Disconnect File Server',
+																					'status': 'queued', 'progress': 0}
 			self.copyactions.append(copyinstruction)
 
 
@@ -133,10 +136,8 @@ class DefineLibraryManager:
 		copystates = []
 		for copyaction in self.copyactions:
 			outputdescription = copyaction['description']
-			if (copyaction['source'])[:1] == "[":
-				if copyaction['target'] != 0:
-					outputdescription = outputdescription + " (Attempt " + str(copyaction['target']) + ")"
-			copystate = {'description': outputdescription, 'status': copyaction['status']}
+			copystate = {'description': copyaction['description'], 'status': copyaction['status'],
+																					'progress': copyaction['progress']}
 			copystates.append(copystate)
 
 		return copystates
@@ -162,7 +163,7 @@ class DefineLibraryManager:
 					if copyitem['status'] == "queued":
 						copyitem['status'] = "copying"
 						if (copyitem['source'])[-8:] == "CONNECT]":
-							copyitem['target'] = copyitem['target'] + 1
+							copyitem['progress'] = copyitem['progress'] + 1
 						continueprocessing = True
 
 		if actionoutcome == True:

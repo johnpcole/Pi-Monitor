@@ -1,6 +1,6 @@
 from filedata_subcomponent import filedata_module as FileData
 from ...functions_component import functions_module as Functions
-from operator import itemgetter, attrgetter, methodcaller
+from operator import attrgetter
 
 
 class DefineTorrentItem:
@@ -98,8 +98,7 @@ class DefineTorrentItem:
 		for fileitem in filedata:
 			existingfile = self.getfileobject(fileitem['index'])
 			if existingfile is None:
-				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'],
-																			Functions.sanitisesize(fileitem['size'])))
+				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'], fileitem['size']))
 		self.files = sorted(self.files, key=attrgetter('filetype'), reverse=True)
 
 # =========================================================================================
@@ -464,6 +463,7 @@ class DefineTorrentItem:
 		for file in self.files:
 			filedestination = self.getdestination(file)
 			if filedestination != []:
-				instruction = {'source': self.getlocation() + file.getpath(), 'target': filedestination}
+				instruction = {'source': self.getlocation() + file.getpath(), 'target': filedestination,
+																							'size': file.getrawsize()}
 				outcome.append(instruction)
 		return outcome

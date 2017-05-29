@@ -3,10 +3,10 @@
 function copyTorrent()
 {
     var pathname = window.location.pathname;
-    var torrentid = pathname.substring(9)
-    changeButtonState('CloseCopy',"Disable")
-    $('#copydialog').show()
-    interactTorrentCopy(torrentid)
+    var torrentid = pathname.substring(9);
+    changeButtonState('CloseCopy',"Disable");
+    $('#copydialog').show();
+    interactTorrentCopy(torrentid);
 };
 
 
@@ -21,29 +21,69 @@ function interactTorrentCopy(torrentid)
         data: JSON.stringify({'copyinstruction':torrentid}),
         dataType:'json',
         success: function(data){
-            var copydata = data.copydata
-                var outputtext = ''
-                $.each(copydata, function(index)
-                {
-                    var currentitem = copydata[index]
-                    outputtext = outputtext + '<div class="dialogitemleft dialogitem">' + currentitem.description + '</div>'
-                    outputtext = outputtext + '<div class="dialogitemright dialogitem"><img src="./static/images/copy_'
-                    outputtext = outputtext + currentitem.status + '.png" alt="copy" /></div>'
-                });
-                rerenderText('dialogcontent', outputtext)
-            if (data.refreshmode == true) {
-                interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!")
+            if (torrentid != "!!! CONTINUE EXISTING COPY PROCESS !!!") {
+                populateCopyDialog(data.copydata);
             } else {
-                changeButtonState('CloseCopy',"Enable")
+                updateCopyDialog(data.copydata);
+            };
+            if (data.refreshmode == true) {
+                interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!");
+            } else {
+                changeButtonState('CloseCopy',"Enable");
             };
         }
     });
 };
 
 
+// Initial population of copy dialog
+
+function populateCopyDialog(copydata)
+{
+    var outputtext = '';
+    $.each(copydata, function(index)
+    {
+        var currentitem = copydata[index];
+        outputtext = outputtext + '<div class="dialogitemleft dialogitem">' + currentitem.description + '</div>';
+        outputtext = outputtext + '<div id="copydialog-' + index + '" class="dialogitemright dialogitem">';
+        outputtext = outputtext + '&nbsp;<img src="./static/images/copy_' + currentitem.status + '.png" /></div>';
+    });
+    rerenderText('dialogcontent', outputtext);
+};
+
+
+// Update population of copy dialog
+
+function updateCopyDialog(copydata)
+{
+    $.each(copydata, function(index)
+    {
+        var currentitem = copydata[index]
+        currentobject = 'copydialog-' + index.toString()
+        outputtext = ''
+        if (currentitem.status != "queued") {
+            if ((currentitem.description == "Connect File Server") || (currentitem.description == "Disconnect File Server")) {
+                outputtext = outputtext + '(Attempt ' + currentitem.progress + ")"
+            };
+        };
+
+        if (currentitem.status == "copying") {
+            if ((currentitem.description != "Connect File Server") && (currentitem.description != "Disconnect File Server")) {
+                outputtext = outputtext + '(~' + currentitem.progress + "%)"
+            };
+        };
+
+        outputtext = outputtext + '&nbsp;<img src="./static/images/copy_' + currentitem.status + '.png" />';
+        rerenderText(currentobject, outputtext);
+    });
+};
+
+
+
+
 // Close torrent copy dialog
 
 function closeCopyDialog()
 {
-    $('#copydialog').hide()
+    $('#copydialog').hide();
 };

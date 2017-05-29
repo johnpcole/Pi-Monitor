@@ -180,10 +180,10 @@ class DefineTorrentManager:
 
 # =========================================================================================
 
-	def getcopyactions(self, torrentid, copymode = 'Real'):
+	def getcopyactions(self, torrentid):
 
 		torrentobject = self.gettorrentobject(torrentid)
-		if (torrentobject.getfinished() == 'Completed') or (copymode == 'Test'):
+		if torrentobject.getfinished() == 'Completed':
 			print "Performing Copy for ", torrentid
 			outcome = torrentobject.getcopyactions()
 		else:

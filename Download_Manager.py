@@ -96,7 +96,7 @@ def copytorrent():
 	torrentid = rawdata['copyinstruction']
 	if torrentid != "!!! CONTINUE EXISTING COPY PROCESS !!!":
 		if torrentmanager.validatetorrentid(torrentid) == True:
-			librarymanager.queuefilecopy(torrentmanager.getcopyactions(torrentid, "Test"))
+			librarymanager.queuefilecopy(torrentmanager.getcopyactions(torrentid))
 		else:
 			print "Copying unknown torrent ", torrentid
 		refreshmode = True
@@ -175,10 +175,13 @@ def addnewtorrent():
 
 
 def wastetime():
-	for i in range(0, 100):
-		print i
-		for j in range(0, 1):#1000000):
-			pass
+	if FileManager.getwebhostconfig() == False:
+		for i in range(0, 100):
+			print str(i), "%"
+			for j in range(0, 1000000):
+				pass
+
+#-----------------------------------------------
 
 
 

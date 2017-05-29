@@ -50,21 +50,21 @@ div.dialogitem {
 }
 
 div.dialogitemleft {
-    width: 460px;
+    width: 396px;
     text-align: left;
-    /*background-color: #440000*/;
+    background-color: #aaffff;
 }
 
 div.dialogitemright {
-    width: 24px;
+    width: 88px;
     text-align: right;
-    /*background-color: #004400*/;
+    background-color: #ffaaff;
 }
 
 div.dialogitem img {
     display: inline-block;
-    height: 17px;
-    width: 17px;
-    margin: -2px 0px 0px 0px;
+    height: 16px;
+    width: 16px;
+    margin: -2px 0px -4px 4px;
 }
 
