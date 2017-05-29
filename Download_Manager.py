@@ -177,7 +177,7 @@ def addnewtorrent():
 def wastetime():
 	for i in range(0, 100):
 		print i
-		for j in range(0, 100000):
+		for j in range(0, 1):#1000000):
 			pass
 
 

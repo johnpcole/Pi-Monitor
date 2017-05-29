@@ -1,10 +1,11 @@
-// Edit torrent configuration
+// Invoke Torrent File Copy
 
 function copyTorrent()
 {
-    $('#copydialog').show()
     var pathname = window.location.pathname;
     var torrentid = pathname.substring(9)
+    changeButtonState('CloseCopy',"Disable")
+    $('#copydialog').show()
     interactTorrentCopy(torrentid)
 };
 
@@ -21,9 +22,7 @@ function interactTorrentCopy(torrentid)
         dataType:'json',
         success: function(data){
             var copydata = data.copydata
-            if (data.refreshmode == true) {
-                interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!")
-                var outputtext = '<div class="dialogtitle">Copying Files...</div><div class="dialogsplitter"></div>'
+                var outputtext = ''
                 $.each(copydata, function(index)
                 {
                     var currentitem = copydata[index]
@@ -32,9 +31,19 @@ function interactTorrentCopy(torrentid)
                     outputtext = outputtext + currentitem.status + '.png" alt="copy" /></div>'
                 });
                 rerenderText('dialogcontent', outputtext)
+            if (data.refreshmode == true) {
+                interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!")
             } else {
-                //$('#copydialog').hide()
+                changeButtonState('CloseCopy',"Enable")
             };
         }
     });
+};
+
+
+// Close torrent copy dialog
+
+function closeCopyDialog()
+{
+    $('#copydialog').hide()
 };

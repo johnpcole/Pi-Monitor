@@ -72,13 +72,19 @@
 </div>
 
 <div id="ajaxloader" class="screenblock"><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div>
-<div id="copydialog" class="screenblock" style="display: none;"><div id="dialogcontent" class="copydialog"></div></div>
+<div id="copydialog" class="screenblock" style="display: none;">
+    <div class="copydialog">
+        <div class="dialogtitle">Copying Files...</div>
+        <div class="dialogsplitter"></div>
+        <div id="dialogcontent" class="dialogcontent"></div>
+        <div class="dialogcontent"><button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();">Close</button></div>
+    </div>
+</div>
 <div style="display: none;">
     <img src="./static/images/copy_queued.png" />
     <img src="./static/images/copy_copying.png" />
     <img src="./static/images/copy_copied.png" />
     <img src="./static/images/copy_failed.png" />
 </div>
-
 
     {% endblock %}
