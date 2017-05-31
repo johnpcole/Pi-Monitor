@@ -2,10 +2,8 @@
 
 $(document).ready(function ()
 {
-    changeButtonState('Edit', 'Show');
-    changeButtonState('Save', 'Hide');
-    changeButtonState('Cancel', 'Hide');
     updateStartStopButtons(getImageName('Status').substr(8));
+    changeAreasState('readmodebuttons', 'Show');
 
     // Refresh the tiles every minute.
     setInterval(function()
@@ -40,7 +38,6 @@ function updateTorrentState(action)
 };
 
 
-
 // Update the displayed data
 
 function updateTorrentStateDisplay(dataitem)
@@ -48,24 +45,6 @@ function updateTorrentStateDisplay(dataitem)
     rerenderImage("Status", "status_"+dataitem.status);
     rerenderText("Progress", dataitem.progress);
     updateStartStopButtons(dataitem.status);
+    updateCopyButton(dataitem.status);
 };
 
-
-
-function updateStartStopButtons(torrentstate)
-{
-    suffix = torrentstate.substr(torrentstate.length-6);
-    if (suffix == "active") {
-        changeButtonState('Start', 'Hide');
-        changeButtonState('Stop', 'Show');
-    } else if (suffix == "queued") {
-        changeButtonState('Start', 'Hide');
-        changeButtonState('Stop', 'Show');
-    } else if (suffix == "paused"){
-        changeButtonState('Stop', 'Hide');
-        changeButtonState('Start', 'Show');
-    } else {
-        changeButtonState('Stop', 'Hide');
-        changeButtonState('Start', 'Hide');
-    };
-};

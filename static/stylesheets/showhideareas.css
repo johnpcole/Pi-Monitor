@@ -10,12 +10,27 @@ div.readonlyfields {
     overflow: hidden;
 }
 
-div.tvshowonlyfields, div.movieonlyfields, div.unknownonlyfields, div.ignoreonlyfields, div.copyonlyfields {
+div.tvshowonlyfields, div.movieonlyfields, div.unknownonlyfields {
     margin: 0;
     padding: 0;
     display: none;
     overflow: hidden;
 }
+
+div.ignoreonlyfields, div.copyonlyfields {
+    margin: 0;
+    padding: 0;
+    display: none;
+    overflow: hidden;
+}
+
+div.editmodebuttons, div.readmodebuttons {
+    margin: 0;
+    padding: 0;
+    display: none;
+    overflow: hidden;
+}
+
 
 div.narrowspacer {
     width: 100%;

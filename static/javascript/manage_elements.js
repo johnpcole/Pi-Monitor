@@ -85,7 +85,7 @@ function getImageName(fieldname)
     if (tileData != null) {
         var fullpath = tileData.src;
         var pathsplit = fullpath.split('/');
-        var filename = pathsplit[pathsplit.length -1];
+        var filename = pathsplit[pathsplit.length-1];
         outcome = filename.split('.')[0];
     } else {
         alert("GetImageName: "+ fieldname);

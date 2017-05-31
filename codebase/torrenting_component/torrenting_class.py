@@ -143,7 +143,7 @@ class DefineTorrentManager:
 		outcome = self.delugeclient.openconnection()
 		newid = self.delugeclient.addtorrentlink(newurl)
 		newobject = self.addtorrentobject(newid)
-		self.refreshtorrentdata(newobject)
+		self.refreshtorrentdata(newid)
 		outcome = self.delugeclient.closeconnection()
 
 		return newid

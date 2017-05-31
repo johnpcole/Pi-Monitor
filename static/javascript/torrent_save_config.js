@@ -164,10 +164,6 @@ function displayReadMode()
 {
     changeAreasState('editmodefields', 'Hide');
     changeAreasState('readonlyfields', 'Show');
-    changeButtonState('Save', 'Hide');
-    changeButtonState('Cancel', 'Hide');
-    changeButtonState('Edit', 'Show');
-    changeButtonState('Exit', 'Show');
-    changeButtonState('Copy', 'Show');
-    changeButtonState('Delete', 'Show');
+    changeAreasState('editmodebuttons', 'Hide');
+    changeAreasState('readmodebuttons', 'Show');
 };

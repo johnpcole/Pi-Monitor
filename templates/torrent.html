@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block javascript %}
+    <script src="./static/javascript/torrent_action_buttons.js"></script>
     <script src="./static/javascript/torrent_change_tvshow.js"></script>
     <script src="./static/javascript/torrent_change_torrenttype.js"></script>
     <script src="./static/javascript/torrent_change_fileoutcome.js"></script>
@@ -60,18 +61,17 @@
             <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
         </div>
     </div>{% endfor %}</div><div class="actionbuttonsgroup">
-    <button type="button" id="Exit" onclick="javascript:window.location.replace('/');"><img src="./static/images/torrentaction_exit.png" alt="exit button" />
-    </button><button type="button" id="Cancel" onclick="javascript:cancelTorrentConfiguration();"><img src="./static/images/torrentaction_cancel.png" alt="commit button" />
+    <div class="readmodebuttons"><button type="button" id="Exit" onclick="javascript:window.location.replace('/');"><img src="./static/images/torrentaction_exit.png" alt="exit button" />
     </button><button type="button" id="Stop" onclick="javascript:updateTorrentState('Stop');"><img src="./static/images/torrentaction_stop.png" alt="stop button" />
     </button><button type="button" id="Start" onclick="javascript:updateTorrentState('Start');"><img src="./static/images/torrentaction_start.png" alt="start button" />
     </button><button type="button" id="Edit" onclick="javascript:editTorrentConfiguration();"><img src="./static/images/torrentaction_edit.png" alt="edit button" />
+    </button><button type="button" id="Copy" onclick="javascript:copyTorrent();"><img src="./static/images/torrentaction_copy.png" alt="copy button" />
+    </button><button type="button" id="Delete" onclick="javascript:updateTorrent('Delete');"><img src="./static/images/torrentaction_delete.png" alt="delete button" />
+    </button></div><div class="editmodebuttons"><button type="button" id="Cancel" onclick="javascript:cancelTorrentConfiguration();"><img src="./static/images/torrentaction_cancel.png" alt="commit button" />
     </button><button type="button" id="Save" onclick="javascript:saveTorrentConfiguration();"><img src="./static/images/torrentaction_commit.png" alt="commit button" />
-    </button><button type="button" id="Copy" onclick="javascript:copyTorrent();">Copy
-    </button><button type="button" id="Delete" onclick="javascript:updateTorrent('Delete');">Delete
-    </button>
+    </button></div>
 </div>
 
-<div id="ajaxloader" class="screenblock"><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div>
 <div id="copydialog" class="screenblock" style="display: none;">
     <div class="copydialog">
         <div class="dialogtitle">Copying Files...</div>

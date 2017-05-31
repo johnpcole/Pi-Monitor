@@ -10,7 +10,7 @@ librarymanager = FileManager.createmanager(FileManager.getlibraryconnectionconfi
 torrentmanager = TorrentManager.createmanager(FileManager.gettorrentconnectionconfig())
 torrentmanager.refreshtorrentlist()
 torrentmanager.setconfigs(FileManager.loadconfigs())
-
+webmode = FileManager.getwebhostconfig()
 
 
 website = Webserver(__name__)
@@ -169,13 +169,13 @@ def addnewtorrent():
 	newid = torrentmanager.addnewtorrenttoclient(rawdata['newurl'])
 	wastetime()
 	#torrentmanager.refreshtorrentlist()
-	return Jsondata(newid=newid)
+	return Jsondata(newtorrentid=newid)
 
 #-----------------------------------------------
 
 
 def wastetime():
-	if FileManager.getwebhostconfig() == False:
+	if webmode == False:
 		for i in range(0, 100):
 			print str(i), "%"
 			for j in range(0, 100):
@@ -185,7 +185,7 @@ def wastetime():
 
 
 
-if FileManager.getwebhostconfig() == True:
+if webmode == True:
 	website.run(debug=False, host='0.0.0.0')
 else:
 	website.run(debug=True)

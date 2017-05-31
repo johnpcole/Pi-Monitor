@@ -9,6 +9,8 @@ $(document).ready(function ()
         //alert("hi")
         updateTorrentsList('Refresh');
     }, 10000);
+
+    $('#ajaxloader').hide();
 });
 
 

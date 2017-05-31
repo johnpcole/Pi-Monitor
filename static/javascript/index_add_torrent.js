@@ -9,9 +9,15 @@ function addTorrent()
         contentType: 'application/json',
         data: JSON.stringify({'newurl': getFieldValue('newurl')}),
         dataType:'json',
+        beforeSend: function() {
+            $('#ajaxloader').show();
+        },
         success: function(data)
         {
-            window.location.replace("/Torrent="+data.newid);
+            window.location.replace("/Torrent="+data.newtorrentid);
+        },
+        complete: function(){
+            $('#ajaxloader').hide();
         }
     });
 };
