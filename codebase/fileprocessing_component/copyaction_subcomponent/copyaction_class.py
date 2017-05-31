@@ -16,7 +16,11 @@ class DefineActionItem:
 
 	def getinfo(self):
 
-		outcome = {'description': self.description, 'status': self.status, 'progress': self.sizeorattempts}
+		if ((self.source)[-8:] == "CONNECT]") and (self.status == "copying"):
+			realstatus = "connecting"
+		else:
+			realstatus = self.status
+		outcome = {'description': self.description, 'status': realstatus, 'progress': self.sizeorattempts}
 
 		return outcome
 

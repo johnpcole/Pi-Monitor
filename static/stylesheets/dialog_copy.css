@@ -52,13 +52,13 @@ div.dialogitem {
 div.dialogitemleft {
     width: 396px;
     text-align: left;
-    background-color: #aaffff;
+    /*background-color: #aaffff;*/
 }
 
 div.dialogitemright {
     width: 88px;
     text-align: right;
-    background-color: #ffaaff;
+    /*background-color: #ffaaff;*/
 }
 
 div.dialogitem img {
