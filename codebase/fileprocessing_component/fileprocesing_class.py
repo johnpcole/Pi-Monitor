@@ -1,4 +1,5 @@
 from filesystem_subcomponent import filesystem_module as FileSystem
+from copyaction_subcomponent import copyaction_module as CopyAction
 
 class DefineLibraryManager:
 
@@ -112,33 +113,24 @@ class DefineLibraryManager:
 		else:
 			self.copyactions = []
 
-			copyinstruction = {'source': '[CONNECT]', 'target': '', 'description': 'Connect File Server',
-																					'status': 'queued', 'progress': 0}
-			self.copyactions.append(copyinstruction)
+			self.copyactions.append(CopyAction.createconnectaction())
 
 			for action in copyactions:
 				copysource = FileSystem.createpathfromlist(action['source'])
 				rawtarget = FileSystem.createpathfromlist(action['target'])
 				copytarget = FileSystem.concatenatepaths(self.mountpoint, rawtarget)
-				copyinstruction = {'source': copysource, 'target': copytarget, 'description': rawtarget,
-																		'status': 'queued', 'progress': action['size']}
-				self.copyactions.append(copyinstruction)
+				self.copyactions.append(CopyAction.createcopyaction(copysource, copytarget, action['size'], rawtarget))
 
-			copyinstruction = {'source': '[DISCONNECT]', 'target': '', 'description': 'Disconnect File Server',
-																					'status': 'queued', 'progress': 0}
-			self.copyactions.append(copyinstruction)
+			self.copyactions.append(CopyAction.createdisconnectaction())
 
 
 # =========================================================================================
 
-	def getcopystate(self):
+	def getcopyprocessinfo(self):
 
 		copystates = []
 		for copyaction in self.copyactions:
-			outputdescription = copyaction['description']
-			copystate = {'description': copyaction['description'], 'status': copyaction['status'],
-																					'progress': copyaction['progress']}
-			copystates.append(copystate)
+			copystates.append(copyaction.getinfo())
 
 		return copystates
 
@@ -146,24 +138,21 @@ class DefineLibraryManager:
 
 # =========================================================================================
 
-	def processfilecopy(self):
+	def processfilecopylist(self):
 
 		continueprocessing = False
 
-		actionoutcome = self.processfilecopyaction()
+		actionoutcome = self.processstartedfilecopyaction()
 
 		startnewitem = True
 		for copyitem in self.copyactions:
-			if copyitem['status'] == "copying":
+			if copyitem.getstatus() == "copying":
 				startnewitem = False
 
 		if startnewitem == True:
 			for copyitem in self.copyactions:
 				if continueprocessing == False:
-					if copyitem['status'] == "queued":
-						copyitem['status'] = "copying"
-						if (copyitem['source'])[-8:] == "CONNECT]":
-							copyitem['progress'] = copyitem['progress'] + 1
+					if copyitem.startaction() == True:
 						continueprocessing = True
 
 		if actionoutcome == True:
@@ -175,29 +164,20 @@ class DefineLibraryManager:
 
 # =========================================================================================
 
-	def processfilecopyaction(self):
+	def processstartedfilecopyaction(self):
 
 		anychange = False
 		for copyitem in self.copyactions:
-			if copyitem['status'] == "copying":
+			if copyitem.getstatus() == "copying":
 				anychange = True
 
-				if copyitem['source'] == "[CONNECT]":
-					if FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password) == 0:
-						copyitem['status'] = "copied"
-					else:
-						copyitem['target'] = copyitem['target'] + 1
-
-				elif copyitem['source'] == "[DISCONNECT]":
-					if FileSystem.unmountnetworkdrive(self.mountpoint) == 0:
-						copyitem['status'] = "copied"
-					else:
-						copyitem['target'] = copyitem['target'] + 1
-
+				if copyitem.getactiontype() == "Connect":
+					actionoutcome = FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
+				elif copyitem.getactiontype() == "Disconnect":
+					actionoutcome = FileSystem.unmountnetworkdrive(self.mountpoint)
 				else:
-					if FileSystem.copyfile(copyitem['source'], copyitem['target']) == 0:
-						copyitem['status'] = "copied"
-					else:
-						copyitem['status'] = "failed"
+					actionoutcome = FileSystem.copyfile(copyitem.getsource(), copyitem.gettarget())
+
+				copyitem.updateaction(actionoutcome)
 
 		return anychange

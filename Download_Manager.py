@@ -102,8 +102,8 @@ def copytorrent():
 		refreshmode = True
 	else:
 		wastetime()
-		refreshmode = librarymanager.processfilecopy()
-	return Jsondata(copydata = librarymanager.getcopystate(), refreshmode = refreshmode)
+		refreshmode = librarymanager.processfilecopylist()
+	return Jsondata(copydata = librarymanager.getcopyprocessinfo(), refreshmode = refreshmode)
 
 
 
@@ -178,7 +178,7 @@ def wastetime():
 	if FileManager.getwebhostconfig() == False:
 		for i in range(0, 100):
 			print str(i), "%"
-			for j in range(0, 1000000):
+			for j in range(0, 100):
 				pass
 
 #-----------------------------------------------
