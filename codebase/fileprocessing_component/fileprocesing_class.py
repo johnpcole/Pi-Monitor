@@ -181,3 +181,4 @@ class DefineLibraryManager:
 				copyitem.updateaction(actionoutcome)
 
 		return anychange
+

@@ -45,16 +45,28 @@ input.movieyearfield {
 }
 
 input.movienamefield {
-    width: 682px;
+    width: 367px;
+}
+
+@media screen and (min-width: 1070px) {
+    input.movienamefield {
+        width: 682px;
+    }
 }
 
 select.tvshownamefield {
-    width: 540px;
+    width: 367px;
+}
+@media screen and (min-width: 1070px) {
+    select.tvshownamefield {
+        width: 540px;
+    }
 }
 
 select.tvshowseasonfield {
     width: 150px;
 }
+
 
 select.fileepisode {
     width: 115px;
@@ -63,3 +75,4 @@ select.fileepisode {
 select.filesubtitle {
     width: 110px;
 }
+
