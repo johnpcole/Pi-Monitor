@@ -10,13 +10,11 @@ function editTorrentConfiguration()
 
 function getTorrentConfig()
 {
-    var pathname = window.location.pathname;
-    var torrentid = pathname.substring(9)
     $.ajax({
         url: 'EditTorrent',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({'torrentid':torrentid}),
+        data: JSON.stringify({'torrentid':getCurrentTorrentId()}),
         dataType:'json',
         beforeSend: function() {
             $('#ajaxloader').show();

@@ -2,12 +2,20 @@
 
 function copyTorrent()
 {
-    var pathname = window.location.pathname;
-    var torrentid = pathname.substring(9);
-    changeButtonState('CloseCopy',"Disable");
+    changeButtonState('CloseCopy',"Enable");
+    changeButtonState('ConfirmCopy',"Enable");
     $('#copydialog').show();
     var copycounter = setInterval(function() { updateCopyProgress(); }, 1000);
-    interactTorrentCopy(torrentid);
+    interactTorrentCopy(getCurrentTorrentId());
+};
+
+
+// Confirm Copy
+function confirmCopy()
+{
+    changeButtonState('CloseCopy',"Disable");
+    changeButtonState('ConfirmCopy',"Disable");
+    interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!");
 };
 
 
@@ -30,7 +38,9 @@ function interactTorrentCopy(torrentid)
             if (data.refreshmode == true) {
                 interactTorrentCopy("!!! CONTINUE EXISTING COPY PROCESS !!!");
             } else {
-                changeButtonState('CloseCopy',"Enable");
+                if (torrentid == "!!! CONTINUE EXISTING COPY PROCESS !!!") {
+                    changeButtonState('CloseCopy',"Enable");
+                };
             };
         }
     });

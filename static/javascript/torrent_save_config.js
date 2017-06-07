@@ -20,13 +20,11 @@ function saveTorrentConfiguration()
 
 function updateTorrentConfig(action)
 {
-    var pathname = window.location.pathname;
-    var torrentid = pathname.substring(9)
     $.ajax({
         url: 'ReconfigureTorrent',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({'torrentid':torrentid, 'newconfiguration':action}),
+        data: JSON.stringify({'torrentid':getCurrentTorrentId(), 'newconfiguration':action}),
         dataType:'json',
         beforeSend: function() {
             $('#ajaxloader').show();

@@ -99,11 +99,28 @@ def copytorrent():
 			librarymanager.queuefilecopy(torrentmanager.getcopyactions(torrentid))
 		else:
 			print "Copying unknown torrent ", torrentid
-		refreshmode = True
+		refreshmode = False
 	else:
 		wastetime()
 		refreshmode = librarymanager.processfilecopylist()
 	return Jsondata(copydata = librarymanager.getcopyprocessinfo(), refreshmode = refreshmode)
+
+
+
+#===============================================================================================
+# Delete Torrent
+#===============================================================================================
+
+@website.route('/DeleteTorrent', methods=['POST'])
+def deletetorrent():
+
+	rawdata = Webpost.get_json()
+	torrentid = rawdata['deleteinstruction']
+	if torrentmanager.validatetorrentid(torrentid) == True:
+		torrentmanager.deletetorrent(torrentid)
+	else:
+		print "Deleting unknown torrent ", torrentid
+	return Jsondata(deletedata = "Done")
 
 
 

@@ -8,7 +8,7 @@ $(document).ready(function ()
     // Refresh the tiles every minute.
     setInterval(function()
     {
-        if (getAreaState('copydialog') == 'Hidden') {
+        if ((getAreaState('copydialog') == 'Hidden') && (getAreaState('deletedialog') == 'Hidden')) {
             updateTorrentState('Refresh');
         };
     }, 10000);
@@ -17,18 +17,25 @@ $(document).ready(function ()
 });
 
 
+// Return the current torrent id
+
+function getCurrentTorrentId()
+{
+    var pathname = window.location.pathname;
+    var torrentid = pathname.substring(9);
+    return torrentid;
+};
+
 
 // Ajax call for all torrent downloading data
 
 function updateTorrentState(action)
 {
-    var pathname = window.location.pathname;
-    var torrentid = pathname.substring(9)
     $.ajax({
         url: 'UpdateTorrent',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({'torrentid':torrentid, 'torrentaction':action}),
+        data: JSON.stringify({'torrentid':getCurrentTorrentId(), 'torrentaction':action}),
         dataType:'json',
         success: function(data)
         {
@@ -47,4 +54,5 @@ function updateTorrentStateDisplay(dataitem)
     updateStartStopButtons(dataitem.status);
     updateCopyButton(dataitem.status);
 };
+
 
