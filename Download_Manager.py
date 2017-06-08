@@ -117,7 +117,7 @@ def deletetorrent():
 	rawdata = Webpost.get_json()
 	torrentid = rawdata['deleteinstruction']
 	if torrentmanager.validatetorrentid(torrentid) == True:
-		torrentmanager.deletetorrent(torrentid)
+		torrentmanager.processonetorrent(torrentid, "Delete")
 	else:
 		print "Deleting unknown torrent ", torrentid
 	return Jsondata(deletedata = "Done")
