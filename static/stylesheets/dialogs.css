@@ -17,6 +17,12 @@ div.dialogcontent {
     padding: 0;
 }
 
+div.dialogactions {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
 div.dialogsplitter {
     height: 2px;
     border-style: solid;
@@ -35,6 +41,7 @@ div.dialogtitle {
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
+    position: relative;
 }
 
 div.dialogitem {
@@ -59,6 +66,12 @@ div.dialogitemright {
     width: 88px;
     text-align: right;
     /*background-color: #ffaaff;*/
+}
+
+div.dialogitemfull {
+    width: 100%;
+    text-align: center;
+    /*background-color: #ffffaa;*/
 }
 
 div.dialogitem img {

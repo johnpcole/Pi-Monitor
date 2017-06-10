@@ -195,7 +195,7 @@ def wastetime():
 	if webmode == False:
 		for i in range(0, 100):
 			print str(i), "%"
-			for j in range(0, 1000000):
+			for j in range(0, 10000):
 				pass
 
 #-----------------------------------------------

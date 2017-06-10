@@ -75,17 +75,18 @@
 
 <div id="copydialog" class="screenblock" style="display: none;">
     <div class="dialog">
-        <div class="dialogtitle">Copying Files...</div>
+        <div class="dialogtitle">Copying Files...<button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
         <div class="dialogsplitter"></div>
         <div id="dialogcontent" class="dialogcontent"></div>
-        <div class="dialogcontent"><button type="button" id="ConfirmCopy" onclick="javascript:confirmCopy();">Go!</button><button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();">Close</button></div>
+        <div class="dialogactions"><button type="button" id="ConfirmCopy" onclick="javascript:confirmCopy();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
     </div>
 </div>
 <div id="deletedialog" class="screenblock" style="display: none;">
     <div class="dialog">
-        <div class="dialogtitle">Delete Torrent?</div>
+        <div class="dialogtitle">Deleting Torrent...<button type="button" onclick="javascript:cancelDelete();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
         <div class="dialogsplitter"></div>
-        <div class="dialogcontent"><button type="button" onclick="javascript:confirmDelete();">Delete</button><button type="button" onclick="javascript:cancelDelete();">Dont Delete</button></div>
+        <div class="dialogcontent"><div class="dialogitem dialogitemfull">Do you want to delete this torrent and all its files?</div></div>
+        <div class="dialogactions"><button type="button" onclick="javascript:confirmDelete();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
     </div>
 </div>
 <div style="display: none;">

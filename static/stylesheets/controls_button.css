@@ -87,3 +87,55 @@ div.actionbuttonsgroup button:disabled img {
     filter: brightness(9) saturate(9);
 }
 
+
+
+
+/* =================================================== */
+/* Button in dialog                                    */
+/* =================================================== */
+
+div.dialogtitle button {
+    width: 15px;
+    height: 15px;
+    background-color: #FFFFCC;
+    position: absolute;
+    top: 0px;
+    right: 2px;
+}
+
+div.dialogtitle button img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+div.dialogtitle button:disabled img {
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
+
+div.dialogactions button {
+    width: 22px;
+    height: 22px;
+    background-color: #FFFFCC;
+    border: 1px solid #000033;
+    padding: 2px;
+    margin: 10px 0px 0px 0px;
+}
+
+div.dialogactions button:disabled {
+    border: 1px solid #FFFFFF;
+}
+
+div.dialogactions button img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+div.dialogactions button:disabled img {
+    -webkit-filter: brightness(9) saturate(9);
+    filter: brightness(9) saturate(9);
+}
