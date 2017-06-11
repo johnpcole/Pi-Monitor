@@ -100,30 +100,31 @@ class DefineDelugeInterface:
 
 # =========================================================================================
 
-	def pausetorrent(self, torrentids):
+	def pausetorrent(self, torrentid):
 
-		if torrentids == "ALL":
+		if torrentid == "ALL":
 			outcome = self.delugeinterface.call('core.pause_all_torrents')
 		else:
-			outcome = self.delugeinterface.call('core.pause_torrent', torrentids)
+			outcome = self.delugeinterface.call('core.pause_torrent', [torrentid])
 		return outcome
 
 # =========================================================================================
 
-	def resumetorrent(self, torrentids):
+	def resumetorrent(self, torrentid):
 
-		if torrentids == "ALL":
+		if torrentid == "ALL":
 			outcome = self.delugeinterface.call('core.resume_all_torrents')
 		else:
-			outcome = self.delugeinterface.call('core.resume_torrent', torrentids)
+			outcome = self.delugeinterface.call('core.resume_torrent', [torrentid])
 		return outcome
 
 # =========================================================================================
 
 	def deletetorrent(self, torrentid):
 
-		return self.delugeinterface.call('core.remove_torrent', torrentid, True)
+		outcome =  self.delugeinterface.call('core.remove_torrent', torrentid, True)
 
+		return outcome
 
 
 

@@ -39,7 +39,7 @@ class DefineTorrentManager:
 					foundflag = True
 
 			if foundflag == False:
-				print "Deleting Torrent ", existingtorrent.getid()
+				print "Removing Torrent from Download-Manager: ", existingtorrent.getid()
 
 		self.torrents = cleanlist
 
@@ -48,7 +48,7 @@ class DefineTorrentManager:
 	def addtorrentobject(self, torrentid):
 
 		self.torrents.append(TorrentData.createitem(torrentid))
-		print "Adding Torrent ", torrentid
+		print "Adding Torrent to Download-Manager", torrentid
 
 		return self.gettorrentobject(torrentid)
 
@@ -134,7 +134,7 @@ class DefineTorrentManager:
 			if torrentobject is not None:
 				torrentobject.setsavedata(datavalues)
 			else:
-				print "Ignoring Saved Config for torrent ", datavalues[0]
+				print "Ignoring Saved Config for Torrent ", datavalues[0]
 
 # =========================================================================================
 
@@ -143,7 +143,7 @@ class DefineTorrentManager:
 		outcome = self.delugeclient.openconnection()
 		newid = self.delugeclient.addtorrentlink(newurl)
 		newobject = self.addtorrentobject(newid)
-		self.refreshtorrentdata(newobject)
+		self.refreshtorrentdata(newid)
 		outcome = self.delugeclient.closeconnection()
 
 		return newid
@@ -169,22 +169,26 @@ class DefineTorrentManager:
 
 		if action == "Stop":
 			outcome = self.delugeclient.openconnection()
-			self.delugeclient.pausetorrent([torrentid])
+			self.delugeclient.pausetorrent(torrentid)
 			outcome = self.delugeclient.closeconnection()
 		elif action == "Start":
 			outcome = self.delugeclient.openconnection()
-			self.delugeclient.resumetorrent([torrentid])
+			self.delugeclient.resumetorrent(torrentid)
+			outcome = self.delugeclient.closeconnection()
+		elif action == "Delete":
+			outcome = self.delugeclient.openconnection()
+			#self.delugeclient.pausetorrent(torrentid)
+			self.delugeclient.deletetorrent(torrentid)
 			outcome = self.delugeclient.closeconnection()
 		else:
 			print "Unknown Single Torrent Request ", action
 
 # =========================================================================================
 
-	def getcopyactions(self, torrentid, copymode = 'Real'):
+	def getcopyactions(self, torrentid):
 
 		torrentobject = self.gettorrentobject(torrentid)
-		if (torrentobject.getfinished() == 'Completed') or (copymode == 'Test'):
-			print "Performing Copy for ", torrentid
+		if torrentobject.getfinished() == 'Completed':
 			outcome = torrentobject.getcopyactions()
 		else:
 			outcome = []

@@ -1,10 +1,26 @@
-.fieldlabel {
+span.fieldlabel {
     line-height: 30px;
     margin: 0;
     padding: 0 5px 0 20px;
 }
 
-.buttongroupequivalent {
+span.torrentfieldlabel {
+    display: inline;
+}
+
+@media screen and (max-width: 1069px) {
+    span.torrentfieldlabel {
+        width: 88px;
+        display: inline-block;
+        padding-left: 0;
+        text-align: right;
+    }
+}
+
+@media screen and (min-width: 1070px) {
+}
+
+div.buttongroupequivalent {
     padding-top: 7px;
     padding-bottom: 7px;
 }

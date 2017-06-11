@@ -1,4 +1,5 @@
 from filesystem_subcomponent import filesystem_module as FileSystem
+from copyaction_subcomponent import copyaction_module as CopyAction
 
 class DefineLibraryManager:
 
@@ -17,6 +18,8 @@ class DefineLibraryManager:
 		self.username = username
 
 		self.password = password
+
+		self.copyactions = []
 
 		self.discovertvshows()
 		self.discoverepisodes()
@@ -62,12 +65,13 @@ class DefineLibraryManager:
 
 # =========================================================================================
 
-	def getdropdownlists(self):
+	def getdropdownlists(self, tvshowname):
 
 		outcome = {}
 		outcome['tvshows'] = self.gettvshows()
 		outcome['episodes'] = self.episodes
 		outcome['subtitles'] = self.subtitles
+		outcome['tvshowseasons'] = self.gettvshowseasons(tvshowname)
 		return outcome
 
 # =========================================================================================
@@ -102,14 +106,79 @@ class DefineLibraryManager:
 
 # =========================================================================================
 
-	def copyfiles(self, copyactions):
+	def queuefilecopy(self, copyactions):
 
 		if copyactions == []:
 			print "No copy actions to perform this time"
 		else:
-			FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
+			self.copyactions = []
+
+			self.copyactions.append(CopyAction.createconnectaction())
+
 			for action in copyactions:
 				copysource = FileSystem.createpathfromlist(action['source'])
-				copytarget = FileSystem.concatenatepaths(self.mountpoint, FileSystem.createpathfromlist(action['target']))
-				FileSystem.copyfile(copysource, copytarget)
-			FileSystem.unmountnetworkdrive(self.mountpoint)
+				rawtarget = FileSystem.createpathfromlist(action['target'])
+				copytarget = FileSystem.concatenatepaths(self.mountpoint, rawtarget)
+				self.copyactions.append(CopyAction.createcopyaction(copysource, copytarget, action['size'], rawtarget))
+
+			self.copyactions.append(CopyAction.createdisconnectaction())
+
+
+# =========================================================================================
+
+	def getcopyprocessinfo(self):
+
+		copystates = []
+		for copyaction in self.copyactions:
+			copystates.append(copyaction.getinfo())
+
+		return copystates
+
+
+
+# =========================================================================================
+
+	def processfilecopylist(self):
+
+		continueprocessing = False
+
+		actionoutcome = self.processstartedfilecopyaction()
+
+		startnewitem = True
+		for copyitem in self.copyactions:
+			if copyitem.getstatus() == "copying":
+				startnewitem = False
+
+		if startnewitem == True:
+			for copyitem in self.copyactions:
+				if continueprocessing == False:
+					if copyitem.startaction() == True:
+						continueprocessing = True
+
+		if actionoutcome == True:
+			continueprocessing = True
+
+		return continueprocessing
+
+
+
+# =========================================================================================
+
+	def processstartedfilecopyaction(self):
+
+		anychange = False
+		for copyitem in self.copyactions:
+			if copyitem.getstatus() == "copying":
+				anychange = True
+
+				if copyitem.getactiontype() == "Connect":
+					actionoutcome = FileSystem.mountnetworkdrive(self.mountpoint, self.networkpath, self.username, self.password)
+				elif copyitem.getactiontype() == "Disconnect":
+					actionoutcome = FileSystem.unmountnetworkdrive(self.mountpoint)
+				else:
+					actionoutcome = FileSystem.copyfile(copyitem.getsource(), copyitem.gettarget())
+
+				copyitem.updateaction(actionoutcome)
+
+		return anychange
+

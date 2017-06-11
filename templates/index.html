@@ -1,21 +1,17 @@
 {% extends "base.html" %}
 
+
+
 {% block javascript %}
     <script src="./static/javascript/index_update_torrents.js"></script>
     <script src="./static/javascript/index_add_torrent.js"></script>
 {% endblock %}
 
+
+
 {% block content %}
-
-<div class="tile bannertile">
-    <input type="text" name="newurl" value="" class="newurlfield" />
-    <input type="button" name="Add" onclick="javascript:addTorrent();" value="Add" />
-    <input type="button" name="Start" onclick="javascript:updateTorrentsList('Start');" value="Start" />
-    <input type="button" name="Stop" onclick="javascript:updateTorrentsList('Stop');" value="Stop" />
-</div>
-
-
-{% for torrent in torrentlist %}<a class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
+<div class="tilesgroup">
+{% for torrent in torrentlist %}<a id="Torrent-{{ torrent.torrentid }}" class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
     <div class="titlebox titleleft">
         {{ torrent.torrenttitle }}
     </div><div class="titlebox titleright">
@@ -26,5 +22,34 @@
         <img id="StatusIcon-{{ torrent.torrentid }}" src="./static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
     </div>
 </a>{% endfor %}
+</div>{% endblock %}
+
+
+
+{% block toolbar %}<div class="actionbuttonsgroup">
+    <button type="button" id="Add" onclick="javascript:addTorrent();"><img src="./static/images/listaction_add.png" alt="add button" />
+    </button><button type="button" id="Stop" onclick="javascript:updateTorrentsList('Stop');"><img src="./static/images/listaction_stopall.png" alt="stop button" />
+    </button><button type="button" id="Start" onclick="javascript:updateTorrentsList('Start');"><img src="./static/images/listaction_startall.png" alt="start button" />
+    </button>
+</div>
 {% endblock %}
 
+
+
+{% block dialogs %}
+<div id="adddialog" class="screenblock hidden">
+    <div class="dialog">
+        <div class="dialogtitle">Adding Torrent...<button type="button" onclick="javascript:cancelAdd();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
+        <div class="dialogsplitter"></div>
+        <div class="dialogcontent"><div class="dialogitem dialogitemfull">New Torrent URL:<input type="text" name="newurl" class="newurlfield" value="" /></div></div>
+        <div class="dialogactions"><button type="button" onclick="javascript:confirmAdd();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block hiddendata %}
+<div class="hidden">
+</div>
+{% endblock %}

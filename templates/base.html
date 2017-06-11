@@ -16,8 +16,13 @@
         <link rel="stylesheet" href='./static/stylesheets/controls_slider.css' />
         <link rel="stylesheet" href='./static/stylesheets/controls_textbox.css' />
         <link rel="stylesheet" href='./static/stylesheets/showhideareas.css' />
+        <link rel="stylesheet" href='./static/stylesheets/ajaxloader.css' />
+        <link rel="stylesheet" href='./static/stylesheets/dialogs.css' />
     </head>
     <body>
-        {% block content %}{% endblock %}
+        {% block content %}{% endblock %}{% block toolbar %}{% endblock %}
+        {% block dialogs %}{% endblock %}
+        {% block hiddendata %}{% endblock %}
+        <div id="ajaxloader" class="screenblock"><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div>
     </body>
 </html>

@@ -8,7 +8,7 @@ class DefineFileItem:
 
 		self.path = path.split('/')
 
-		self.size = size
+		self.rawsize = size
 
 		self.filetype = "NOT PROCESSED"
 		self.updatefiletype()
@@ -54,9 +54,15 @@ class DefineFileItem:
 
 # =========================================================================================
 
+	def getrawsize(self):
+
+		return self.rawsize
+
+# =========================================================================================
+
 	def getsize(self):
 
-		return self.size
+		return Functions.sanitisesize(self.rawsize)
 
 # =========================================================================================
 

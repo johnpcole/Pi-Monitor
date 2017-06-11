@@ -10,14 +10,9 @@ function saveTorrentConfiguration()
     } else if (newtype == 'movie') {
         newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename"), 'year' : getFieldValue('movieyear'), 'files' : getFileInstructions("movie") };
     } else {
-        newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename") };
+        newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename"), 'files' : getUnknownTorrentFileInstructions() };
     };
     updateTorrentConfig(newinstructions);
-    changeAreasState('editmodefields', 'Hide');
-    changeAreasState('readonlyfields', 'Show');
-    changeButtonState('Edit', 'Show');
-    changeButtonState('Save', 'Hide');
-    changeButtonState('Cancel', 'Hide');
 };
 
 
@@ -25,15 +20,21 @@ function saveTorrentConfiguration()
 
 function updateTorrentConfig(action)
 {
-    var pathname = window.location.pathname;
     $.ajax({
-        url: 'ReconfigureTorrent='+pathname.substring(9),
+        url: 'ReconfigureTorrent',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(action),
+        data: JSON.stringify({'torrentid':getCurrentTorrentId(), 'newconfiguration':action}),
         dataType:'json',
+        beforeSend: function() {
+            $('#ajaxloader').show();
+        },
         success: function(data){
             updateTorrentConfigDisplay(data.selectedtorrent);
+            displayReadMode();
+        },
+        complete: function(){
+            $('#ajaxloader').hide();
         }
     });
 };
@@ -134,3 +135,33 @@ function getFileInstructions(torrenttype)
     return outcome;
 };
 
+
+// Get sanitised tvshow & movie file designations
+
+function getUnknownTorrentFileInstructions()
+{
+    var rawdata = getFileControlStates();
+    var rawlength = rawdata.length;
+    var loopindex;
+    var currentitem;
+    var outcome = {};
+    var idval;
+    for (loopindex = 0; loopindex < rawlength; loopindex++) {
+        currentitem = rawdata[loopindex];
+        idval = currentitem[0];
+        instructionval = "ignore";
+        outcome[idval] = instructionval;
+    };
+    return outcome;
+};
+
+
+// Show & Hide Areas
+
+function displayReadMode()
+{
+    changeAreasState('editmodefields', 'Hide');
+    changeAreasState('readonlyfields', 'Show');
+    changeAreasState('editmodebuttons', 'Hide');
+    changeAreasState('readmodebuttons', 'Show');
+};

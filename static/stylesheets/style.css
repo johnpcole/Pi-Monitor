@@ -1,5 +1,5 @@
 body {
-    width: 1050px;
+    width: 560px;
     background: #DDDDEE;
     font-family: 'Open Sans', sans-serif;
     line-height: 100%;
@@ -7,136 +7,26 @@ body {
     padding: 5px;
 }
 
+@media screen and (min-width: 1070px) {
+    body{
+        width: 1054px;
+    }
+}
+
 span {
     margin: 0;
     padding: 0;
 }
 
-
-/*
-a {
-    text-decoration: none;
-    padding: 0px;
-    margin: 0px;
-    border-style: none;
-}
-.tiledata {
-    width: 150px;
-}
-
-.tilepercentage {
-    width: 40px;
-}
-
-.tileindent {
-    width: 550px;
-}
-
-.tilesection {
-    position: relative;
-    background-color: #F0C090;
-    color: black;
-    display: inline-block;
-    height: 18px;
-    padding: 0px 0px 0px 0px;
-    overflow: hidden;
-    margin: 0px 0px 0px 0px;
-    border-style: none;
-    white-space: nowrap;
-    font-size: 80%;
-}
-
-.tiletitle {
-    width: 750px;
-    height: 20px;
-    font-size: 100%;
-}
-
-.tilenamebanner {
-    width: 610px;
-    height: 20px;
-    font-size: 100%;
-}
-
-.tilenamedata {
-    width: 80px;
-    height: 20px;
-    font-size: 100%;
-}
-
-.filename {
-    width: 750px;
-    height: 20px;
-    font-size: 100%;
-}
-
-.filespacer {
-    width: 780px;
-    height: 5px;
-    border-style: solid;
-    border-width: 1px 0px 0px 0px;
-    border-color: #FFAA00;
-    margin: 5px 0px 0px -5px;
-}
-
-
-.tileicon {
-    width: 20px;
-    height: 20px;
-}
-
-.tilesubicon {
-    width: 18px;
-    height: 18px;
-}
-
-.largeindent {
-    margin-left: 550px;
-}
-
-.right {
-    text-align: right;
-}
-
-p {
-    margin: 1px 3px 0px 3px;
-    padding: 0;
-    /* vertical-align: middle;
-    position: relative;
+div.screenblock {
+    position: absolute;
     top: 0;
     left: 0;
+    background-color: rgba(100,100,150,0.75);
+    width: 100%;
+    height: 100%;
 }
 
-.editfields {
+div.hidden {
     display: none;
 }
-
-.tvshowonlyfields {
-    display: inline;
-}
-
-.movieonlyfields {
-    display: inline;
-}
-
-.episodeselector {
-    display: inline;
-}
-
-.typeselectordiv {
-    width: 100px;
-    height: 50px;
-    position: relative;
-    display: inline-block;
-    background-color: #00ffff;
-}
-
-.typedetailsdiv {
-    width: 500px;
-    height: 50px;
-    position: relative;
-    display: inline-block;
-    background-color: #ff00ff;
-}
-
-*/

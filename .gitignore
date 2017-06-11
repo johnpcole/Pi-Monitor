@@ -4,6 +4,8 @@
 
 .idea/
 data/
+static/images/old/
+static/images/to_be_used/
 *.pyc
 
 # =========================

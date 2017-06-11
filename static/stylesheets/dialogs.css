@@ -1,0 +1,83 @@
+div.dialog {
+    margin: 100px auto;
+    padding: 7px 10px;
+    width: 500px;
+    /*height: 280px;*/
+    background-color: #FFFFCC;
+    overflow: hidden;
+    border-style: none;
+    vertical-align: top;
+    color: #000033;
+    box-shadow: 0px 0px 3px 3px #333366;
+    outline: 0;
+}
+
+div.dialogcontent {
+    margin: 0;
+    padding: 0;
+}
+
+div.dialogactions {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+div.dialogsplitter {
+    height: 2px;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #000033;
+    margin: 0 auto;
+    padding: 0;
+    width: 490px;
+}
+
+div.dialogtitle {
+    width: 100%;
+    text-align: center;
+    padding: 2px 3px 6px 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+}
+
+div.dialogitem {
+    font-size: 75%;
+    padding: 5px 4px 4px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    /*border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #FFFFFF;*/
+}
+
+div.dialogitemleft {
+    width: 396px;
+    text-align: left;
+    /*background-color: #aaffff;*/
+}
+
+div.dialogitemright {
+    width: 88px;
+    text-align: right;
+    /*background-color: #ffaaff;*/
+}
+
+div.dialogitemfull {
+    width: 100%;
+    text-align: center;
+    /*background-color: #ffffaa;*/
+}
+
+div.dialogitem img {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin: -2px 0px -4px 4px;
+}
+

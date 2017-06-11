@@ -6,9 +6,12 @@ $(document).ready(function ()
     // Refresh the tiles every minute.
     setInterval(function()
     {
-        //alert("hi")
-        updateTorrentsList('Refresh');
+        if (getAreaState('adddialog') == 'Hidden') {
+            updateTorrentsList('Refresh');
+        };
     }, 10000);
+
+    $('#ajaxloader').hide();
 });
 
 

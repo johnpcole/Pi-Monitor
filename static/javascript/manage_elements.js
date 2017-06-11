@@ -21,13 +21,16 @@ function changeAreasState(areaname, displayvalue)
 function changeAreaState(areaname, displayvalue)
 {
     var areaobject = document.getElementById(areaname);
-    if (displayvalue == 'Hide') {
-        areaobject.style.display = "none";
+    if (areaobject != null) {
+        if (displayvalue == 'Hide') {
+            areaobject.style.display = "none";
+        } else {
+            areaobject.style.display = "inline-block";
+        };
     } else {
-        areaobject.style.display = "inline-block";
+        alert("changeAreaState: "+areaname);
     };
 };
-
 
 
 
@@ -82,10 +85,30 @@ function getImageName(fieldname)
     if (tileData != null) {
         var fullpath = tileData.src;
         var pathsplit = fullpath.split('/');
-        var filename = pathsplit[pathsplit.length -1];
+        var filename = pathsplit[pathsplit.length-1];
         outcome = filename.split('.')[0];
     } else {
         alert("GetImageName: "+ fieldname);
     }
     return outcome
 };
+
+
+
+// Get Area Hidden/Displayed state
+
+function getAreaState(areaid)
+{
+    var controlobject = document.getElementById(areaid);
+    if (controlobject != null) {
+        if (controlobject.style.display == 'none') {
+            return "Hidden";
+        } else {
+            return "Displayed";
+        };
+    } else {
+    alert("Cant find area: "+areaid)
+    };
+};
+
+

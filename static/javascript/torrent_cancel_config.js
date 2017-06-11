@@ -3,9 +3,5 @@
 
 function cancelTorrentConfiguration()
 {
-    changeAreasState('editmodefields', 'Hide');
-    changeAreasState('readonlyfields', 'Show');
-    changeButtonState('Edit', 'Show');
-    changeButtonState('Save', 'Hide');
-    changeButtonState('Cancel', 'Hide');
+    displayReadMode();
 };

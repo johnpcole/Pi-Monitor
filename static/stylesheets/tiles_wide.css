@@ -2,21 +2,32 @@
    TILE CONTAINER
    =============================================================================== */
 
-.torrenttile {
-    width: 954px;
+div.torrenttile {
+    width: 460px;
 }
 
+@media screen and (min-width: 1070px) {
+    div.torrenttile {
+        width: 954px;
+    }
+}
 
 /* ===============================================================================
    TILE TITLE ROW
    =============================================================================== */
 
-.titleleftextended {
-    width: 828px;
+div.titleleftextended {
+    width: 427px;
     text-align: left;
 }
 
-.titlerightextended {
+@media screen and (min-width: 1070px) {
+    div.titleleftextended {
+        width: 922px;
+    }
+}
+
+div.titlerightextended {
     width: 20px;
     text-align: right;
 }
@@ -26,22 +37,45 @@
    TITLE SEPARATOR LINE
    =============================================================================== */
 
-.splitterextended {
-    width: 852px;
+div.splitterextended {
+    width: 452px;
 }
 
+@media screen and (min-width: 1070px) {
+    div.splitterextended {
+        width: 946px;
+    }
+}
 
 /* ===============================================================================
    TILE SUBTILE ROW
    =============================================================================== */
 
-.subtitleleftextended {
-    width: 664px;
+div.subtitleleftextended {
+    width: 452px;
     text-align: left;
 }
 
-.subtitlerightextended {
-    width: 180px;
+@media screen and (min-width: 1070px) {
+    div.subtitleleftextended {
+        width: 758px;
+    }
+}
+
+div.subtitlerightextended {
+    width: 452px;
     text-align: right;
+}
+
+@media screen and (min-width: 1070px) {
+    div.subtitlerightextended {
+        width: 180px;
+    }
+}
+
+@media screen and (max-width: 1069px) {
+    div.subtitlerightextended {
+        padding-top: 0px;
+    }
 }
 

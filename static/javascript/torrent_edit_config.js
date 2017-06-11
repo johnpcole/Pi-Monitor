@@ -3,11 +3,6 @@
 function editTorrentConfiguration()
 {
     getTorrentConfig()
-    changeAreasState('editmodefields', 'Show');
-    changeAreasState('readonlyfields', 'Hide');
-    changeButtonState('Edit', 'Hide');
-    changeButtonState('Save', 'Show');
-    changeButtonState('Cancel', 'Show');
 };
 
 
@@ -15,12 +10,23 @@ function editTorrentConfiguration()
 
 function getTorrentConfig()
 {
-    var pathname = window.location.pathname;
-    $.getJSON('EditTorrent='+pathname.substring(9))
-        .done(function (data)
-        {
+    $.ajax({
+        url: 'EditTorrent',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({'torrentid':getCurrentTorrentId()}),
+        dataType:'json',
+        beforeSend: function() {
+            $('#ajaxloader').show();
+        },
+        success: function(data){
             updateTorrentConfigFields(data.selectedtorrent, data.listitems);
-        });
+            displayEditMode();
+        },
+        complete: function(){
+            $('#ajaxloader').hide();
+        }
+    });
 };
 
 
@@ -33,19 +39,19 @@ function updateTorrentConfigFields(editinfo, listitems)
     setFieldValue('movieyear', editinfo.movieyear);
     repopulateDropDownList('tvshowselector', listitems.tvshows)
     setDropDownValue('tvshowselector', editinfo.tvshowname);
-    updateTVShowSeasons(editinfo.tvshowseason);
+    updateTVShowSeasonsList(listitems.tvshowseasons, editinfo.tvshowseason);
     var filelist = editinfo.files;
     $.each(filelist, function(index)
     {
         var currentfile = filelist[index]
-        changeFileDesignation(index, currentfile.outcome);
-        populateFileDropDownLists(currentfile.filetype, index, listitems)
+        changeFileDesignation(currentfile.fileid, currentfile.outcome);
+        populateFileDropDownLists(currentfile.filetype, currentfile.fileid, listitems)
         if (currentfile.outcome == "copy") {
             if (editinfo.torrenttype == "tvshow") {
-                setDropDownValue('episodeselector-'+index, currentfile.episodeselector);
+                setDropDownValue('episodeselector-'+currentfile.fileid, currentfile.episodeselector);
             };
             if (currentfile.filetype == "subtitle") {
-                setDropDownValue('subtitleselector-'+index, currentfile.subtitleselector);
+                setDropDownValue('subtitleselector-'+currentfile.fileid, currentfile.subtitleselector);
             };
         };
     });
@@ -62,4 +68,15 @@ function populateFileDropDownLists(filetype, fileindex, listitems)
             repopulateDropDownList('subtitleselector-'+fileindex, listitems.subtitles)
         };
     };
+};
+
+
+// Show & Hide Areas
+
+function displayEditMode()
+{
+    changeAreasState('readonlyfields', 'Hide');
+    changeAreasState('editmodefields', 'Show');
+    changeAreasState('readmodebuttons', 'Hide');
+    changeAreasState('editmodebuttons', 'Show');
 };
