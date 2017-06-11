@@ -18,8 +18,21 @@ function updateCopyButton(torrentstate)
 {
     var torrentstateprefix = torrentstate.substr(0, 7);
     if (torrentstateprefix == "seeding") {
-        changeButtonState('Copy', 'Show');
+        changeButtonState('Copy', 'Enable');
     } else {
-        changeButtonState('Copy', 'Hide');
+        changeButtonState('Copy', 'Disable');
+    };
+};
+
+
+
+function updateEditButton()
+{
+    var areaobjectlist = document.getElementsByClassName('file_all');
+    var areaindex = areaobjectlist.length;
+    if (areaindex > 0) {
+        changeButtonState('Edit', 'Enable');
+    } else {
+        changeButtonState('Edit', 'Disable');
     };
 };

@@ -2,7 +2,7 @@
 
 $(document).ready(function ()
 {
-    //updateBuildTiles();
+    $('#adddialog').hide();
     // Refresh the tiles every minute.
     setInterval(function()
     {

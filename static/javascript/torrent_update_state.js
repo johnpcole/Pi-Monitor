@@ -2,7 +2,12 @@
 
 $(document).ready(function ()
 {
-    updateStartStopButtons(getImageName('Status').substr(8));
+    $('#copydialog').hide();
+    $('#deletedialog').hide();
+    var torrentstatus = getImageName('Status').substr(7);
+    updateStartStopButtons(torrentstatus);
+    updateCopyButton(torrentstatus);
+    updateEditButton();
     changeAreasState('readmodebuttons', 'Show');
 
     // Refresh the tiles every minute.
@@ -39,7 +44,11 @@ function updateTorrentState(action)
         dataType:'json',
         success: function(data)
         {
-            updateTorrentStateDisplay(data.selectedtorrent);
+            if (data.selectedtorrent.filechangealert == true) {
+                window.location.replace("/Torrent="+getCurrentTorrentId());
+            } else {
+                updateTorrentStateDisplay(data.selectedtorrent);
+            };
         }
     });
 };

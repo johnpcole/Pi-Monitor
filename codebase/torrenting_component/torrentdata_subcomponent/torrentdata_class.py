@@ -23,6 +23,8 @@ class DefineTorrentItem:
 
 		self.files = []
 
+		self.filechangeflag = False
+
 		self.torrenttype = "unknown"
 
 		self.movieorshowname = ""
@@ -34,6 +36,8 @@ class DefineTorrentItem:
 	# =========================================================================================
 
 	def updateinfo(self, datalist):
+
+		filecount = len(self.files)
 
 		for dataitem in datalist:
 
@@ -78,6 +82,9 @@ class DefineTorrentItem:
 			else:
 				outcome = "Unknown Data Label: " + dataitem
 				assert 0 == 1, outcome
+
+		if len(self.files) != filecount:
+			self.filechangeflag = True
 
 # =========================================================================================
 
@@ -312,7 +319,9 @@ class DefineTorrentItem:
 						'files': self.getextendedfiledata(datamode)}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
-						'progress': self.getprogresssizeeta()}
+						'progress': self.getprogresssizeeta(),
+						'filechangealert': self.filechangeflag}
+			self.filechangeflag = False
 		elif datamode == "reconfigure":
 			outcome = { 'torrenttitle': self.gettorrenttitle(),
 						'torrenttype': self.torrenttype,
