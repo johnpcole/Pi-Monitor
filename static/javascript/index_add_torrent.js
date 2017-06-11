@@ -1,7 +1,12 @@
-
-// Call for to add torrent
-
 function addTorrent()
+{
+    $('#adddialog').show();
+};
+
+
+// Call for adding torrent
+
+function confirmAdd()
 {
     $.ajax({
         url: 'AddTorrent',
@@ -15,9 +20,16 @@ function addTorrent()
         success: function(data)
         {
             window.location.replace("/Torrent="+data.newtorrentid);
-        },
-        complete: function(){
-            $('#ajaxloader').hide();
         }
     });
 };
+
+// Close torrent add dialog
+
+function cancelAdd()
+{
+    $('#adddialog').hide();
+};
+
+
+

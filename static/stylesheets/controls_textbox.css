@@ -16,6 +16,9 @@ input[type=text] {
     padding: 0px 6px;
 }
 
+div.dialog input[type=text], div.dialog select {
+    height: 22px;
+}
 
 select {
     -webkit-appearance: none;
@@ -46,6 +49,11 @@ input.movieyearfield {
 
 input.movienamefield {
     width: 367px;
+}
+
+input.newurlfield {
+    width: 386px;
+    margin: 0px 12px 0px 10px;
 }
 
 @media screen and (min-width: 1070px) {
