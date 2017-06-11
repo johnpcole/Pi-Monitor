@@ -14,10 +14,10 @@ function updateStartStopButtons(torrentstate)
 };
 
 
-function updateCopyButton(torrentstate)
+function updateCopyButton(torrentstate, torrenttype)
 {
     var torrentstateprefix = torrentstate.substr(0, 7);
-    if (torrentstateprefix == "seeding") {
+    if ((torrentstateprefix == "seeding") && (torrenttype != "unknown")) {
         changeButtonState('Copy', 'Enable');
     } else {
         changeButtonState('Copy', 'Disable');

@@ -6,7 +6,7 @@ $(document).ready(function ()
     $('#deletedialog').hide();
     var torrentstatus = getImageName('Status').substr(7);
     updateStartStopButtons(torrentstatus);
-    updateCopyButton(torrentstatus);
+    updateCopyButton(torrentstatus, getImageName('TorrentType').substr(5));
     updateEditButton();
     changeAreasState('readmodebuttons', 'Show');
 
@@ -61,7 +61,7 @@ function updateTorrentStateDisplay(dataitem)
     rerenderImage("Status", "status_"+dataitem.status);
     rerenderText("Progress", dataitem.progress);
     updateStartStopButtons(dataitem.status);
-    updateCopyButton(dataitem.status);
+    updateCopyButton(dataitem.status, getImageName('TorrentType').substr(5));
 };
 
 
