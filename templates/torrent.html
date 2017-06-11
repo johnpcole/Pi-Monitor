@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+
+
 {% block javascript %}
     <script src="./static/javascript/torrent_action_buttons.js"></script>
     <script src="./static/javascript/torrent_change_tvshow.js"></script>
@@ -12,6 +14,8 @@
     <script src="./static/javascript/torrent_copy.js"></script>
     <script src="./static/javascript/torrent_delete.js"></script>
 {% endblock %}
+
+
 
 {% block content %}
 <div class="tilesgroup">
@@ -61,7 +65,12 @@
         </div><div class="subtitlebox fileright">
             <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
         </div>
-    </div>{% endfor %}</div><div class="actionbuttonsgroup">
+    </div>{% endfor %}
+</div>{% endblock %}
+
+
+
+{% block toolbar %}<div class="actionbuttonsgroup">
     <div class="readmodebuttons"><button type="button" id="Exit" onclick="javascript:window.location.replace('/');"><img src="./static/images/torrentaction_exit.png" alt="exit button" />
     </button><button type="button" id="Stop" onclick="javascript:updateTorrentState('Stop');"><img src="./static/images/torrentaction_stop.png" alt="stop button" />
     </button><button type="button" id="Start" onclick="javascript:updateTorrentState('Start');"><img src="./static/images/torrentaction_start.png" alt="start button" />
@@ -72,8 +81,12 @@
     </button><button type="button" id="Save" onclick="javascript:saveTorrentConfiguration();"><img src="./static/images/torrentaction_commit.png" alt="commit button" />
     </button></div>
 </div>
+{% endblock %}
 
-<div id="copydialog" class="screenblock" style="display: none;">
+
+
+{% block dialogs %}
+<div id="copydialog" class="screenblock hidden">
     <div class="dialog">
         <div class="dialogtitle">Copying Files...<button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
         <div class="dialogsplitter"></div>
@@ -81,7 +94,7 @@
         <div class="dialogactions"><button type="button" id="ConfirmCopy" onclick="javascript:confirmCopy();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
     </div>
 </div>
-<div id="deletedialog" class="screenblock" style="display: none;">
+<div id="deletedialog" class="screenblock hidden">
     <div class="dialog">
         <div class="dialogtitle">Deleting Torrent...<button type="button" onclick="javascript:cancelDelete();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
         <div class="dialogsplitter"></div>
@@ -89,7 +102,12 @@
         <div class="dialogactions"><button type="button" onclick="javascript:confirmDelete();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
     </div>
 </div>
-<div style="display: none;">
+{% endblock %}
+
+
+
+{% block hiddendata %}
+<div class="hidden">
     <span id="copyprogress">0</span>
     <span id="copystep">0</span>
     <img src="./static/images/copy_queued.png" />
@@ -98,5 +116,4 @@
     <img src="./static/images/copy_copied.png" />
     <img src="./static/images/copy_failed.png" />
 </div>
-
-    {% endblock %}
+{% endblock %}
