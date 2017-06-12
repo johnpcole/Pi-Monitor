@@ -33,6 +33,20 @@ function changeAreaState(areaname, displayvalue)
 };
 
 
+// Update area colour
+
+function changeAreaColour(areaname, displayvalue)
+{
+    var areaobject = document.getElementById(areaname);
+    if (areaobject != null) {
+        areaobject.style.backgroundColor = displayvalue;
+    } else {
+        alert("changeAreaColour: "+areaname);
+    };
+};
+
+
+
 
 // Update the displayed text
 

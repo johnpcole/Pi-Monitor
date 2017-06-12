@@ -15,4 +15,5 @@ function changeFileDesignation(fileid, newtype)
         changeButtonState('MakeCopy-'+fileid, "Disable");
         changeButtonState('MakeIgnore-'+fileid, "Enable");
     };
+//updateFileTileColour("File-"+fileid, getImageName("filetype-"+fileid), newtype);
 };

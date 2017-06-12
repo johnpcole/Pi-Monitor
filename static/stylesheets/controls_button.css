@@ -75,6 +75,10 @@ div.actionbuttonsgroup button {
     display: inline-block;
 }
 
+div.actionbuttonsgroup button:hover:enabled {
+    background-color: #777777;
+}
+
 div.actionbuttonsgroup img {
     width: 36px;
     height: 36px;

@@ -52,6 +52,7 @@ function updateTorrentTile(dataitem)
 {
     tid = dataitem.torrentid
     rerenderImage("StatusIcon-"+tid, "status_"+dataitem.status);
+    updateTorrentTileColour("Torrent-"+tid, dataitem.status);
     rerenderText("Progress-"+tid, dataitem.progress)
 };
 

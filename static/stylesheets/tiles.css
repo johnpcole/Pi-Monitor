@@ -30,45 +30,60 @@ a.tile {
 }
 
 a.tile:hover {
-    background-color: #000000;
+    background-color: #222222;
 }
 
 .torrent_seeding_active {
-    background-color: #008800;
+    background-color: #009600;
 }
 
 .torrent_seeding_queued {
-    background-color: #008800;
+    background-color: #009600;
 }
 
 .torrent_seeding_paused {
-    background-color: #004400;
+    background-color: #003200;
 }
 
 .torrent_downloading_active {
-    background-color: #AA2200;
+    background-color: #DC6E00;
 }
 
 .torrent_downloading_queued {
-    background-color: #AA2200;
+    background-color: #DC6E00;
 }
 
 .torrent_downloading_paused {
-    background-color: #551100;
+    background-color: #964B00;
 }
 
 .torrent_checking {
-    background-color: #AAAA00;
+    background-color: #4B0000;
 }
 
 .torrent_error {
-    background-color: #AA0000;
+    background-color: #AF0000;
 }
 
-.file_all {
-    background-color: #AAAA00;
+.file_video_copy {
+    background-color: #AFAF00;
 }
 
+.file_video_ignore {
+    background-color: #4B4B00;
+}
+
+.file_subtitle_copy {
+    background-color: #000096;
+}
+
+.file_subtitle_ignore {
+    background-color: #000032;
+}
+
+.file_none_ignore, .file_none_copy {
+    background-color: #101010;
+}
 
 
 /* ===============================================================================
