@@ -9,16 +9,22 @@
 
 
 
+{% block banner %}
+<div id="IndexBanner" class="tile bannertile file_none_ignore">Download-Manager
+</div>{% endblock %}
+
+
+
 {% block content %}
 <div class="tilesgroup">
-{% for torrent in torrentlist %}<a id="Torrent-{{ torrent.torrentid }}" class="tile headlinetile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
-    <div class="titlebox titleleft">
+{% for torrent in torrentlist %}<a id="Torrent-{{ torrent.torrentid }}" class="tile contenttile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
+    <div class="titlebox contenttitleleft">
         {{ torrent.torrenttitle }}
-    </div><div class="titlebox titleright">
+    </div><div class="titlebox contenttitleright">
         <img src="./static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
-    </div><div class="tilesplitter splitterline"></div><div class="subtitlebox subtitleleft">
+    </div><div class="tilesplitter contentsplitter"></div><div class="subtitlebox torrentsubtitleleft">
         {{ torrent.torrentname }}
-    </div><div class="subtitlebox subtitleright">
+    </div><div class="subtitlebox torrentsubtitleright">
         <img id="StatusIcon-{{ torrent.torrentid }}" src="./static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
     </div>
 </a>{% endfor %}
