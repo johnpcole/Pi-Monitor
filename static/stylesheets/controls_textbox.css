@@ -48,7 +48,13 @@ input.movieyearfield {
 }
 
 input.movienamefield {
-    width: 367px;
+    width: 431px;
+}
+
+@media screen and (min-width: 1070px) {
+    input.movienamefield {
+        width: 746px;
+    }
 }
 
 input.newurlfield {
@@ -56,18 +62,12 @@ input.newurlfield {
     margin: 0px 12px 0px 10px;
 }
 
-@media screen and (min-width: 1070px) {
-    input.movienamefield {
-        width: 682px;
-    }
-}
-
 select.tvshownamefield {
-    width: 367px;
+    width: 431px;
 }
 @media screen and (min-width: 1070px) {
     select.tvshownamefield {
-        width: 540px;
+        width: 603px;
     }
 }
 
