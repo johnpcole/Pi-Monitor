@@ -47,6 +47,19 @@ function changeAreaColour(areaname, displayvalue)
 
 
 
+// Update area class
+
+function changeAreaClass(areaname, classvalue)
+{
+    var areaobject = document.getElementById(areaname);
+    if (areaobject != null) {
+        areaobject.className = classvalue;
+    } else {
+        alert("changeAreaClass: "+areaname);
+    };
+};
+
+
 
 // Update the displayed text
 

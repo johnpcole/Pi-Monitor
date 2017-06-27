@@ -6,6 +6,8 @@ class DefineDelugeInterface:
 
 		self.delugeinterface = "Dummy Interface Object"
 
+		self.speedmeter = 0
+
 # =========================================================================================
 
 	def openconnection(self):
@@ -25,6 +27,18 @@ class DefineDelugeInterface:
 	def gettorrentlist(self):
 
 		return ('dummytorrent1', 'dummytorrent2', 'dummytorrent3')
+
+# =========================================================================================
+
+	def getstats(self):
+
+		if self.speedmeter == 0:
+			self.speedmeter = 1
+		else:
+			self.speedmeter = self.speedmeter * 2
+		if self.speedmeter > 10000000000:
+			self.speedmeter = 0
+		return self.speedmeter
 
 # =========================================================================================
 

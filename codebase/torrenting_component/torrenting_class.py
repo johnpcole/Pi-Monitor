@@ -1,5 +1,6 @@
 from deluge_subcomponent import deluge_module as DelugeClient
 from torrentdata_subcomponent import torrentdata_module as TorrentData
+from ..functions_component import functions_module as Functions
 
 class DefineTorrentManager:
 
@@ -11,6 +12,19 @@ class DefineTorrentManager:
 			self.delugeclient = DelugeClient.createinterface(address, port, username, password)
 
 		self.torrents = []
+
+# =========================================================================================
+
+	def getstats(self):
+
+		currentspeed = self.delugeclient.getstats()
+		outcome = {}
+		outcome['d'] = Functions.getlogmeterdata(currentspeed, 67, 124, 1.0, 1.0)
+		outcome['u'] = Functions.getlogmeterdata(currentspeed / 10, 67, 124, 0.6, 1.0)
+		outcome['s'] = Functions.getlogmeterdata(currentspeed / 100, 67, 124, 1.0, 3.0)
+		print (currentspeed / 100)
+
+		return outcome
 
 # =========================================================================================
 

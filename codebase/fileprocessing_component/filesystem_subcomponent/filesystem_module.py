@@ -228,3 +228,16 @@ def copyfile(source, target):
 		outcome = OperatingSystem.system('copy "' + source + '" "' + target + '"')
 
 	return outcome
+
+
+
+# def gettreesize(path):
+# 	"""Return total size of files in given path and subdirs."""
+# 	total = 0
+# 	for entry in OperatingSystem.scandir(path):
+# 		if entry.is_dir(follow_symlinks=False):
+# 			total += gettreesize(entry.path)
+# 		else:
+# 			total += entry.stat(follow_symlinks=False).st_size
+# 	return total
+

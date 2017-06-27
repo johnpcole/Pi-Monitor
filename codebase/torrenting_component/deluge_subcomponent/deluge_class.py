@@ -6,12 +6,21 @@ class DefineDelugeInterface:
 
 		self.delugeinterface = DelugeDaemonInterface(address, port, username, password)
 
+		self.speedmeter = 0
+
 # =========================================================================================
 
 	def openconnection(self):
 
 		while self.delugeinterface.connected == False:
 			self.delugeinterface.connect()
+			#print "========================================================="
+			#print self.delugeinterface.call('client.api_methods')
+			#print "========================================================="
+			#WORKS! print self.delugeinterface.call('core.get_free_space')
+			#print "========================================================="
+			#WORKS! print self.delugeinterface.call('core.get_config')
+			#print "========================================================="
 		return self.delugeinterface.connected
 
 # =========================================================================================
@@ -126,5 +135,15 @@ class DefineDelugeInterface:
 
 		return outcome
 
+# =========================================================================================
 
+	def getstats(self):
+
+		if self.speedmeter == 0:
+			self.speedmeter = 1
+		else:
+			self.speedmeter = self.speedmeter * 2
+		if self.speedmeter > 10000000000:
+			self.speedmeter = 0
+		return self.speedmeter
 

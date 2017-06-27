@@ -1,3 +1,5 @@
+import math as Maths
+
 def sanitisesize(rawsize):
 
 	if rawsize > 1000000000:
@@ -81,3 +83,37 @@ def getinitial(name):
 		noun = name
 	outcome = noun[:1]
 	return outcome.upper()
+
+
+
+def getlogmeterdata(currentval, decalheight, decalwidth, needlesize, scale):
+
+	# Assumes the decal image is 688 x 1236 pixels big, scaled
+	# Needle length is 564 at 100% scaling
+
+	verticalratio = decalheight / 688.0
+	horizontalratio = decalwidth / 1236.0
+	verticalneedlelength = verticalratio * 554.0 * needlesize
+	horizontalneedlelength = horizontalratio * 544.0 * needlesize
+	verticalorigin = verticalratio * 74.0
+	horizontalorigin = horizontalratio * 618.0
+
+	if currentval < 1:
+		segment = -1.0
+	else:
+		segment = scale * Maths.log10(currentval)
+		if segment > 7.0:
+			segment = 7.0
+
+	angle = Maths.pi * (segment + 1.0) / 8.0
+
+	verticalfinal = (verticalneedlelength * Maths.sin(angle)) + verticalorigin
+	horizontalfinal = (horizontalneedlelength * Maths.cos(angle)) + horizontalorigin
+
+	outcome = {}
+	outcome['vo'] = decalheight - verticalorigin
+	outcome['ho'] = decalwidth - horizontalorigin
+	outcome['vf'] = decalheight - verticalfinal
+	outcome['hf'] = decalwidth - horizontalfinal
+
+	return outcome

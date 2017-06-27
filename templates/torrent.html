@@ -64,7 +64,7 @@
                 </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
                 </select></div>{% endif %}
         </div></div>{% endif %}</div><div class="tilesplitter contentsplitter"></div><div class="subtitlebox filesubtitleleft">
-            {{ fileitem.filename }}
+            <span class="tooltip">{{ fileitem.filename }}</span>{{ fileitem.filename }}
         </div><div class="subtitlebox filesubtitleright">
             <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
         </div>
