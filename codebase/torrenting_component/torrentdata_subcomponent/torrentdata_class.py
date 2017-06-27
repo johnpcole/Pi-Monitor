@@ -33,6 +33,8 @@ class DefineTorrentItem:
 
 		self.eta = "!UNKNOWN!"
 
+		self.dateadded = -99999
+
 	# =========================================================================================
 
 	def updateinfo(self, datalist):
@@ -78,6 +80,9 @@ class DefineTorrentItem:
 
 			elif dataitem == "eta":
 				self.eta = Functions.sanitisetime(datalist[dataitem])
+
+			elif dataitem == "time_added":
+				self.dateadded = datalist[dataitem]
 
 			else:
 				outcome = "Unknown Data Label: " + dataitem

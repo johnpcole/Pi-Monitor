@@ -10,17 +10,22 @@
 
 
 {% block banner %}
-<div id="IndexBanner" class="tile bannertile file_video_copy"><div class="indexbannercontent"><div class="titlebox contenttitleleft">Download-Manager</div>
-<div class="tilesplitter contentsplitter"></div></div><div class="meter speedmeter">
-    <svg viewBox="0 0 124 67">
-        <g stroke="#FFFF00" stroke-width="3" stroke-linecap="round" id="downloadneedle"><line x1="{{ stats.d.ho }}" y1="{{ stats.d.vo }}" x2="{{ stats.d.hf }}" y2="{{ stats.d.vf }}" /></g>
-        <g stroke="#6688FF" stroke-width="3" stroke-linecap="round" id="uploadneedle"><line x1="{{ stats.u.ho }}" y1="{{ stats.u.vo }}" x2="{{ stats.u.hf }}" y2="{{ stats.u.vf }}" /></g>
-    </svg>
-</div><div class="meter spacemeter">
-    <svg viewBox="0 0 124 67">
-        <g stroke="#DD6666" stroke-width="3" stroke-linecap="round" id="spaceneedle"><line x1="{{ stats.s.ho }}" y1="{{ stats.s.vo }}" x2="{{ stats.s.hf }}" y2="{{ stats.s.vf }}" /></g>
-    </svg>
-</div>
+<div id="IndexBanner" class="tile bannertile file_video_copy">
+    <div class="meter spacemeter">
+        <svg viewBox="0 0 124 67">
+            <g stroke="#DD6666" stroke-width="3" stroke-linecap="round" id="spaceneedle"><line x1="{{ stats.s.ho }}" y1="{{ stats.s.vo }}" x2="{{ stats.s.hf }}" y2="{{ stats.s.vf }}" /></g>
+        </svg>
+    </div>
+    <div class="indexbannercontent">
+        <div class="titlebox contenttitleleft">Download-Manager</div>
+        <div class="tilesplitter contentsplitter"></div>
+    </div>
+    <div class="meter speedmeter">
+        <svg viewBox="0 0 124 67">
+            <g stroke="#FFFF00" stroke-width="3" stroke-linecap="round" id="downloadneedle"><line x1="{{ stats.d.ho }}" y1="{{ stats.d.vo }}" x2="{{ stats.d.hf }}" y2="{{ stats.d.vf }}" /></g>
+            <g stroke="#6688FF" stroke-width="3" stroke-linecap="round" id="uploadneedle"><line x1="{{ stats.u.ho }}" y1="{{ stats.u.vo }}" x2="{{ stats.u.hf }}" y2="{{ stats.u.vf }}" /></g>
+        </svg>
+    </div>
 </div>{% endblock %}
 
 

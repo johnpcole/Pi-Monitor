@@ -4,14 +4,12 @@ from flask import Flask as Webserver
 from flask import render_template as Webpage
 from flask import jsonify as Jsondata
 from flask import request as Webpost
-#from codebase.fileprocessing_component.filesystem_subcomponent.filesystem_module import gettreesize
 
 librarymanager = FileManager.createmanager(FileManager.getlibraryconnectionconfig())
 torrentmanager = TorrentManager.createmanager(FileManager.gettorrentconnectionconfig())
 torrentmanager.refreshtorrentlist()
 torrentmanager.setconfigs(FileManager.loadconfigs())
 webmode = FileManager.getwebhostconfig()
-#print gettreesize("C:\Users\Public\Documents\Public Network Shared")
 
 website = Webserver(__name__)
 
