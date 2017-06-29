@@ -25,9 +25,6 @@ class DefineTorrentManager:
 		outcome['u'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
 		outcome['s'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.95, 0.5)
 		outcome['t'] = Functions.getmeterdata(Functions.getlinmeterangle(54.0, 27.5, 52.5), 0.95, 0.5)
-		#outcome['d'] = Functions.getlogmeterdata(0, 1.0, 0.0, 1.0)
-		#outcome['u'] = Functions.getlogmeterdata(1000, 1.0, 0.0, 1.0)
-		#outcome['s'] = Functions.getlogmeterdata(100000000000000000, 1.0, 0.0, 3.0)
 
 		return outcome
 
