@@ -1,7 +1,7 @@
 from deluge_subcomponent import deluge_module as DelugeClient
 from torrentdata_subcomponent import torrentdata_module as TorrentData
 from ..functions_component import functions_module as Functions
-from operator import attrgetter
+
 
 class DefineTorrentManager:
 
@@ -21,9 +21,13 @@ class DefineTorrentManager:
 	def getstats(self):
 
 		outcome = {}
-		outcome['d'] = Functions.getlogmeterdata(self.sessiondata['downloadspeed'], 67, 124, 1.0, 1.0)
-		outcome['u'] = Functions.getlogmeterdata(self.sessiondata['uploadspeed'], 67, 124, 0.6, 1.0)
-		outcome['s'] = Functions.getlogmeterdata(self.sessiondata['freespace'], 67, 124, 1.0, 3.0)
+		outcome['d'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.95, 0.5)
+		outcome['u'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
+		outcome['s'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.95, 0.5)
+		outcome['t'] = Functions.getmeterdata(Functions.getlinmeterangle(54.0, 27.5, 52.5), 0.95, 0.5)
+		#outcome['d'] = Functions.getlogmeterdata(0, 1.0, 0.0, 1.0)
+		#outcome['u'] = Functions.getlogmeterdata(1000, 1.0, 0.0, 1.0)
+		#outcome['s'] = Functions.getlogmeterdata(100000000000000000, 1.0, 0.0, 3.0)
 
 		return outcome
 
@@ -58,7 +62,7 @@ class DefineTorrentManager:
 			if foundflag == False:
 				print "Removing Torrent from Download-Manager: ", existingtorrent.getid()
 
-		self.torrents = sorted(cleanlist, key=attrgetter('dateadded'), reverse=True)
+		self.torrents = Functions.sortdictionary(cleanlist, 'dateadded', True)
 
 # =========================================================================================
 

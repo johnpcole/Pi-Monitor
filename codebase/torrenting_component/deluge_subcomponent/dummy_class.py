@@ -30,7 +30,7 @@ class DefineDelugeInterface:
 
 # =========================================================================================
 
-	def getstats(self):
+	def updatestats(self):
 
 		if self.speedmeter == 0:
 			self.speedmeter = 1
@@ -38,7 +38,6 @@ class DefineDelugeInterface:
 			self.speedmeter = self.speedmeter * 2
 		if self.speedmeter > 10000000000:
 			self.speedmeter = 0
-		return self.speedmeter
 
 # =========================================================================================
 
@@ -152,3 +151,13 @@ class DefineDelugeInterface:
 		return self.delugeinterface.call('remove_torrent', torrentid, True)
 
 
+# =========================================================================================
+
+ 	def getsessiondata(self):
+
+		self.updatestats()
+		outcome = {}
+		outcome['uploadspeed'] = self.speedmeter
+		outcome['downloadspeed'] = self.speedmeter / 20
+		outcome['freespace'] = self.speedmeter / 10000000
+		return outcome

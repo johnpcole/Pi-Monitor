@@ -1,4 +1,14 @@
 import math as Maths
+import operator as Operators
+
+
+def sortdictionary(rawdictionary, sortattribute, reverseflag):
+
+	outcome = sorted(rawdictionary, key=Operators.attrgetter(sortattribute), reverse=reverseflag)
+
+	return outcome
+
+
 
 def sanitisesize(rawsize):
 
@@ -86,17 +96,40 @@ def getinitial(name):
 
 
 
-def getlogmeterdata(currentval, decalheight, decalwidth, needlesize, scale):
+def getmeterdata(needleangle, needlesize, needlepivot):
 
+	decalheight = 68
+	decalwidth = 121
 	# Assumes the decal image is 688 x 1236 pixels big, scaled
+	#1212 678
 	# Needle length is 564 at 100% scaling
 
-	verticalratio = decalheight / 688.0
-	horizontalratio = decalwidth / 1236.0
-	verticalneedlelength = verticalratio * 554.0 * needlesize
-	horizontalneedlelength = horizontalratio * 544.0 * needlesize
+	fullneedlestretch = 544.0
+	verticalratio = decalheight / 678.0
+	horizontalratio = decalwidth / 1212.0
+	verticalneedlelength = verticalratio * fullneedlestretch * needlesize
+	horizontalneedlelength = horizontalratio * fullneedlestretch * needlesize
+	verticalpivotlength = verticalratio * fullneedlestretch * needlepivot
+	horizontalpivotlength = horizontalratio * fullneedlestretch * needlepivot
 	verticalorigin = verticalratio * 74.0
-	horizontalorigin = horizontalratio * 618.0
+	horizontalorigin = horizontalratio * 610.0
+
+	verticalstart = (verticalpivotlength * Maths.sin(needleangle)) + verticalorigin
+	horizontalstart = (horizontalpivotlength * Maths.cos(needleangle)) + horizontalorigin
+	verticalfinal = (verticalneedlelength * Maths.sin(needleangle)) + verticalorigin
+	horizontalfinal = (horizontalneedlelength * Maths.cos(needleangle)) + horizontalorigin
+
+	outcome = {}
+	outcome['vo'] = decalheight - verticalstart
+	outcome['ho'] = decalwidth - horizontalstart
+	outcome['vf'] = decalheight - verticalfinal
+	outcome['hf'] = decalwidth - horizontalfinal
+
+	return outcome
+
+
+
+def getlogmeterangle(currentval, scale):
 
 	if currentval < 1:
 		segment = -1.0
@@ -105,15 +138,22 @@ def getlogmeterdata(currentval, decalheight, decalwidth, needlesize, scale):
 		if segment > 7.0:
 			segment = 7.0
 
-	angle = Maths.pi * (segment + 1.0) / 8.0
-
-	verticalfinal = (verticalneedlelength * Maths.sin(angle)) + verticalorigin
-	horizontalfinal = (horizontalneedlelength * Maths.cos(angle)) + horizontalorigin
-
-	outcome = {}
-	outcome['vo'] = decalheight - verticalorigin
-	outcome['ho'] = decalwidth - horizontalorigin
-	outcome['vf'] = decalheight - verticalfinal
-	outcome['hf'] = decalwidth - horizontalfinal
+	outcome = Maths.pi * (segment + 1.0) / 8.0
 
 	return outcome
+
+
+def getlinmeterangle(currentval, scalemin, scalemax):
+
+	fraction = (currentval - scalemin) / (scalemax - scalemin)
+
+	if fraction < 0.0:
+		fraction = 0.0
+	if fraction > 1.0:
+		fraction = 1.0
+
+	outcome = Maths.pi * fraction
+
+	return outcome
+
+

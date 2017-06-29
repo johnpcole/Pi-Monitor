@@ -1,6 +1,5 @@
 from filedata_subcomponent import filedata_module as FileData
 from ...functions_component import functions_module as Functions
-from operator import attrgetter
 
 
 class DefineTorrentItem:
@@ -111,7 +110,7 @@ class DefineTorrentItem:
 			existingfile = self.getfileobject(fileitem['index'])
 			if existingfile is None:
 				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'], fileitem['size']))
-		self.files = sorted(self.files, key=attrgetter('filetype'), reverse=True)
+		self.torrents = Functions.sortdictionary(self.files, 'filetype', True)
 
 # =========================================================================================
 
