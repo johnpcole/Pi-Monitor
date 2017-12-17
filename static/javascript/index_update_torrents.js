@@ -9,7 +9,7 @@ $(document).ready(function ()
         if (getAreaState('adddialog') == 'Hidden') {
             updateTorrentsList('Refresh');
         };
-    }, 1000);
+    }, 10000);
 
     $('#ajaxloader').hide();
 });
