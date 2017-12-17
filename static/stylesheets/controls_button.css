@@ -75,6 +75,10 @@ div.actionbuttonsgroup button {
     display: inline-block;
 }
 
+div.actionbuttonsgroup button:hover:enabled {
+    background-color: #777777;
+}
+
 div.actionbuttonsgroup img {
     width: 36px;
     height: 36px;
@@ -83,8 +87,8 @@ div.actionbuttonsgroup img {
 }
 
 div.actionbuttonsgroup button:disabled img {
-    -webkit-filter: brightness(9) saturate(9);
-    filter: brightness(9) saturate(9);
+    -webkit-filter: brightness(3) saturate(9);
+    filter: brightness(3) saturate(9);
 }
 
 
@@ -139,3 +143,4 @@ div.dialogactions button:disabled img {
     -webkit-filter: brightness(9) saturate(9);
     filter: brightness(9) saturate(9);
 }
+

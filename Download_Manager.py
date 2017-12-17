@@ -5,13 +5,11 @@ from flask import render_template as Webpage
 from flask import jsonify as Jsondata
 from flask import request as Webpost
 
-
 librarymanager = FileManager.createmanager(FileManager.getlibraryconnectionconfig())
 torrentmanager = TorrentManager.createmanager(FileManager.gettorrentconnectionconfig())
 torrentmanager.refreshtorrentlist()
 torrentmanager.setconfigs(FileManager.loadconfigs())
 webmode = FileManager.getwebhostconfig()
-
 
 website = Webserver(__name__)
 
@@ -25,7 +23,7 @@ website = Webserver(__name__)
 def initialiselistpage():
 
 	torrentmanager.refreshtorrentlist()
-	return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"))
+	return Webpage('index.html', torrentlist = torrentmanager.gettorrentlistdata("initialise"), stats = torrentmanager.getstats())
 
 
 
@@ -43,7 +41,7 @@ def updatelistpage():
 	elif bulkaction != "Refresh":
 		print "Unknown Torrents List Update Action ", bulkaction
 	torrentmanager.refreshtorrentlist()
-	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"))
+	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"), stats = torrentmanager.getstats())
 
 
 

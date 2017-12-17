@@ -2,6 +2,7 @@
     <script src="./static/javascript/jquery-3.2.0.js"></script>
     <script src="./static/javascript/manage_controls.js"></script>
     <script src="./static/javascript/manage_elements.js"></script>
+    <script src="./static/javascript/manage_colours.js"></script>
     {% block javascript %}{% endblock %}
     <head>
         <title>Download-Manager</title>
@@ -17,10 +18,11 @@
         <link rel="stylesheet" href='./static/stylesheets/controls_textbox.css' />
         <link rel="stylesheet" href='./static/stylesheets/showhideareas.css' />
         <link rel="stylesheet" href='./static/stylesheets/ajaxloader.css' />
+        <link rel="stylesheet" href='./static/stylesheets/tooltips.css' />
         <link rel="stylesheet" href='./static/stylesheets/dialogs.css' />
     </head>
     <body>
-        {% block content %}{% endblock %}{% block toolbar %}{% endblock %}
+        {% block banner %}{% endblock %}{% block content %}{% endblock %}{% block toolbar %}{% endblock %}
         {% block dialogs %}{% endblock %}
         {% block hiddendata %}{% endblock %}
         <div id="ajaxloader" class="screenblock"><div class="spinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div></div>

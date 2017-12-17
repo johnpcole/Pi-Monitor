@@ -14,12 +14,25 @@ function updateStartStopButtons(torrentstate)
 };
 
 
-function updateCopyButton(torrentstate)
+function updateCopyButton(torrentstate, torrenttype)
 {
     var torrentstateprefix = torrentstate.substr(0, 7);
-    if (torrentstateprefix == "seeding") {
-        changeButtonState('Copy', 'Show');
+    if ((torrentstateprefix == "seeding") && (torrenttype != "unknown")) {
+        changeButtonState('Copy', 'Enable');
     } else {
-        changeButtonState('Copy', 'Hide');
+        changeButtonState('Copy', 'Disable');
+    };
+};
+
+
+
+function updateEditButton()
+{
+    var areaobjectlist = document.getElementsByClassName('contenttile');
+    var areaindex = areaobjectlist.length;
+    if (areaindex > 0) {
+        changeButtonState('Edit', 'Enable');
+    } else {
+        changeButtonState('Edit', 'Disable');
     };
 };

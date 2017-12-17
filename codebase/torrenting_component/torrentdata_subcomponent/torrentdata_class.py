@@ -1,6 +1,5 @@
 from filedata_subcomponent import filedata_module as FileData
 from ...functions_component import functions_module as Functions
-from operator import attrgetter
 
 
 class DefineTorrentItem:
@@ -23,6 +22,8 @@ class DefineTorrentItem:
 
 		self.files = []
 
+		self.filechangeflag = False
+
 		self.torrenttype = "unknown"
 
 		self.movieorshowname = ""
@@ -31,9 +32,13 @@ class DefineTorrentItem:
 
 		self.eta = "!UNKNOWN!"
 
+		self.dateadded = -99999
+
 	# =========================================================================================
 
 	def updateinfo(self, datalist):
+
+		filecount = len(self.files)
 
 		for dataitem in datalist:
 
@@ -75,9 +80,15 @@ class DefineTorrentItem:
 			elif dataitem == "eta":
 				self.eta = Functions.sanitisetime(datalist[dataitem])
 
+			elif dataitem == "time_added":
+				self.dateadded = datalist[dataitem]
+
 			else:
 				outcome = "Unknown Data Label: " + dataitem
 				assert 0 == 1, outcome
+
+		if len(self.files) != filecount:
+			self.filechangeflag = True
 
 # =========================================================================================
 
@@ -99,7 +110,7 @@ class DefineTorrentItem:
 			existingfile = self.getfileobject(fileitem['index'])
 			if existingfile is None:
 				self.files.append(FileData.createitem(fileitem['index'], fileitem['path'], fileitem['size']))
-		self.files = sorted(self.files, key=attrgetter('filetype'), reverse=True)
+		self.torrents = Functions.sortdictionary(self.files, 'filetype', True)
 
 # =========================================================================================
 
@@ -312,7 +323,9 @@ class DefineTorrentItem:
 						'files': self.getextendedfiledata(datamode)}
 		elif datamode == "refresh":
 			outcome = { 'status': self.getfullstatus(),
-						'progress': self.getprogresssizeeta()}
+						'progress': self.getprogresssizeeta(),
+						'filechangealert': self.filechangeflag}
+			self.filechangeflag = False
 		elif datamode == "reconfigure":
 			outcome = { 'torrenttitle': self.gettorrenttitle(),
 						'torrenttype': self.torrenttype,

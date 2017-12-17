@@ -2,13 +2,13 @@
    TILE CONTAINER
    =============================================================================== */
 
-div.torrenttile {
-    width: 460px;
+div.bannertile {
+    width: 524px;
 }
 
 @media screen and (min-width: 1070px) {
-    div.torrenttile {
-        width: 954px;
+    div.bannertile {
+        width: 1018px;
     }
 }
 
@@ -16,18 +16,18 @@ div.torrenttile {
    TILE TITLE ROW
    =============================================================================== */
 
-div.titleleftextended {
-    width: 427px;
+div.bannertitleleft {
+    width: 492px;
     text-align: left;
 }
 
 @media screen and (min-width: 1070px) {
-    div.titleleftextended {
-        width: 922px;
+    div.bannertitleleft {
+        width: 986px;
     }
 }
 
-div.titlerightextended {
+div.bannertitleright {
     width: 20px;
     text-align: right;
 }
@@ -37,13 +37,13 @@ div.titlerightextended {
    TITLE SEPARATOR LINE
    =============================================================================== */
 
-div.splitterextended {
-    width: 452px;
+div.bannersplitter {
+    width: 516px;
 }
 
 @media screen and (min-width: 1070px) {
-    div.splitterextended {
-        width: 946px;
+    div.bannersplitter {
+        width: 1010px;
     }
 }
 
@@ -51,30 +51,30 @@ div.splitterextended {
    TILE SUBTILE ROW
    =============================================================================== */
 
-div.subtitleleftextended {
-    width: 452px;
+div.bannersubtitleleft {
+    width: 516px;
     text-align: left;
 }
 
 @media screen and (min-width: 1070px) {
-    div.subtitleleftextended {
-        width: 758px;
+    div.bannersubtitleleft {
+        width: 822px;
     }
 }
 
-div.subtitlerightextended {
-    width: 452px;
+div.bannersubtitleright {
+    width: 516px;
     text-align: right;
 }
 
 @media screen and (min-width: 1070px) {
-    div.subtitlerightextended {
+    div.bannersubtitleright {
         width: 180px;
     }
 }
 
 @media screen and (max-width: 1069px) {
-    div.subtitlerightextended {
+    div.bannersubtitleright {
         padding-top: 0px;
     }
 }

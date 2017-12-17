@@ -33,6 +33,33 @@ function changeAreaState(areaname, displayvalue)
 };
 
 
+// Update area colour
+
+function changeAreaColour(areaname, displayvalue)
+{
+    var areaobject = document.getElementById(areaname);
+    if (areaobject != null) {
+        areaobject.style.backgroundColor = displayvalue;
+    } else {
+        alert("changeAreaColour: "+areaname);
+    };
+};
+
+
+
+// Update area class
+
+function changeAreaClass(areaname, classvalue)
+{
+    var areaobject = document.getElementById(areaname);
+    if (areaobject != null) {
+        areaobject.className = classvalue;
+    } else {
+        alert("changeAreaClass: "+areaname);
+    };
+};
+
+
 
 // Update the displayed text
 

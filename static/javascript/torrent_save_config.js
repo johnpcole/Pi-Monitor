@@ -12,6 +12,7 @@ function saveTorrentConfiguration()
     } else {
         newinstructions = { 'torrenttype' : newtype, 'moviename' : getFieldValue("moviename"), 'files' : getUnknownTorrentFileInstructions() };
     };
+    updateCopyButton(getImageName('Status').substr(7), newtype);
     updateTorrentConfig(newinstructions);
 };
 
@@ -53,6 +54,8 @@ function updateTorrentConfigDisplay(dataitem)
     {
         rerenderText("filetitle-"+filelist[index].fileid, filelist[index].filetitle);
         rerenderImage("outcome-"+filelist[index].fileid, "fileaction_"+filelist[index].outcome);
+        var filetypelabel = getImageName("filetype-"+filelist[index].fileid)
+        updateFileTileColour("File-"+filelist[index].fileid, filetypelabel.substr(9), filelist[index].outcome);
     });
 
 };

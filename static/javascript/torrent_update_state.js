@@ -2,7 +2,12 @@
 
 $(document).ready(function ()
 {
-    updateStartStopButtons(getImageName('Status').substr(8));
+    $('#copydialog').hide();
+    $('#deletedialog').hide();
+    var torrentstatus = getImageName('Status').substr(7);
+    updateStartStopButtons(torrentstatus);
+    updateCopyButton(torrentstatus, getImageName('TorrentType').substr(5));
+    updateEditButton();
     changeAreasState('readmodebuttons', 'Show');
 
     // Refresh the tiles every minute.
@@ -39,7 +44,11 @@ function updateTorrentState(action)
         dataType:'json',
         success: function(data)
         {
-            updateTorrentStateDisplay(data.selectedtorrent);
+            if (data.selectedtorrent.filechangealert == true) {
+                window.location.replace("/Torrent="+getCurrentTorrentId());
+            } else {
+                updateTorrentStateDisplay(data.selectedtorrent);
+            };
         }
     });
 };
@@ -50,9 +59,10 @@ function updateTorrentState(action)
 function updateTorrentStateDisplay(dataitem)
 {
     rerenderImage("Status", "status_"+dataitem.status);
+    updateTorrentTileColour("TorrentTile", "bannertile", dataitem.status);
     rerenderText("Progress", dataitem.progress);
     updateStartStopButtons(dataitem.status);
-    updateCopyButton(dataitem.status);
+    updateCopyButton(dataitem.status, getImageName('TorrentType').substr(5));
 };
 
 

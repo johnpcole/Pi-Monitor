@@ -1,5 +1,8 @@
 from deluge_subcomponent import deluge_module as DelugeClient
 from torrentdata_subcomponent import torrentdata_module as TorrentData
+from ..functions_component import functions_module as Functions
+from monitor_subcomponent import monitor_module as Monitor
+
 
 class DefineTorrentManager:
 
@@ -12,11 +15,27 @@ class DefineTorrentManager:
 
 		self.torrents = []
 
+		self.sessiondata = {'uploadspeed':0, 'downloadspeed':0, 'freespace':0, 'temperature':0}
+
+# =========================================================================================
+
+	def getstats(self):
+
+		outcome = {}
+		outcome['d'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.95, 0.5)
+		outcome['u'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
+		outcome['s'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.95, 0.5)
+		outcome['t'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.95, 0.5)
+
+		return outcome
+
 # =========================================================================================
 
 	def refreshtorrentlist(self):
 
 		outcome = self.delugeclient.openconnection()
+
+		self.updatestats()
 
 		torrentidlist = self.delugeclient.gettorrentlist()
 		for torrentiditem in torrentidlist:
@@ -41,7 +60,7 @@ class DefineTorrentManager:
 			if foundflag == False:
 				print "Removing Torrent from Download-Manager: ", existingtorrent.getid()
 
-		self.torrents = cleanlist
+		self.torrents = Functions.sortdictionary(cleanlist, 'dateadded', True)
 
 # =========================================================================================
 
@@ -195,3 +214,10 @@ class DefineTorrentManager:
 
 		return outcome
 
+
+# =========================================================================================
+
+	def updatestats(self):
+
+		self.sessiondata = self.delugeclient.getsessiondata()
+		self.sessiondata['temperature'] = Monitor.gettemperature()

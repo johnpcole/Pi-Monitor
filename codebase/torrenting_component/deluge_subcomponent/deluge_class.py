@@ -12,6 +12,13 @@ class DefineDelugeInterface:
 
 		while self.delugeinterface.connected == False:
 			self.delugeinterface.connect()
+			#print "========================================================="
+			#print self.delugeinterface.call('client.api_methods')
+			#print "========================================================="
+			#WORKS! print self.delugeinterface.call('core.get_free_space')
+			#print "========================================================="
+			#WORKS! print self.delugeinterface.call('core.get_config')
+			#print "========================================================="
 		return self.delugeinterface.connected
 
 # =========================================================================================
@@ -38,7 +45,7 @@ class DefineDelugeInterface:
 
 	def getdelugekeys(self):
 
-		return ["state", "save_path", "name", "total_size", "progress", "eta", "files", "is_finished"]
+		return ["state", "save_path", "name", "total_size", "progress", "eta", "files", "is_finished", "time_added"]
 
 # =========================================================================================
 
@@ -94,12 +101,6 @@ class DefineDelugeInterface:
 
 # =========================================================================================
 
-	def getfreespace(self):
-
-		return self.delugeinterface.call('core.get_free_space')
-
-# =========================================================================================
-
 	def pausetorrent(self, torrentid):
 
 		if torrentid == "ALL":
@@ -126,5 +127,14 @@ class DefineDelugeInterface:
 
 		return outcome
 
+# =========================================================================================
 
+ 	def getsessiondata(self):
 
+		rawstats = self.delugeinterface.call('core.get_session_status', [	"payload_download_rate",
+																			"payload_upload_rate"])
+		outcome = {}
+		outcome['uploadspeed'] = rawstats['payload_upload_rate']
+		outcome['downloadspeed'] = rawstats['payload_download_rate']
+		outcome['freespace'] = (self.delugeinterface.call('core.get_free_space')) / 1000000000
+		return outcome

@@ -6,6 +6,8 @@ class DefineDelugeInterface:
 
 		self.delugeinterface = "Dummy Interface Object"
 
+		self.speedmeter = 0
+
 # =========================================================================================
 
 	def openconnection(self):
@@ -25,6 +27,17 @@ class DefineDelugeInterface:
 	def gettorrentlist(self):
 
 		return ('dummytorrent1', 'dummytorrent2', 'dummytorrent3')
+
+# =========================================================================================
+
+	def updatestats(self):
+
+		if self.speedmeter == 0:
+			self.speedmeter = 1
+		else:
+			self.speedmeter = self.speedmeter * 2
+		if self.speedmeter > 10000000000:
+			self.speedmeter = 0
 
 # =========================================================================================
 
@@ -138,3 +151,13 @@ class DefineDelugeInterface:
 		return self.delugeinterface.call('remove_torrent', torrentid, True)
 
 
+# =========================================================================================
+
+ 	def getsessiondata(self):
+
+		self.updatestats()
+		outcome = {}
+		outcome['uploadspeed'] = self.speedmeter
+		outcome['downloadspeed'] = self.speedmeter / 20
+		outcome['freespace'] = self.speedmeter / 10000000
+		return outcome
