@@ -26,6 +26,8 @@ class DefineLibraryManager:
 		self.discoversubtitles()
 
 # =========================================================================================
+# Connects to the file server, and compiles a list of tv shows and seasons to store locally
+# =========================================================================================
 
 	def discovertvshows(self):
 
@@ -52,17 +54,35 @@ class DefineLibraryManager:
 		FileSystem.unmountnetworkdrive(self.mountpoint)
 
 # =========================================================================================
+# Returns the list of tv shows and seasons
+# =========================================================================================
 
 	def gettvshowlists(self):
 
 		return self.tvshows
 
 # =========================================================================================
+# Returns the list of tv show names
+# =========================================================================================
 
 	def gettvshows(self):
 
 		return sorted(self.tvshows.keys())
 
+# =========================================================================================
+# Returns the list of season names for the specified tv show
+# =========================================================================================
+
+	def gettvshowseasons(self, tvshowname):
+
+		if tvshowname in self.tvshows:
+			outcome = self.tvshows[tvshowname]
+		else:
+			outcome = []
+		return outcome
+
+# =========================================================================================
+# Returns all the drop-down list options for the specified tv show
 # =========================================================================================
 
 	def getdropdownlists(self, tvshowname):
@@ -75,15 +95,7 @@ class DefineLibraryManager:
 		return outcome
 
 # =========================================================================================
-
-	def gettvshowseasons(self, tvshowname):
-
-		if tvshowname in self.tvshows:
-			outcome = self.tvshows[tvshowname]
-		else:
-			outcome = []
-		return outcome
-
+# Generates a list of episodes for the episode drop-down list
 # =========================================================================================
 
 	def discoverepisodes(self):
@@ -95,6 +107,8 @@ class DefineLibraryManager:
 		for x in range(1, 100):
 			self.episodes.append("Special "+str(x))
 
+# =========================================================================================
+# Generates a list of subtitle types for the subtitle drop-down list
 # =========================================================================================
 
 	def discoversubtitles(self):

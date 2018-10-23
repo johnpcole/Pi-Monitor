@@ -2,7 +2,7 @@ import os as OperatingSystem
 
 def mountnetworkdrive(mountpoint, networkpath, username, password):
 	if concatenatepaths(" ", " ") == " / ":
-		outcome = OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+' '+networkpath+' '+mountpoint)
+		outcome = OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+',noexec,vers=2.0 '+networkpath+' '+mountpoint)
 	else:
 		if username != "":
 			outcome = OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
