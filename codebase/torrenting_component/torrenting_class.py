@@ -30,6 +30,8 @@ class DefineTorrentManager:
 		return outcome
 
 # =========================================================================================
+# Connects to the torrent daemon, and updates the local list of torrents
+# =========================================================================================
 
 	def refreshtorrentlist(self):
 

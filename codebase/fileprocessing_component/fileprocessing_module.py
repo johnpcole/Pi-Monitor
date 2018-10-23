@@ -1,6 +1,9 @@
 from filesystem_subcomponent import filesystem_module as FileSystem
-from . import fileprocesing_class as FileManagerClass
+from . import fileprocessing_class as FileManagerClass
 
+# =========================================================================================
+# Creates the Library object, which contains file server connectivity data,
+# as well as lists of tv shows, and processes copy actions
 # =========================================================================================
 
 def createmanager(connectioncredentials):
@@ -8,6 +11,8 @@ def createmanager(connectioncredentials):
 													connectioncredentials['Address'],connectioncredentials['Username'],
 													connectioncredentials['Password'])
 
+# =========================================================================================
+# Reads the configuration data for connecting to the torrent daemon, from a file
 # =========================================================================================
 
 def gettorrentconnectionconfig():
@@ -19,6 +24,8 @@ def gettorrentconnectionconfig():
 	return outcome
 
 # =========================================================================================
+# Reads the configuration data for connecting to the file server, from a file
+# =========================================================================================
 
 def getlibraryconnectionconfig():
 	credentials = FileSystem.readfromdisk('./data/libraryconnection.cfg')
@@ -29,15 +36,21 @@ def getlibraryconnectionconfig():
 	return outcome
 
 # =========================================================================================
+# Saves the current torrent config information, to a file
+# =========================================================================================
 
 def saveconfigs(outputlist):
 	FileSystem.writetodisk('./data/torrentconfigs.db', outputlist)
 
 # =========================================================================================
+# Reads the current torrent config information, from a file
+# =========================================================================================
 
 def loadconfigs():
 	return FileSystem.readfromdisk('./data/torrentconfigs.db')
 
+# =========================================================================================
+# Reads the configuration data for webhosting, from a file
 # =========================================================================================
 
 def getwebhostconfig():
@@ -48,6 +61,8 @@ def getwebhostconfig():
 		outcome = False
 	return outcome
 
+# =========================================================================================
+# Creates a filepath from a list of nodes, using the appropriate filesystem symbol
 # =========================================================================================
 
 def buildpath(nodelist):

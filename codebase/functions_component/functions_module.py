@@ -92,6 +92,13 @@ def getinitial(name):
 	else:
 		noun = name
 	outcome = noun[:1]
+	if (outcome == "1") or (outcome == "2") or (outcome == "3") or (outcome == "4") or (outcome == "5"):
+		outcome = "0"
+	if (outcome == "6") or (outcome == "7") or (outcome == "8") or (outcome == "9") or (outcome == "#"):
+		outcome = "0"
+	if (outcome == "!") or (outcome == "$") or (outcome == "%") or (outcome == "#") or (outcome == "@"):
+		outcome = "0"
+
 	return outcome.upper()
 
 
