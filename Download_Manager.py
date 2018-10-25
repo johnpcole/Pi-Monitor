@@ -38,6 +38,9 @@ def updatelistpage():
 	bulkaction = rawdata["bulkaction"]
 	if (bulkaction == "Start") or (bulkaction == "Stop"):
 		torrentmanager.bulkprocessalltorrents(bulkaction)
+	elif bulkaction == "RescanFileServer":
+		print "Rescanning File-Server for TV Shows & Seasons"
+		librarymanager.discovertvshows()
 	elif bulkaction != "Refresh":
 		print "Unknown Torrents List Update Action ", bulkaction
 	torrentmanager.refreshtorrentlist()
