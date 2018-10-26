@@ -43,7 +43,7 @@ class DefineTorrentItem:
 		for dataitem in datalist:
 
 			if dataitem == "name":
-				self.torrentname = datalist[dataitem]
+				self.torrentname = Functions.sanitisetext(datalist[dataitem])
 
 			elif dataitem == "torrenttype":
 				self.torrenttype = datalist[dataitem]

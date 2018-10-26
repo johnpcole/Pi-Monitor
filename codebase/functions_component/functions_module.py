@@ -40,6 +40,34 @@ def sanitisetime(rawtime):
 	return outcome
 
 
+def sanitisetext(rawtext):
+
+	outcome = ""
+
+	stringsize = len(rawtext)
+
+	if stringsize > 0:
+
+		if rawtext.isalnum() == True:
+			outcome = rawtext
+
+		else:
+
+			for index in range(0, stringsize, 1):
+				charitem = rawtext[index:index+1]
+				charval = ord(charitem)
+
+				if (charval >= 48) and (charval <= 57):
+					outcome = outcome + charitem
+				elif (charval >= 65) and (charval <= 90):
+					outcome = outcome + charitem
+				elif (charval >= 97) and (charval <= 122):
+					outcome = outcome + charitem
+				else:
+					outcome = outcome + " "
+
+	return outcome
+
 
 def minifyseason(seasonname, episodename):
 
@@ -94,9 +122,9 @@ def getinitial(name):
 	outcome = noun[:1]
 	if (outcome == "1") or (outcome == "2") or (outcome == "3") or (outcome == "4") or (outcome == "5"):
 		outcome = "0"
-	if (outcome == "6") or (outcome == "7") or (outcome == "8") or (outcome == "9") or (outcome == "#"):
+	elif (outcome == "6") or (outcome == "7") or (outcome == "8") or (outcome == "9") or (outcome == "#"):
 		outcome = "0"
-	if (outcome == "!") or (outcome == "$") or (outcome == "%") or (outcome == "#") or (outcome == "@"):
+	elif (outcome == "!") or (outcome == "$") or (outcome == "%") or (outcome == "#") or (outcome == "@"):
 		outcome = "0"
 
 	return outcome.upper()
