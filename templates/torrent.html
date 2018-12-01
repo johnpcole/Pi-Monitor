@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 
+<!-- ------------------------------------------------------------------------------------------------ -->
+
 
 {% block javascript %}
+
     <script src="./static/javascript/torrent_action_buttons.js"></script>
     <script src="./static/javascript/torrent_change_tvshow.js"></script>
     <script src="./static/javascript/torrent_change_torrenttype.js"></script>
@@ -13,110 +16,398 @@
     <script src="./static/javascript/torrent_update_state.js"></script>
     <script src="./static/javascript/torrent_copy.js"></script>
     <script src="./static/javascript/torrent_delete.js"></script>
+
 {% endblock %}
 
+
+<!-- ------------------------------------------------------------------------------------------------ -->
 
 
 {% block banner %}
-<div id="TorrentTile" class="tile bannertile torrent_{{ selectedtorrent.status }}">
-    <div class="readonlyfields">
-        <div class="titlebox bannertitleleft" id="TorrentTitle">{{ selectedtorrent.torrenttitle }}</div><div class="titlebox bannertitleright"><img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" /></div>
-    </div><div class="editmodefields">
-        <div class="buttongroup">
-            <button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
-                <img src="./static/images/type_unknown.png" alt="unknown button" />
-            </button><button type="button" id="MakeMovie" onclick="javascript:changeTorrentType('movie');">
-                <img src="/static/images/type_movie.png" alt="movie button" />
-            </button><button type="button" id="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');">
-                <img src="/static/images/type_tvshow.png" alt="tv show button" />
-            </button>
-        </div><div class="unknownonlyfields"><span class="fieldlabel">New Unspecified Torrent</span></div><div class="tvshowonlyfields">
-            <div class="narrowspacer"></div><span class="fieldlabel torrentfieldlabel">TV Show:</span><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');">
-</select><div class="narrowspacer"></div><span class="fieldlabel torrentfieldlabel">Season:</span><select class="tvshowseasonfield" name="tvshowseasonselector"></select>
-        </div><div class="movieonlyfields">
-            <div class="narrowspacer"></div><span class="fieldlabel torrentfieldlabel">Film:</span><input type="text" name="moviename" value="" class="movienamefield" /><div class="narrowspacer"></div><span class="fieldlabel torrentfieldlabel">Year:</span><input type="text" name="movieyear" value="" class="movieyearfield" />
-        </div>
-    </div>
-    <div class="tilesplitter bannersplitter"></div><div class="subtitlebox bannersubtitleleft">
-        {{ selectedtorrent.torrentname }}
-    </div><div class="subtitlebox bannersubtitleright">
-        <img id="Status" src="./static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><span id="Progress">{{ selectedtorrent.progress }}</span>
-    </div>
-</div>{% endblock %}
 
+ --><div id="TorrentTile" class="tile bannertile torrent_{{ selectedtorrent.status }}"><!--
+
+Section: Configured-Title & Type Read-Only-View
+
+     --><div class="readonlyfields"><!--
+
+Subsection: Configured-Title
+
+          --><div class="titlebox bannertitleleft" id="TorrentTitle">
+                <span>{{ selectedtorrent.torrenttitle }}</span>
+            </div><!--
+
+Subsection: Type
+
+         --><div class="titlebox bannertitleright">
+                <img id="TorrentType" src="./static/images/type_{{ selectedtorrent.torrenttype }}.png" alt="{{ selectedtorrent.torrenttype }}" />
+            </div><!--
+
+     --></div><!--
+
+Section: Configured-Title & Type Edit-Mode-View
+
+     --><div class="editmodefields"><!--
+
+Subsection: Type-Selector-Buttons
+
+         --><div class="buttongroup"><!--
+
+             --><button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
+                    <img src="./static/images/type_unknown.png" alt="unknown button" />
+                </button><!--
+
+             --><button type="button" id="MakeMovie" onclick="javascript:changeTorrentType('movie');">
+                    <img src="/static/images/type_movie.png" alt="movie button" />
+                </button><!--
+
+             --><button type="button" id="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');">
+                    <img src="/static/images/type_tvshow.png" alt="tv show button" />
+                </button><!--
+
+         --></div><!--
+
+Subsection: Unknown-Type-Fields
+
+         --><div class="unknownonlyfields">
+                <span class="fieldlabel">New Unspecified Torrent</span>
+            </div><!--
+
+Subsection: TV-Show-Type-Fields
+
+         --><div class="tvshowonlyfields"><!--
+             --><div class="narrowspacer"></div><!--
+             --><span class="fieldlabel torrentfieldlabel">TV Show:</span><!--
+             --><select class="tvshownamefield" name="tvshowselector" onchange="javascript:updateTVShowSeasons('');"></select><!--
+             --><div class="narrowspacer"></div><!--
+             --><span class="fieldlabel torrentfieldlabel">Season:</span><!--
+             --><select class="tvshowseasonfield" name="tvshowseasonselector"></select><!--
+         --></div><!--
+
+Subsection: Movie-Type-Fields
+
+         --><div class="movieonlyfields"><!--
+             --><div class="narrowspacer"></div><!--
+             --><span class="fieldlabel torrentfieldlabel">Film:</span><!--
+             --><input type="text" name="moviename" value="" class="movienamefield" /><!--
+             --><div class="narrowspacer"></div><!--
+             --><span class="fieldlabel torrentfieldlabel">Year:</span><!--
+             --><input type="text" name="movieyear" value="" class="movieyearfield" /><!--
+         --></div><!--
+
+
+     --></div><!--
+
+Section: Horizontal-Line
+
+     --><div class="tilesplitter bannersplitter"></div><!--
+
+Section: Raw-Title
+
+     --><div class="subtitlebox bannersubtitleleft">
+            {{ selectedtorrent.torrentname }}
+        </div><!--
+
+Section: Progress and Status
+
+     --><div class="subtitlebox bannersubtitleright"><!--
+         --><img id="Status" src="./static/images/status_{{ selectedtorrent.status }}.png" alt="{{ selectedtorrent.status }}" /><!--
+         --><span id="Progress">{{ selectedtorrent.progress }}</span><!--
+     --></div><!--
+
+ --></div><!--
+
+{% endblock %}
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
 
 
 {% block content %}
-<div class="tilesgroup">{% for fileitem in selectedtorrent.files %}<div id="File-{{ fileitem.fileid }}" class="tile contenttile file_{{ fileitem.filetype }}_{{ fileitem.outcome }}">
-        <div class="readonlyfields"><div class="titlebox contenttitleleft" id="filetitle-{{ fileitem.fileid }}">{{ fileitem.filetitle }}</div><div class="titlebox contenttitleright"><img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" /></div>
-        </div><div class="editmodefields">{% if fileitem.filetype == "none" %}<div class="titlebox contenttitlefull buttongroupequivalent">Ignored File</div>
-            {% else %}<div class="unknownonlyfields"><div class="titlebox contenttitlefull buttongroupequivalent">Do Not Save</div>
-                </div><div class="movieonlyfields tvshowonlyfields"><div class="buttongroup">
-                <button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
-                    <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
-                </button><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
-                    <img src="./static/images/fileaction_copy.png" alt="copy button" />
-                </button>
-            </div><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}"><span class="fieldlabel">Do Not Save</span>
-            </div><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}">
-                <div class="movieonlyfields"><span class="fieldlabel">Save As Film</span>
-                </div><div class="tvshowonlyfields"><span class="fieldlabel">Save As:</span><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode">
-                </select></div>{% if fileitem.filetype == "subtitle" %}<div class="tvshowonlyfields movieonlyfields"><span class="fieldlabel">Subtitle:</span><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle">
-                </select></div>{% endif %}
-        </div></div>{% endif %}</div><div class="tilesplitter contentsplitter"></div><div class="subtitlebox filesubtitleleft">
-            <span class="tooltip">{{ fileitem.filename }}</span>{{ fileitem.filename }}
-        </div><div class="subtitlebox filesubtitleright">
-            <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" />{{ fileitem.size }}
-        </div>
-    </div>{% endfor %}
-</div>{% endblock %}
 
+ --><div class="tilesgroup"><!--
 
+{% for fileitem in selectedtorrent.files %}
 
-{% block toolbar %}<div class="actionbuttonsgroup">
-    <div class="readmodebuttons"><button type="button" id="Exit" onclick="javascript:window.location.replace('/');"><img src="./static/images/torrentaction_exit.png" alt="exit button" />
-    </button><button type="button" id="Stop" onclick="javascript:updateTorrentState('Stop');"><img src="./static/images/torrentaction_stop.png" alt="stop button" />
-    </button><button type="button" id="Start" onclick="javascript:updateTorrentState('Start');"><img src="./static/images/torrentaction_start.png" alt="start button" />
-    </button><button disabled type="button" id="Edit" onclick="javascript:editTorrentConfiguration();"><img src="./static/images/torrentaction_edit.png" alt="edit button" />
-    </button><button disabled type="button" id="Copy" onclick="javascript:copyTorrent();"><img src="./static/images/torrentaction_copy.png" alt="copy button" />
-    </button><button type="button" id="Delete" onclick="javascript:deleteTorrent();"><img src="./static/images/torrentaction_delete.png" alt="delete button" />
-    </button></div><div class="editmodebuttons"><button type="button" id="Cancel" onclick="javascript:cancelTorrentConfiguration();"><img src="./static/images/torrentaction_cancel.png" alt="commit button" />
-    </button><button type="button" id="Save" onclick="javascript:saveTorrentConfiguration();"><img src="./static/images/torrentaction_commit.png" alt="commit button" />
-    </button></div>
-</div>
+File {{ fileitem.filetitle }}
+
+     --><div id="File-{{ fileitem.fileid }}" class="tile contenttile file_{{ fileitem.filetype }}_{{ fileitem.outcome }}"><!--
+
+Section: Configured-Filename & Type Read-Only-View
+
+         --><div class="readonlyfields"><!--
+
+Subsection: Configured-Filename
+
+             --><div class="titlebox contenttitleleft" id="filetitle-{{ fileitem.fileid }}">
+                    <span>{{ fileitem.filetitle }}</span>
+                </div><!--
+
+Subsection: Type
+
+             --><div class="titlebox contenttitleright">
+                    <img id="outcome-{{ fileitem.fileid }}" class="outeredgeimage" src="./static/images/fileaction_{{ fileitem.outcome }}.png" alt="{{ fileitem.outcome }}" />
+                </div><!--
+
+         --></div><!--
+
+Section: Configured-Filename & Type Edit-Mode-View
+
+         --><div class="editmodefields"><!--
+
+{% if fileitem.filetype == "none" %}
+
+Section-Mode: Unusable-Filetype; Torrent Type Irrelevent
+
+             --><div class="titlebox contenttitlefull buttongroupequivalent">
+                    <span>Ignored File</span>
+                </div><!--
+
+{% else %}
+
+Section-Mode: Usable-Filetype; Unknown Torrent Type
+
+             --><div class="unknownonlyfields"><!--
+
+                 --><div class="titlebox contenttitlefull buttongroupequivalent">
+                        <span>Do Not Save</span>
+                    </div><!--
+
+             --></div><!--
+
+Section-Mode: Usable-Filetype; Known Torrent Type
+
+             --><div class="movieonlyfields tvshowonlyfields"><!--
+
+Subsection: FileMode-Selector-Buttons
+
+                 --><div class="buttongroup"><!--
+
+                     --><button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
+                            <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
+                        </button><!--
+
+                     --><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
+                            <img src="./static/images/fileaction_copy.png" alt="copy button" />
+                        </button><!--
+
+                 --></div><!--
+
+Subsection: Dont-Copy-Filemode
+
+                 --><div class="ignoreonlyfields" id="ignoreconfig-{{ fileitem.fileid }}">
+                        <span class="fieldlabel">Do Not Save</span>
+                    </div><!--
+
+Subsection: Do-Copy-Filemode
+
+                 --><div class="copyonlyfields" id="copyconfig-{{ fileitem.fileid }}"><!--
+
+                     --><div class="movieonlyfields">
+                            <span class="fieldlabel">Save As Film</span>
+                        </div><!--
+
+                     --><div class="tvshowonlyfields">
+                            <span class="fieldlabel">Save As:</span><!--
+                         --><select name="episodeselector-{{ fileitem.fileid }}" class="fileepisode"></select>
+                        </div><!--
+
+{% if fileitem.filetype == "subtitle" %}
+
+                     --><div class="tvshowonlyfields movieonlyfields">
+                            <span class="fieldlabel">Subtitle:</span><!--
+                         --><select name="subtitleselector-{{ fileitem.fileid }}" class="filesubtitle"></select>
+                        </div><!--
+
+{% endif %}
+
+                 --></div><!--
+             --></div><!--
+
+{% endif %}
+
+         --></div><!--
+
+Section: Horizontal-Line
+
+         --><div class="tilesplitter contentsplitter">
+            </div><!--
+
+Section: Raw-Filename
+
+         --><div class="subtitlebox filesubtitleleft">
+                <span class="tooltip">{{ fileitem.filename }}</span><!--
+             --><span>{{ fileitem.filename }}</span>
+            </div><!--
+
+Section: File-Type & File-Size
+
+         --><div class="subtitlebox filesubtitleright">
+                <img id="filetype-{{ fileitem.fileid }}" src="./static/images/filetype_{{ fileitem.filetype }}.png" alt="{{ fileitem.filetype }}" /><!--
+             --><span>{{ fileitem.size }}</span>
+            </div><!--
+
+     --></div><!--
+
+{% endfor %}
+
+ --></div><!--
+
 {% endblock %}
 
+
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+
+{% block toolbar %}
+
+ --><div class="actionbuttonsgroup"><!--
+
+Section: Read-Only-Mode Action Buttons
+
+     --><div class="readmodebuttons"><!--
+
+         --><button type="button" id="Exit" onclick="javascript:window.location.replace('/');">
+                <img src="./static/images/torrentaction_exit.png" alt="exit button" />
+            </button><!--
+
+         --><button type="button" id="Stop" onclick="javascript:updateTorrentState('Stop');">
+                <img src="./static/images/torrentaction_stop.png" alt="stop button" />
+            </button><!--
+
+         --><button type="button" id="Start" onclick="javascript:updateTorrentState('Start');">
+                <img src="./static/images/torrentaction_start.png" alt="start button" />
+            </button><!--
+
+         --><button disabled type="button" id="Edit" onclick="javascript:editTorrentConfiguration();">
+                <img src="./static/images/torrentaction_edit.png" alt="edit button" />
+            </button><!--
+
+         --><button disabled type="button" id="Copy" onclick="javascript:copyTorrent();">
+                <img src="./static/images/torrentaction_copy.png" alt="copy button" />
+            </button><!--
+
+         --><button type="button" id="Delete" onclick="javascript:deleteTorrent();">
+                <img src="./static/images/torrentaction_delete.png" alt="delete button" />
+            </button><!--
+
+     --></div><!--
+
+Section: Edit-Mode Action Buttons
+
+     --><div class="editmodebuttons"><!--
+
+         --><button type="button" id="Cancel" onclick="javascript:cancelTorrentConfiguration();">
+                <img src="./static/images/torrentaction_cancel.png" alt="commit button" />
+            </button><!--
+
+         --><button type="button" id="Save" onclick="javascript:saveTorrentConfiguration();">
+                <img src="./static/images/torrentaction_commit.png" alt="commit button" />
+            </button><!--
+
+     --></div><!--
+
+ --></div><!--
+
+{% endblock %}
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
 
 
 {% block dialogs %}
-<div id="copydialog" class="screenblock hidden">
-    <div class="dialog">
-        <div class="dialogtitle">Copying Files...<button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
-        <div class="dialogsplitter"></div>
-        <div id="dialogcontent" class="dialogcontent"></div>
-        <div class="dialogactions"><button type="button" id="ConfirmCopy" onclick="javascript:confirmCopy();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
-    </div>
-</div>
-<div id="deletedialog" class="screenblock hidden">
-    <div class="dialog">
-        <div class="dialogtitle">Deleting Torrent...<button type="button" onclick="javascript:cancelDelete();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
-        <div class="dialogsplitter"></div>
-        <div class="dialogcontent"><div class="dialogitem dialogitemfull">Do you want to delete this torrent and all its files?</div></div>
-        <div class="dialogactions"><button type="button" onclick="javascript:confirmDelete();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
-    </div>
-</div>
+
+COPY-DIALOG
+
+ --><div id="copydialog" class="screenblock hidden">
+        <div class="dialog"><!--
+
+Dialog-Title and Cancel-Button
+
+         --><div class="dialogtitle">
+                <span>Copying Files...</span><!--
+             --><button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();">
+                    <img src="./static/images/dialog_close.png" alt="close" />
+                </button>
+            </div><!--
+
+Horizontal-Bar
+
+         --><div class="dialogsplitter">
+            </div><!--
+
+Dialog-Content
+
+         --><div id="dialogcontent" class="dialogcontent">
+            </div><!--
+
+Ok-Button
+
+         --><div class="dialogactions">
+                <button type="button" id="ConfirmCopy" onclick="javascript:confirmCopy();">
+                    <img src="./static/images/dialog_go.png" alt="go" />
+                </button>
+            </div><!--
+
+     --></div>
+    </div><!--
+
+
+
+DELETE-DIALOG
+
+ --><div id="deletedialog" class="screenblock hidden">
+        <div class="dialog"><!--
+
+Dialog-Title and Cancel-Button
+
+         --><div class="dialogtitle">
+                <span>Deleting Torrent...</span><!--
+             --><button type="button" onclick="javascript:cancelDelete();">
+                    <img src="./static/images/dialog_close.png" alt="close" />
+                </button>
+            </div><!--
+
+Horizontal-Bar
+
+         --><div class="dialogsplitter">
+            </div><!--
+
+Dialog-Content
+
+         --><div class="dialogcontent">
+                <div class="dialogitem dialogitemfull">
+                    <span>Do you want to delete this torrent and all its files?</span>
+                </div>
+            </div><!--
+
+Ok-Button
+
+         --><div class="dialogactions">
+                <button type="button" onclick="javascript:confirmDelete();">
+                    <img src="./static/images/dialog_go.png" alt="go" />
+                </button>
+            </div><!--
+
+     --></div>
+    </div><!--
+
 {% endblock %}
 
 
+<!-- ------------------------------------------------------------------------------------------------ -->
+
 
 {% block hiddendata %}
-<div class="hidden">
-    <span id="copyprogress">0</span>
-    <span id="copystep">0</span>
-    <img src="./static/images/copy_queued.png" />
-    <img src="./static/images/copy_copying.png" />
-    <img src="./static/images/copy_connecting.png" />
-    <img src="./static/images/copy_copied.png" />
-    <img src="./static/images/copy_failed.png" />
-</div>
+
+ --><div class="hidden">
+        <span id="copyprogress">0</span>
+        <span id="copystep">0</span>
+        <img src="./static/images/copy_queued.png" />
+        <img src="./static/images/copy_copying.png" />
+        <img src="./static/images/copy_connecting.png" />
+        <img src="./static/images/copy_copied.png" />
+        <img src="./static/images/copy_failed.png" />
+    </div><!--
+
 {% endblock %}

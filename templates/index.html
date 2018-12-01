@@ -1,81 +1,223 @@
 {% extends "base.html" %}
 
 
+<!-- ------------------------------------------------------------------------------------------------ -->
+
 
 {% block javascript %}
+
     <script src="./static/javascript/index_update_torrents.js"></script>
     <script src="./static/javascript/index_add_torrent.js"></script>
+
 {% endblock %}
 
+
+<!-- ------------------------------------------------------------------------------------------------ -->
 
 
 {% block banner %}
-<div id="IndexBanner" class="tile bannertile file_video_copy"><div class="meter spacemeter">
-        <svg width="121" height="68" viewBox="0 0 121 68">
-            <g stroke="#92D050" stroke-width="3" stroke-linecap="round" id="spaceneedle"><line x1="{{ stats.s.ho }}" y1="{{ stats.s.vo }}" x2="{{ stats.s.hf }}" y2="{{ stats.s.vf }}" /></g>
-        </svg>
-    </div><div class="meter thermometer">
-        <svg width="121" height="68" viewBox="0 0 121 68">
-            <g stroke="#DD6666" stroke-width="3" stroke-linecap="round" id="tempneedle"><line x1="{{ stats.t.ho }}" y1="{{ stats.t.vo }}" x2="{{ stats.t.hf }}" y2="{{ stats.t.vf }}" /></g>
-        </svg>
-    </div><div class="indexbannercontent">
-        <div class="titlebox contenttitleleft">Download-Manager</div>
-        <div class="tilesplitter contentsplitter"></div>
-    </div><div class="meter speedmeter">
-        <svg width="121" height="68" viewBox="0 0 121 68">
-            <g stroke="#FFFF00" stroke-width="3" stroke-linecap="round" id="downloadneedle"><line x1="{{ stats.d.ho }}" y1="{{ stats.d.vo }}" x2="{{ stats.d.hf }}" y2="{{ stats.d.vf }}" /></g>
-            <g stroke="#6688FF" stroke-width="3" stroke-linecap="round" id="uploadneedle"><line x1="{{ stats.u.ho }}" y1="{{ stats.u.vo }}" x2="{{ stats.u.hf }}" y2="{{ stats.u.vf }}" /></g>
-        </svg>
-    </div><div class="meter countmeter">
-        <svg width="121" height="68" viewBox="0 0 121 68">
-        </svg>
-    </div></div>{% endblock %}
 
+ --><div id="IndexBanner" class="tile bannertile file_video_copy"><!--
+
+Space Meter
+
+     --><div class="meter spacemeter">
+            <svg width="121" height="68" viewBox="0 0 121 68">
+                <g stroke="#92D050" stroke-width="3" stroke-linecap="round" id="spaceneedle">
+                    <line x1="{{ stats.s.ho }}" y1="{{ stats.s.vo }}" x2="{{ stats.s.hf }}" y2="{{ stats.s.vf }}" />
+                </g>
+            </svg>
+        </div><!--
+
+Thermometer
+
+     --><div class="meter thermometer">
+            <svg width="121" height="68" viewBox="0 0 121 68">
+                <g stroke="#DD6666" stroke-width="3" stroke-linecap="round" id="tempneedle">
+                    <line x1="{{ stats.t.ho }}" y1="{{ stats.t.vo }}" x2="{{ stats.t.hf }}" y2="{{ stats.t.vf }}" />
+                </g>
+            </svg>
+        </div><!--
+
+Banner Content
+
+     --><div class="indexbannercontent">
+            <div class="titlebox contenttitleleft">
+                <span>Download-Manager</span>
+            </div><!--
+         --><div class="tilesplitter contentsplitter"></div>
+        </div><!--
+
+Speed Meter
+
+     --><div class="meter speedmeter">
+            <svg width="121" height="68" viewBox="0 0 121 68">
+                <g stroke="#FFFF00" stroke-width="3" stroke-linecap="round" id="downloadneedle">
+                    <line x1="{{ stats.d.ho }}" y1="{{ stats.d.vo }}" x2="{{ stats.d.hf }}" y2="{{ stats.d.vf }}" />
+                </g>
+                <g stroke="#6688FF" stroke-width="3" stroke-linecap="round" id="uploadneedle">
+                    <line x1="{{ stats.u.ho }}" y1="{{ stats.u.vo }}" x2="{{ stats.u.hf }}" y2="{{ stats.u.vf }}" />
+                </g>
+            </svg>
+        </div><!--
+
+Count Meter
+
+     --><div class="meter countmeter">
+            <svg width="121" height="68" viewBox="0 0 121 68">
+
+            </svg>
+        </div><!--
+
+ --></div><!--
+
+{% endblock %}
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
 
 
 {% block content %}
-<div class="tilesgroup">
-{% for torrent in torrentlist %}<a id="Torrent-{{ torrent.torrentid }}" class="tile contenttile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}">
-    <div class="titlebox contenttitleleft">
-        {{ torrent.torrenttitle }}
-    </div><div class="titlebox contenttitleright">
-        <img src="./static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
-    </div><div class="tilesplitter contentsplitter"></div><div class="subtitlebox torrentsubtitleleft">
-        {{ torrent.torrentname }}
-    </div><div class="subtitlebox torrentsubtitleright">
-        <img id="StatusIcon-{{ torrent.torrentid }}" src="./static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
-    </div>
-</a>{% endfor %}
-</div>{% endblock %}
 
+ --><div class="tilesgroup"><!--
 
+{% for torrent in torrentlist %}
 
-{% block toolbar %}<div class="actionbuttonsgroup">
-    <button type="button" id="Add" onclick="javascript:addTorrent();"><img src="./static/images/listaction_add.png" alt="add button" />
-    </button><button type="button" id="Stop" onclick="javascript:updateTorrentsList('Stop');"><img src="./static/images/listaction_stopall.png" alt="stop button" />
-    </button><button type="button" id="Start" onclick="javascript:updateTorrentsList('Start');"><img src="./static/images/listaction_startall.png" alt="start button" />
-    </button><button type="button" id="RescanFileServer" onclick="javascript:updateTorrentsList('RescanFileServer');"><img src="./static/images/folder_refresh.png" alt="rescan fileserver button" />
-    </button><!--<button type="button" id="Config" onclick="javascript:folderMaintenance();"><img src="./static/images/listaction_config.png" alt="config folder button" />
-    </button>-->
-</div>
+Torrent {{ torrent.torrentid }}
+
+     --><a id="Torrent-{{ torrent.torrentid }}" class="tile contenttile torrent_{{ torrent.status }}" href="/Torrent={{ torrent.torrentid }}"><!--
+
+Configured-Title
+
+         --><div class="titlebox contenttitleleft">
+                <span>{{ torrent.torrenttitle }}</span>
+            </div><!--
+
+Type
+
+         --><div class="titlebox contenttitleright">
+                <img src="./static/images/type_{{ torrent.torrenttype }}.png" alt="{{ torrent.torrenttype }}" />
+            </div><!--
+
+Horizontal-Bar
+
+         --><div class="tilesplitter contentsplitter">
+            </div><!--
+
+Raw-Title
+
+         --><div class="subtitlebox torrentsubtitleleft">
+                <span>{{ torrent.torrentname }}</span>
+            </div><!--
+
+Progress and Status
+
+         --><div class="subtitlebox torrentsubtitleright">
+                <img id="StatusIcon-{{ torrent.torrentid }}" src="./static/images/status_{{ torrent.status }}.png" alt="{{ torrent.status }}" /><!--
+             --><span id="Progress-{{ torrent.torrentid }}">{{ torrent.progress }}</span>
+            </div><!--
+
+     --></a><!--
+
+{% endfor %}
+
+ --></div><!--
+
 {% endblock %}
 
+
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+
+{% block toolbar %}
+
+--><div class="actionbuttonsgroup"><!--
+
+Add-Button
+
+     --><button type="button" id="Add" onclick="javascript:addTorrent();">
+            <img src="./static/images/listaction_add.png" alt="add button" />
+        </button><!--
+
+Stop-All-Button
+
+     --><button type="button" id="Stop" onclick="javascript:updateTorrentsList('Stop');">
+            <img src="./static/images/listaction_stopall.png" alt="stop button" />
+        </button><!--
+
+Start-All-Button
+
+     --><button type="button" id="Start" onclick="javascript:updateTorrentsList('Start');">
+            <img src="./static/images/listaction_startall.png" alt="start button" />
+        </button><!--
+
+Rescan-File-Server-Button
+
+     --><button type="button" id="RescanFileServer" onclick="javascript:updateTorrentsList('RescanFileServer');">
+            <img src="./static/images/folder_refresh.png" alt="rescan fileserver button" />
+        </button><!--
+
+        <button type="button" id="Config" onclick="javascript:folderMaintenance();">
+            <img src="./static/images/listaction_config.png" alt="config folder button" />
+        </button>
+
+ --></div><!--
+
+{% endblock %}
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
 
 
 {% block dialogs %}
-<div id="adddialog" class="screenblock hidden">
-    <div class="dialog">
-        <div class="dialogtitle">Adding Torrent...<button type="button" onclick="javascript:cancelAdd();"><img src="./static/images/dialog_close.png" alt="close" /></button></div>
-        <div class="dialogsplitter"></div>
-        <div class="dialogcontent"><div class="dialogitem dialogitemfull">New Torrent URL:<input type="text" name="newurl" class="newurlfield" value="" /></div></div>
-        <div class="dialogactions"><button type="button" onclick="javascript:confirmAdd();"><img src="./static/images/dialog_go.png" alt="go" /></button></div>
-    </div>
-</div>
+
+ADD-DIALOG
+
+ --><div id="adddialog" class="screenblock hidden">
+        <div class="dialog"><!--
+
+Dialog-Title and Cancel-Button
+
+         --><div class="dialogtitle">
+                <span>Adding Torrent...</span><!--
+             --><button type="button" onclick="javascript:cancelAdd();">
+                    <img src="./static/images/dialog_close.png" alt="close" />
+                </button>
+            </div><!--
+
+Horizontal-Bar
+
+         --><div class="dialogsplitter"></div><!--
+
+Dialog-Content
+
+         --><div class="dialogcontent">
+                <div class="dialogitem dialogitemfull">
+                    <span>New Torrent URL: </span><!--
+                 --><input type="text" name="newurl" class="newurlfield" value="" />
+                </div>
+            </div><!--
+
+Ok-Button
+
+         --><div class="dialogactions">
+                <button type="button" onclick="javascript:confirmAdd();">
+                    <img src="./static/images/dialog_go.png" alt="go" />
+                </button>
+            </div><!--
+
+     --></div>
+    </div><!--
+
 {% endblock %}
 
 
+<!-- ------------------------------------------------------------------------------------------------ -->
+
 
 {% block hiddendata %}
-<div class="hidden">
-</div>
+
+ --><div class="hidden">
+    </div><!--
+
 {% endblock %}
