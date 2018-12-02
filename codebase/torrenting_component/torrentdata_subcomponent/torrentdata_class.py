@@ -351,7 +351,7 @@ class DefineTorrentItem:
 				filedata = {}
 				filedata["fileid"] = file.getid()
 				if datamode == "initialise":
-					filedata["filename"] = file.getshortpath()
+					filedata["filename"] = file.getsanitisedfilename()
 					filedata["filetype"] = file.gettype()
 					filedata["size"] = file.getsize()
 					filedata["filetitle"] = self.getfiletitle(file)

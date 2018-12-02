@@ -15,6 +15,9 @@ class DefineFileItem:
 
 		self.episode = "ignore"
 
+		self.sanitisedfilename = Functions.sanitisetext(self.getshortpath())
+
+
 # =========================================================================================
 
 	def updatefilepurpose(self, episode):
@@ -51,6 +54,12 @@ class DefineFileItem:
 
 		pathsplit = self.path
 		return pathsplit[len(pathsplit)-1]
+
+# =========================================================================================
+
+	def getsanitisedfilename(self):
+
+		return self.sanitisedfilename
 
 # =========================================================================================
 

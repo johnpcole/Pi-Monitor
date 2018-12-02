@@ -63,8 +63,10 @@ def sanitisetext(rawtext):
 					outcome = outcome + charitem
 				elif (charval >= 97) and (charval <= 122):
 					outcome = outcome + charitem
+				elif charval == 46:
+					outcome = outcome + charitem
 				else:
-					outcome = outcome + " "
+					outcome = outcome + "_"
 
 	return outcome
 
