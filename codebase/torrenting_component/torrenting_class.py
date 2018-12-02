@@ -8,15 +8,20 @@ class DefineTorrentManager:
 
 	def __init__(self, address, port, username, password):
 
+		# The information required to connect to the deluge daemon
 		if address == "dummy":
 			self.delugeclient = DelugeClient.createdummy()
 		else:
 			self.delugeclient = DelugeClient.createinterface(address, port, username, password)
 
+		# The list of torrents in the deluge daemon; each item contains composite torrenting data
 		self.torrents = []
 
+		# An array of meter graph data, capturing important overall torrenting stats
 		self.sessiondata = {'uploadspeed':0, 'downloadspeed':0, 'freespace':0, 'temperature':0}
 
+# =========================================================================================
+# Generates an array of stat numerics, required to draw the meter graphs
 # =========================================================================================
 
 	def getstats(self):
@@ -35,44 +40,33 @@ class DefineTorrentManager:
 
 	def refreshtorrentlist(self):
 
-		outcome = self.delugeclient.openconnection()
+		dummyoutcome = self.delugeclient.openconnection()
 
 		self.updatestats()
 
 		torrentidlist = self.delugeclient.gettorrentlist()
-		for torrentiditem in torrentidlist:
 
-			if self.validatetorrentid(torrentiditem) == False:
-				newtorrentobject = self.addtorrentobject(torrentiditem)
-
-			self.refreshtorrentdata(torrentiditem)
-
-		outcome = self.delugeclient.closeconnection()
+		dummyoutcome = self.delugeclient.closeconnection()
 		#print "Connection closure attempted - Connection State = ", outcome
 
-		cleanlist = []
+		self.registermissingtorrents(torrentidlist)
 
-		for existingtorrent in self.torrents:
-			foundflag = False
-			for torrentiditem in torrentidlist:
-				if torrentiditem == existingtorrent.getid():
-					cleanlist.append(existingtorrent)
-					foundflag = True
-
-			if foundflag == False:
-				print "Removing Torrent from Download-Manager: ", existingtorrent.getid()
-
-		self.torrents = Functions.sortdictionary(cleanlist, 'dateadded', True)
+		self.cleantorrentlist(torrentidlist)
 
 # =========================================================================================
+# Registers a torrent in Download-Manager, with default torrent data which is
+# populated with real data later
+# =========================================================================================
 
-	def addtorrentobject(self, torrentid):
+	def registertorrentobject(self, torrentid):
 
 		self.torrents.append(TorrentData.createitem(torrentid))
 		print "Adding Torrent to Download-Manager", torrentid
 
 		return self.gettorrentobject(torrentid)
 
+# =========================================================================================
+# Confirms whether the specified torrent id is registered in Download-Manager
 # =========================================================================================
 
 	def validatetorrentid(self, torrentid):
@@ -83,6 +77,8 @@ class DefineTorrentManager:
 				outcome = True
 		return outcome
 
+# =========================================================================================
+# Returns the torrent object (containing all the torrent data) for a specified ID
 # =========================================================================================
 
 	def gettorrentobject(self, torrentid):
@@ -95,16 +91,19 @@ class DefineTorrentManager:
 		return outcome
 
 # =========================================================================================
+# Refreshes the torrent data for the specified ID, by connecting to the Deluge client
+# =========================================================================================
 
 	def refreshtorrentdata(self, torrentid):
 
 		torrentobject = self.gettorrentobject(torrentid)
-		outcome = self.delugeclient.openconnection()
+
+		dummyoutcome = self.delugeclient.openconnection()
 
 		torrentdata = self.delugeclient.gettorrentdata(torrentid)
 		torrentobject.updateinfo(torrentdata)
 
-		outcome = self.delugeclient.closeconnection()
+		dummyoutcome = self.delugeclient.closeconnection()
 		#print "Connection closure attempted - Connection State = ", outcome
 
 
@@ -163,7 +162,8 @@ class DefineTorrentManager:
 
 		outcome = self.delugeclient.openconnection()
 		newid = self.delugeclient.addtorrentlink(newurl)
-		newobject = self.addtorrentobject(newid)
+		newobject = self.registertorrentobject(newid)
+		#TO-DO = change newobject to be success/error outcome, allowing for graceful failure
 		self.refreshtorrentdata(newid)
 		outcome = self.delugeclient.closeconnection()
 
@@ -223,3 +223,38 @@ class DefineTorrentManager:
 
 		self.sessiondata = self.delugeclient.getsessiondata()
 		self.sessiondata['temperature'] = Monitor.gettemperature()
+
+# =========================================================================================
+# Identifies any torrents in the deluge client that aren't captured in the Download-Manager,
+# and registers them in Download-Manager, and gets all the relevent torrent data (files etc)
+# =========================================================================================
+
+	def registermissingtorrents(self, torrentidlist):
+
+		for torrentiditem in torrentidlist:
+
+			if self.validatetorrentid(torrentiditem) == False:
+				dummynewtorrentobject = self.registertorrentobject(torrentiditem)
+
+			self.refreshtorrentdata(torrentiditem)
+
+# =========================================================================================
+# Identifies any torrents in Download-Manager which are no longer in the deluge client,
+# and deregisters them from Download-Manager; Also orders the torrent list by date added
+# =========================================================================================
+
+	def cleantorrentlist(self, torrentidlist):
+
+		cleanlist = []
+
+		for existingtorrent in self.torrents:
+			foundflag = False
+			for torrentiditem in torrentidlist:
+				if torrentiditem == existingtorrent.getid():
+					cleanlist.append(existingtorrent)
+					foundflag = True
+
+			if foundflag == False:
+				print "Deregistering Missing Torrent in Download-Manager: ", existingtorrent.getid()
+
+		self.torrents = Functions.sortdictionary(cleanlist, 'dateadded', True)
