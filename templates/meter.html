@@ -1,6 +1,6 @@
 {% macro metertemplate(l1, l2, l3, l4, l5, l6, l7) %}
                 <style>
-                    .metertext { font: 9px sans-serif; fill: #999999; font-weight: bold;}
+                    .metertext { font: 9px 'Oswald', sans-serif; fill: #999999; font-weight: normal;}
                 </style>
                 <g stroke="#EEEEEE" stroke-width="1.5" stroke-linecap="round">
                     <circle cx="60.5" cy="61" r="58" fill="#222222" />
@@ -8,38 +8,21 @@
                     <line y1="67" x1="3" y2="67" x2="118" />
                 </g>
                 <g stroke="#999999" stroke-width="1.5" stroke-linecap="round">
-                    <line y1="61.0" x1="17.0" y2="61.0" x2="8.3" />
-                    <line y1="44.3532706921" x1="20.3112403358" y2="41.0239248305" x2="12.2734884029" />
-                    <line y1="30.2408550184" x1="29.7408550184" y2="24.0890260221" x2="23.5890260221" />
-                    <line y1="20.8112403358" x1="43.8532706921" y2="12.7734884029" x2="40.5239248305" />
-                    <line y1="17.5" x1="60.5" y2="8.8" x2="60.5" />
-                    <line y1="20.8112403358" x1="77.1467293079" y2="12.7734884029" x2="80.4760751695" />
-                    <line y1="30.2408550184" x1="91.2591449816" y2="24.0890260221" x2="97.4109739779" />
-                    <line y1="44.3532706921" x1="100.688759664" y2="41.0239248305" x2="108.726511597" />
-                    <line y1="61.0" x1="104.0" y2="61.0" x2="112.7" />
-
-                    <!--<line y1="61.0" x1="20.6" y2="61.0" x2="6.35" />
-                    <line y1="45.7309310486" x1="23.6372066528" y2="40.2776921374" x2="10.4719233145" />
-                    <line y1="32.7864394307" x1="32.2864394307" y2="22.7101677987" x2="22.2101677987" />
-                    <line y1="24.1372066528" x1="45.2309310486" y2="10.9719233145" x2="39.7776921374" />
-                    <line y1="21.1" x1="60.5" y2="6.85" x2="60.5" />
-                    <line y1="24.1372066528" x1="75.7690689514" y2="10.9719233145" x2="81.2223078626" />
-                    <line y1="32.7864394307" x1="88.7135605693" y2="22.7101677987" x2="98.7898322013" />
-                    <line y1="45.7309310486" x1="97.3627933472" y2="40.2776921374" x2="110.528076685" />
-                    <line y1="61.0" x1="100.4" y2="61.0" x2="114.65" />-->
+                    <line y1="61.0" x1="14.1" y2="61.0" x2="5.4" />
+                    <line y1="43.2434887383" x1="17.6319896915" y2="39.9141428767" x2="9.59423775863" />
+                    <line y1="28.1902453529" x1="27.6902453529" y2="22.0384163566" x2="21.5384163566" />
+                    <line y1="18.1319896915" x1="42.7434887383" y2="10.0942377586" x2="39.4141428767" />
+                    <line y1="14.6" x1="60.5" y2="5.9" x2="60.5" />
+                    <line y1="18.1319896915" x1="78.2565112617" y2="10.0942377586" x2="81.5858571233" />
+                    <line y1="28.1902453529" x1="93.3097546471" y2="22.0384163566" x2="99.4615836434" />
+                    <line y1="43.2434887383" x1="103.368010309" y2="39.9141428767" x2="111.405762241" />
+                    <line y1="61.0" x1="106.9" y2="61.0" x2="115.6" />
                 </g>
-                <!--<text x="25" y="52" class="metertext" text-anchor="start">{{ l1 }}</text>
+                <text x="21" y="50" class="metertext" text-anchor="start">{{ l1 }}</text>
                 <text x="0" y="0" class="metertext" text-anchor="start">{{ l2 }}</text>
-                <text x="42" y="34" class="metertext" text-anchor="start">{{ l3 }}</text>
-                <text x="60" y="31" class="metertext" text-anchor="middle">{{ l4 }}</text>
-                <text x="78" y="34" class="metertext" text-anchor="end">{{ l5 }}</text>
+                <text x="41" y="30" class="metertext" text-anchor="start">{{ l3 }}</text>
+                <text x="60" y="26" class="metertext" text-anchor="middle">{{ l4 }}</text>
+                <text x="79" y="30" class="metertext" text-anchor="end">{{ l5 }}</text>
                 <text x="0" y="0" class="metertext" text-anchor="end">{{ l6 }}</text>
-                <text x="95" y="52" class="metertext" text-anchor="end">{{ l7 }}</text>-->
-                <text x="23" y="52" class="metertext" text-anchor="start">{{ l1 }}</text>
-                <text x="0" y="0" class="metertext" text-anchor="start">{{ l2 }}</text>
-                <text x="41" y="32" class="metertext" text-anchor="start">{{ l3 }}</text>
-                <text x="60" y="29" class="metertext" text-anchor="middle">{{ l4 }}</text>
-                <text x="79" y="32" class="metertext" text-anchor="end">{{ l5 }}</text>
-                <text x="0" y="0" class="metertext" text-anchor="end">{{ l6 }}</text>
-                <text x="97" y="52" class="metertext" text-anchor="end">{{ l7 }}</text>
+                <text x="99" y="50" class="metertext" text-anchor="end">{{ l7 }}</text>
 {% endmacro %}
