@@ -35,7 +35,7 @@ class DefineTorrentManager:
 #		index = 30.0
 #		for indexcounter in range(1, 10):
 #			index = index + 2.5
-#			item = Functions.getmeterdata(Functions.getlinmeterangle(index, 32.5, 52.5), 0.95, 0.7)
+#			item = Functions.getmeterdata(Functions.getlinmeterangle(index, 32.5, 52.5), 0.9, 0.75)
 #			outcome = '                    <line y1="' + str(item['vo']) + '" x1="' + str(item['ho']) + '" y2="' + str(item['vf']) + '" x2="' + str(item['hf']) + '" />'
 #			print outcome
 
