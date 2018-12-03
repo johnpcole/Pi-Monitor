@@ -13,4 +13,3 @@ def gettemperature():
         outcome = 45.0
     return outcome
 
-

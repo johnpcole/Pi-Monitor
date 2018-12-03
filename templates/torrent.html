@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% from 'button.html' import buttontemplate %}
+{% from 'button.html' import disabledbuttontemplate %}
+{% from 'button.html' import itembuttontemplate %}
+{% from 'dialog.html' import dialogtoptemplate %}
+{% from 'dialog.html' import dialogbottomtemplate %}
 
 
 <!-- ------------------------------------------------------------------------------------------------ -->
@@ -53,17 +58,11 @@ Subsection: Type-Selector-Buttons
 
          --><div class="buttongroup"><!--
 
-             --><button type="button" id="MakeUnknown" onclick="javascript:changeTorrentType('unknown');">
-                    <img src="./static/images/type_unknown.png" alt="unknown button" />
-                </button><!--
+                {{ buttontemplate("MakeUnknown", "changeTorrentType('unknown')", "type_unknown", "unknown") }}
 
-             --><button type="button" id="MakeMovie" onclick="javascript:changeTorrentType('movie');">
-                    <img src="/static/images/type_movie.png" alt="movie button" />
-                </button><!--
+                {{ buttontemplate("MakeMovie", "changeTorrentType('movie')", "type_movie", "movie") }}
 
-             --><button type="button" id="MakeTVShow" onclick="javascript:changeTorrentType('tvshow');">
-                    <img src="/static/images/type_tvshow.png" alt="tv show button" />
-                </button><!--
+                {{ buttontemplate("MakeTVShow", "changeTorrentType('tvshow')", "type_tvshow", "tv show") }}
 
          --></div><!--
 
@@ -105,7 +104,7 @@ Section: Horizontal-Line
 Section: Raw-Title
 
      --><div class="subtitlebox bannersubtitleleft">
-            {{ selectedtorrent.torrentname }}
+            <span>{{ selectedtorrent.torrentname }}</span>
         </div><!--
 
 Section: Progress and Status
@@ -183,13 +182,9 @@ Subsection: FileMode-Selector-Buttons
 
                  --><div class="buttongroup"><!--
 
-                     --><button type="button" id="MakeIgnore-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','ignore');">
-                            <img src="./static/images/fileaction_ignore.png" alt="ignore button" />
-                        </button><!--
+                        {{ itembuttontemplate("MakeIgnore", fileitem.fileid, "changeFileDesignation", "ignore", "fileaction_ignore", "ignore") }}
 
-                     --><button type="button" id="MakeCopy-{{ fileitem.fileid }}" onclick="javascript:changeFileDesignation('{{ fileitem.fileid }}','copy');">
-                            <img src="./static/images/fileaction_copy.png" alt="copy button" />
-                        </button><!--
+                        {{ itembuttontemplate("MakeCopy", fileitem.fileid, "changeFileDesignation", "copy", "fileaction_copy", "copy") }}
 
                  --></div><!--
 
@@ -267,29 +262,17 @@ Section: Read-Only-Mode Action Buttons
 
      --><div class="readmodebuttons"><!--
 
-         --><button type="button" id="Exit" onclick="javascript:window.location.replace('/');">
-                <img src="./static/images/torrentaction_exit.png" alt="exit button" />
-            </button><!--
+            {{ buttontemplate("Exit", "window.location.replace('/')", "torrentaction_exit", "exit") }}
 
-         --><button type="button" id="Stop" onclick="javascript:updateTorrentState('Stop');">
-                <img src="./static/images/torrentaction_stop.png" alt="stop button" />
-            </button><!--
+            {{ buttontemplate("Stop", "updateTorrentState('Stop')", "torrentaction_stop", "stop") }}
 
-         --><button type="button" id="Start" onclick="javascript:updateTorrentState('Start');">
-                <img src="./static/images/torrentaction_start.png" alt="start button" />
-            </button><!--
+            {{ buttontemplate("Start", "updateTorrentState('Start')", "torrentaction_start", "start") }}
 
-         --><button disabled type="button" id="Edit" onclick="javascript:editTorrentConfiguration();">
-                <img src="./static/images/torrentaction_edit.png" alt="edit button" />
-            </button><!--
+            {{ disabledbuttontemplate("Edit", "editTorrentConfiguration()", "torrentaction_edit", "edit") }}
 
-         --><button disabled type="button" id="Copy" onclick="javascript:copyTorrent();">
-                <img src="./static/images/torrentaction_copy.png" alt="copy button" />
-            </button><!--
+            {{ disabledbuttontemplate("Copy", "copyTorrent()", "torrentaction_copy", "copy") }}
 
-         --><button type="button" id="Delete" onclick="javascript:deleteTorrent();">
-                <img src="./static/images/torrentaction_delete.png" alt="delete button" />
-            </button><!--
+            {{ buttontemplate("Delete", "deleteTorrent()", "torrentaction_delete", "delete") }}
 
      --></div><!--
 
@@ -297,13 +280,9 @@ Section: Edit-Mode Action Buttons
 
      --><div class="editmodebuttons"><!--
 
-         --><button type="button" id="Cancel" onclick="javascript:cancelTorrentConfiguration();">
-                <img src="./static/images/torrentaction_cancel.png" alt="commit button" />
-            </button><!--
+            {{ buttontemplate("Cancel", "cancelTorrentConfiguration()", "torrentaction_cancel", "cancel") }}
 
-         --><button type="button" id="Save" onclick="javascript:saveTorrentConfiguration();">
-                <img src="./static/images/torrentaction_commit.png" alt="commit button" />
-            </button><!--
+            {{ buttontemplate("Save", "saveTorrentConfiguration()", "torrentaction_commit", "commit") }}
 
      --></div><!--
 
@@ -319,59 +298,23 @@ Section: Edit-Mode Action Buttons
 
 COPY-DIALOG
 
- --><div id="copydialog" class="screenblock hidden">
-        <div class="dialog"><!--
-
-Dialog-Title and Cancel-Button
-
-         --><div class="dialogtitle">
-                <span>Copying Files...</span><!--
-             --><button type="button" id="CloseCopy" onclick="javascript:closeCopyDialog();">
-                    <img src="./static/images/dialog_close.png" alt="close" />
-                </button>
-            </div><!--
-
-Horizontal-Bar
-
-         --><div class="dialogsplitter">
-            </div><!--
+    {{ dialogtoptemplate("copydialog", "Copying Files", "CloseCopy", "closeCopyDialog()") }}
 
 Dialog-Content
 
          --><div id="dialogcontent" class="dialogcontent">
             </div><!--
 
+
 Ok-Button
 
-         --><div class="dialogactions">
-                <button type="button" id="ConfirmCopy" onclick="javascript:confirmCopy();">
-                    <img src="./static/images/dialog_go.png" alt="go" />
-                </button>
-            </div><!--
-
-     --></div>
-    </div><!--
+    {{ dialogbottomtemplate("ConfirmCopy", "confirmCopy()") }}
 
 
 
 DELETE-DIALOG
 
- --><div id="deletedialog" class="screenblock hidden">
-        <div class="dialog"><!--
-
-Dialog-Title and Cancel-Button
-
-         --><div class="dialogtitle">
-                <span>Deleting Torrent...</span><!--
-             --><button type="button" onclick="javascript:cancelDelete();">
-                    <img src="./static/images/dialog_close.png" alt="close" />
-                </button>
-            </div><!--
-
-Horizontal-Bar
-
-         --><div class="dialogsplitter">
-            </div><!--
+    {{ dialogtoptemplate("deletedialog", "Deleting Torrent", "CloseDelete", "cancelDelete()") }}
 
 Dialog-Content
 
@@ -381,16 +324,7 @@ Dialog-Content
                 </div>
             </div><!--
 
-Ok-Button
-
-         --><div class="dialogactions">
-                <button type="button" onclick="javascript:confirmDelete();">
-                    <img src="./static/images/dialog_go.png" alt="go" />
-                </button>
-            </div><!--
-
-     --></div>
-    </div><!--
+    {{ dialogbottomtemplate("ConfirmDelete", "confirmDelete()") }}
 
 {% endblock %}
 

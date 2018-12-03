@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% from 'meter.html' import metertemplate %}
+{% from 'button.html' import buttontemplate %}
+{% from 'dialog.html' import dialogtoptemplate %}
+{% from 'dialog.html' import dialogbottomtemplate %}
 
 
 <!-- ------------------------------------------------------------------------------------------------ -->
@@ -22,7 +26,8 @@
 Space Meter
 
      --><div class="meter spacemeter">
-            <svg width="121" height="68" viewBox="0 0 121 68">
+            <svg width="121" height="68">
+                {{ metertemplate("1", "", "", "10", "", "", "100") }}
                 <g stroke="#92D050" stroke-width="3" stroke-linecap="round" id="spaceneedle">
                     <line x1="{{ stats.s.ho }}" y1="{{ stats.s.vo }}" x2="{{ stats.s.hf }}" y2="{{ stats.s.vf }}" />
                 </g>
@@ -32,7 +37,8 @@ Space Meter
 Thermometer
 
      --><div class="meter thermometer">
-            <svg width="121" height="68" viewBox="0 0 121 68">
+            <svg width="121" height="68">
+                {{ metertemplate("35", "", "40", "", "45", "", "50") }}
                 <g stroke="#DD6666" stroke-width="3" stroke-linecap="round" id="tempneedle">
                     <line x1="{{ stats.t.ho }}" y1="{{ stats.t.vo }}" x2="{{ stats.t.hf }}" y2="{{ stats.t.vf }}" />
                 </g>
@@ -51,7 +57,8 @@ Banner Content
 Speed Meter
 
      --><div class="meter speedmeter">
-            <svg width="121" height="68" viewBox="0 0 121 68">
+            <svg width="121" height="68">
+                {{ metertemplate("1", "", "", "k", "", "", "M") }}
                 <g stroke="#FFFF00" stroke-width="3" stroke-linecap="round" id="downloadneedle">
                     <line x1="{{ stats.d.ho }}" y1="{{ stats.d.vo }}" x2="{{ stats.d.hf }}" y2="{{ stats.d.vf }}" />
                 </g>
@@ -64,8 +71,8 @@ Speed Meter
 Count Meter
 
      --><div class="meter countmeter">
-            <svg width="121" height="68" viewBox="0 0 121 68">
-
+            <svg width="121" height="68">
+                {{ metertemplate("", "", "", "", "", "", "") }}
             </svg>
         </div><!--
 
@@ -135,27 +142,19 @@ Progress and Status
 
 Add-Button
 
-     --><button type="button" id="Add" onclick="javascript:addTorrent();">
-            <img src="./static/images/listaction_add.png" alt="add button" />
-        </button><!--
+        {{ buttontemplate("Add", "addTorrent()", "listaction_add", "add") }}
 
 Stop-All-Button
 
-     --><button type="button" id="Stop" onclick="javascript:updateTorrentsList('Stop');">
-            <img src="./static/images/listaction_stopall.png" alt="stop button" />
-        </button><!--
+        {{ buttontemplate("Stop", "updateTorrentsList('Stop')", "listaction_stopall", "stop") }}
 
 Start-All-Button
 
-     --><button type="button" id="Start" onclick="javascript:updateTorrentsList('Start');">
-            <img src="./static/images/listaction_startall.png" alt="start button" />
-        </button><!--
+        {{ buttontemplate("Start", "updateTorrentsList('Start')", "listaction_startall", "start") }}
 
 Rescan-File-Server-Button
 
-     --><button type="button" id="RescanFileServer" onclick="javascript:updateTorrentsList('RescanFileServer');">
-            <img src="./static/images/folder_refresh.png" alt="rescan fileserver button" />
-        </button><!--
+        {{ buttontemplate("RescanFileServer", "updateTorrentsList('RescanFileServer')", "folder_refresh", "rescan fileserver") }}
 
         <button type="button" id="Config" onclick="javascript:folderMaintenance();">
             <img src="./static/images/listaction_config.png" alt="config folder button" />
@@ -173,21 +172,7 @@ Rescan-File-Server-Button
 
 ADD-DIALOG
 
- --><div id="adddialog" class="screenblock hidden">
-        <div class="dialog"><!--
-
-Dialog-Title and Cancel-Button
-
-         --><div class="dialogtitle">
-                <span>Adding Torrent...</span><!--
-             --><button type="button" onclick="javascript:cancelAdd();">
-                    <img src="./static/images/dialog_close.png" alt="close" />
-                </button>
-            </div><!--
-
-Horizontal-Bar
-
-         --><div class="dialogsplitter"></div><!--
+    {{ dialogtoptemplate("adddialog", "Adding Torrent", "CloseAdd", "cancelAdd()") }}
 
 Dialog-Content
 
@@ -198,16 +183,7 @@ Dialog-Content
                 </div>
             </div><!--
 
-Ok-Button
-
-         --><div class="dialogactions">
-                <button type="button" onclick="javascript:confirmAdd();">
-                    <img src="./static/images/dialog_go.png" alt="go" />
-                </button>
-            </div><!--
-
-     --></div>
-    </div><!--
+    {{ dialogbottomtemplate("ConfirmAdd", "confirmAdd()") }}
 
 {% endblock %}
 

@@ -27,10 +27,21 @@ class DefineTorrentManager:
 	def getstats(self):
 
 		outcome = {}
-		outcome['d'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.95, 0.5)
+		outcome['d'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.9, 0.5)
 		outcome['u'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
-		outcome['s'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.95, 0.5)
-		outcome['t'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.95, 0.5)
+		outcome['s'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.9, 0.5)
+		outcome['t'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.9, 0.5)
+
+#		index = 30.0
+#		for indexcounter in range(1, 10):
+#			index = index + 2.5
+#			item = Functions.getmeterdata(Functions.getlinmeterangle(index, 32.5, 52.5), 0.95, 0.7)
+#			outcome = '                    <line y1="' + str(item['vo']) + '" x1="' + str(item['ho']) + '" y2="' + str(item['vf']) + '" x2="' + str(item['hf']) + '" />'
+#			print outcome
+
+		return outcome
+
+
 
 		return outcome
 
