@@ -1,4 +1,8 @@
-{% macro metertemplate(l1, l2, l3, l4, l5, l6, l7) %}
+{% macro metertemplate(metertypeclass, l1, l2, l3, l4, l5, l6, l7, redmode) %}
+
+     --><div class="meter {{ metertypeclass }}">
+            <svg width="121" height="68">
+
                 <style>
                     .metertext { font: 9px 'Oswald', sans-serif; fill: #999999; font-weight: normal;}
                 </style>
@@ -7,6 +11,13 @@
                     <rect x="0" y="67" width="121" height="8" fill="#7D7D00" stroke-width="0"/>
                     <line y1="67" x1="3" y2="67" x2="118" />
                 </g>
+
+            {% if redmode == "high" %}
+                <circle cx="60.5" cy="61" r="51" stroke-dasharray="40 300" stroke-dashoffset="60" fill="transparent" stroke="#660000" stroke-width="9" />
+            {% elif redmode == "low" %}
+                <circle cx="60.5" cy="61" r="51" stroke-dasharray="40 300" stroke-dashoffset="180" fill="transparent" stroke="#660000" stroke-width="9" />
+            {% endif %}
+
                 <g stroke="#999999" stroke-width="1.5" stroke-linecap="round">
                     <line y1="61.0" x1="14.1" y2="61.0" x2="5.4" />
                     <line y1="43.2434887383" x1="17.6319896915" y2="39.9141428767" x2="9.59423775863" />
@@ -18,11 +29,49 @@
                     <line y1="43.2434887383" x1="103.368010309" y2="39.9141428767" x2="111.405762241" />
                     <line y1="61.0" x1="106.9" y2="61.0" x2="115.6" />
                 </g>
+            {% if l1 != "" %}
                 <text x="21" y="50" class="metertext" text-anchor="start">{{ l1 }}</text>
+            {% endif %}
+            {% if l2 != "" %}
                 <text x="0" y="0" class="metertext" text-anchor="start">{{ l2 }}</text>
+            {% endif %}
+            {% if l3 != "" %}
                 <text x="41" y="30" class="metertext" text-anchor="start">{{ l3 }}</text>
+            {% endif %}
+            {% if l4 != "" %}
                 <text x="60" y="26" class="metertext" text-anchor="middle">{{ l4 }}</text>
+            {% endif %}
+            {% if l5 != "" %}
                 <text x="79" y="30" class="metertext" text-anchor="end">{{ l5 }}</text>
+            {% endif %}
+            {% if l6 != "" %}
                 <text x="0" y="0" class="metertext" text-anchor="end">{{ l6 }}</text>
+            {% endif %}
+            {% if l7 != "" %}
                 <text x="99" y="50" class="metertext" text-anchor="end">{{ l7 }}</text>
+            {% endif %}
+
+{% endmacro %}
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+
+{% macro meterlinetemplate(id, colour, x1, y1, x2, y2) %}
+
+                <g stroke="{{ colour }}" stroke-width="3" stroke-linecap="round" id="{{ id }}">
+                    <line x1="{{ x1 }}" y1="{{ y1 }}" x2="{{ x2 }}" y2="{{ y2 }}" />
+                </g>
+
+{% endmacro %}
+
+
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+
+{% macro meterendtemplate() %}
+
+            </svg>
+        </div><!--
+
 {% endmacro %}
