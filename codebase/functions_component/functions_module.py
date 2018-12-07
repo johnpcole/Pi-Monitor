@@ -188,6 +188,7 @@ def getlogmeterangle(currentval, scale):
 	return outcome
 
 
+
 def getlinmeterangle(currentval, scalemin, scalemax):
 
 	fraction = (currentval - scalemin) / (scalemax - scalemin)
@@ -202,3 +203,29 @@ def getlinmeterangle(currentval, scalemin, scalemax):
 	return outcome
 
 
+
+def getblockmeterangle(currentval, anglemax, blocksin180):
+
+	blockanglesize = 180.0 / blocksin180
+
+	blockstart = currentval * blockanglesize
+
+	if blockstart > anglemax:
+		blockstart = anglemax
+
+	return blockstart
+
+
+
+def getmeter2data(circleradius, startangle, endangle):
+
+	circumference = circleradius * Maths.pi * 2.0
+
+	filledangle = (endangle - startangle) / 360.0
+
+	outcome = {}
+	outcome['fill'] = filledangle * circumference
+	outcome['gap'] = circumference - outcome['fill']
+	outcome['offset'] = ((180.0 - startangle) / 360.0) * circumference
+
+	return outcome

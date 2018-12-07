@@ -18,7 +18,8 @@ class DefineTorrentManager:
 		self.torrents = []
 
 		# An array of meter graph data, capturing important overall torrenting stats
-		self.sessiondata = {'uploadspeed':0, 'downloadspeed':0, 'freespace':0, 'temperature':0}
+		self.sessiondata = {'uploadspeed':0, 'downloadspeed':0, 'freespace':0, 'temperature':0, 'downloadcount':0,
+								'activedownloads':0, 'uploadcount':0, 'activeuploads':0}
 
 # =========================================================================================
 # Generates an array of stat numerics, required to draw the meter graphs
@@ -27,17 +28,21 @@ class DefineTorrentManager:
 	def getstats(self):
 
 		outcome = {}
-		outcome['d'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.9, 0.5)
-		outcome['u'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
-		outcome['s'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.9, 0.5)
-		outcome['t'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.9, 0.5)
+		outcome['downloadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.9, 0.5)
+		outcome['uploadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
+		outcome['space'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.9, 0.5)
+		outcome['temperature'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.9, 0.5)
+		outcome['downloadcount'] = Functions.getmeter2data(49.5, Functions.getblockmeterangle(self.sessiondata['downloadcount'], 185.0, 9.5), 185.0)
+		outcome['activedownloads'] = Functions.getmeter2data(49.5, Functions.getblockmeterangle(self.sessiondata['activedownloads'], 185.0, 9.5), 185.0)
+		outcome['uploadcount'] = Functions.getmeter2data(36.5, Functions.getblockmeterangle(self.sessiondata['uploadcount'], 185.0, 9.5), 185.0)
+		outcome['activeuploads'] = Functions.getmeter2data(36.5, Functions.getblockmeterangle(self.sessiondata['activeuploads'], 185.0, 9.5), 185.0)
 
 #		index = 30.0
-#		for indexcounter in range(1, 10):
+#		for indexcounter in range(1, 11):
 #			index = index + 2.5
-#			item = Functions.getmeterdata(Functions.getlinmeterangle(index, 32.5, 52.5), 0.95, 0.8)
-#			outcome = '                    <line y1="' + str(item['vo']) + '" x1="' + str(item['ho']) + '" y2="' + str(item['vf']) + '" x2="' + str(item['hf']) + '" />'
-#			print outcome
+#			item = Functions.getmeterdata(Functions.getlinmeterangle(index, 32.5, 56.25), 0.7, 0.0)
+#			dummyoutcome = '                    <line y1="' + str(item['vo']) + '" x1="' + str(item['ho']) + '" y2="' + str(item['vf']) + '" x2="' + str(item['hf']) + '" />'
+#			print dummyoutcome
 
 		return outcome
 
@@ -60,9 +65,11 @@ class DefineTorrentManager:
 		dummyoutcome = self.delugeclient.closeconnection()
 		#print "Connection closure attempted - Connection State = ", outcome
 
-		self.registermissingtorrents(torrentidlist)
+		self.registermissingtorrentsandupdatetorrentdata(torrentidlist)
 
 		self.cleantorrentlist(torrentidlist)
+
+		self.updateactivitycounts()
 
 # =========================================================================================
 # Registers a torrent in Download-Manager, with default torrent data which is
@@ -240,7 +247,7 @@ class DefineTorrentManager:
 # and registers them in Download-Manager, and gets all the relevent torrent data (files etc)
 # =========================================================================================
 
-	def registermissingtorrents(self, torrentidlist):
+	def registermissingtorrentsandupdatetorrentdata(self, torrentidlist):
 
 		for torrentiditem in torrentidlist:
 
@@ -269,3 +276,22 @@ class DefineTorrentManager:
 				print "Deregistering Missing Torrent in Download-Manager: ", existingtorrent.getid()
 
 		self.torrents = Functions.sortdictionary(cleanlist, 'dateadded', True)
+
+
+
+	# =========================================================================================
+
+	def updateactivitycounts(self):
+
+		self.sessiondata['downloadcount'] = 0
+		self.sessiondata['activedownloads'] = 0
+		self.sessiondata['uploadcount'] = 0
+		self.sessiondata['activeuploads'] = 0
+
+		for existingtorrent in self.torrents:
+
+			newcount = existingtorrent.getconnectiondata()
+
+			for indexkey in newcount:
+				self.sessiondata[indexkey] = self.sessiondata[indexkey] + newcount[indexkey]
+

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% from 'meter.html' import metertemplate %}
+{% from 'meter.html' import meteroutlinetemplate %}
+{% from 'meter.html' import metermarkerstemplate %}
+{% from 'meter.html' import meterblockstemplate %}
 {% from 'meter.html' import meterlinetemplate %}
 {% from 'meter.html' import meterendtemplate %}
 {% from 'button.html' import buttontemplate %}
@@ -27,15 +29,17 @@
 
 Space Meter
 
-                {{ metertemplate("spacemeter", "1", "", "", "10", "", "", "100", "low") }}
-                {{ meterlinetemplate("spaceneedle", "#92D050", stats.s.ho, stats.s.vo, stats.s.hf, stats.s.vf) }}
+                {{ meteroutlinetemplate("spacemeter") }}
+                {{ metermarkerstemplate("1", "", "", "10", "", "", "100", "low") }}
+                {{ meterlinetemplate("spaceneedle", "#92D050", stats.space.ho, stats.space.vo, stats.space.hf, stats.space.vf) }}
                 {{ meterendtemplate() }}
 
 Thermometer
 
 
-                {{ metertemplate("thermometer", "35", "", "40", "", "45", "", "50", "high") }}
-                {{ meterlinetemplate("tempneedle", "#DD6666", stats.t.ho, stats.t.vo, stats.t.hf, stats.t.vf) }}
+                {{ meteroutlinetemplate("thermometer") }}
+                {{ metermarkerstemplate("35", "", "40", "", "45", "", "50", "high") }}
+                {{ meterlinetemplate("tempneedle", "#DD6666", stats.temperature.ho, stats.temperature.vo, stats.temperature.hf, stats.temperature.vf) }}
                 {{ meterendtemplate() }}
 
 Banner Content
@@ -49,14 +53,16 @@ Banner Content
 
 Speed Meter
 
-                {{ metertemplate("speedmeter", "1", "", "", "k", "", "", "M", "none") }}
-                {{ meterlinetemplate("downloadneedle", "#FFFF00", stats.d.ho, stats.d.vo, stats.d.hf, stats.d.vf) }}
-                {{ meterlinetemplate("uploadneedle", "#6688FF", stats.u.ho, stats.u.vo, stats.u.hf, stats.u.vf) }}
+                {{ meteroutlinetemplate("speedmeter") }}
+                {{ metermarkerstemplate("1", "", "", "k", "", "", "M", "none") }}
+                {{ meterlinetemplate("downloadneedle", "#FFFF00", stats.downloadspeed.ho, stats.downloadspeed.vo, stats.downloadspeed.hf, stats.downloadspeed.vf) }}
+                {{ meterlinetemplate("uploadneedle", "#6688FF", stats.uploadspeed.ho, stats.uploadspeed.vo, stats.uploadspeed.hf, stats.uploadspeed.vf) }}
                 {{ meterendtemplate() }}
 
 Count Meter
 
-                {{ metertemplate("countmeter", "", "", "", "", "", "", "", "none") }}
+                {{ meteroutlinetemplate("countmeter") }}
+                {{ meterblockstemplate(stats.downloadcount.fill, stats.downloadcount.gap, stats.downloadcount.offset, stats.activedownloads.fill, stats.activedownloads.gap, stats.activedownloads.offset, stats.uploadcount.fill, stats.uploadcount.gap, stats.uploadcount.offset, stats.activeuploads.fill, stats.activeuploads.gap, stats.activeuploads.offset) }}
                 {{ meterendtemplate() }}
 
  --></div><!--

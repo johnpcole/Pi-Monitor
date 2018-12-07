@@ -34,6 +34,14 @@ class DefineTorrentItem:
 
 		self.dateadded = -99999
 
+#		self.totalpeers = 0
+
+		self.activepeers = 0
+
+#		self.totalseeders = 0
+
+		self.activeseeders = 0
+
 	# =========================================================================================
 
 	def updateinfo(self, datalist):
@@ -82,6 +90,18 @@ class DefineTorrentItem:
 
 			elif dataitem == "time_added":
 				self.dateadded = datalist[dataitem]
+
+			elif dataitem == "num_seeds":
+				self.activeseeders = datalist[dataitem]
+
+#			elif dataitem == "total_seeds":
+#				self.totalseeders = datalist[dataitem]
+
+			elif dataitem == "num_peers":
+				self.activepeers = datalist[dataitem]
+
+#			elif dataitem == "total_peers":
+#				self.totalpeers = datalist[dataitem]
 
 			else:
 				outcome = "Unknown Data Label: " + dataitem
@@ -479,4 +499,26 @@ class DefineTorrentItem:
 				instruction = {'source': self.getlocation() + file.getpath(), 'target': filedestination,
 																							'size': file.getrawsize()}
 				outcome.append(instruction)
+		return outcome
+
+
+
+	def getconnectiondata(self):
+
+		outcome = {}
+		outcome['activedownloads'] = 0
+		outcome['activeuploads'] = 0
+		outcome['downloadcount'] = 0
+		outcome['activedownloads'] = 0
+
+		torrentstatus = self.getfullstatus()
+		if torrentstatus[-6:] == "active":
+			outcome['uploadcount'] = 1
+			if self.activepeers > 0:
+				outcome['activeuploads'] = 1
+			if torrentstatus == "downloading_active":
+				outcome['downloadcount'] = 1
+				if self.activeseeders > 0:
+					outcome['activedownloads'] = 1
+
 		return outcome
