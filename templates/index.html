@@ -9,6 +9,7 @@
 {% from 'dialog.html' import dialogbottomtemplate %}
 {% from 'icons.html' import thermometertemplate %}
 {% from 'icons.html' import storagetemplate %}
+{% from 'icons.html' import connectivitytemplate %}
 
 
 <!-- ------------------------------------------------------------------------------------------------ -->
@@ -61,12 +62,14 @@ Speed Meter
                 {{ metermarkerstemplate("1", "", "", "k", "", "", "M", "none") }}
                 {{ meterlinetemplate("downloadneedle", "#FFFF00", stats.downloadspeed.ho, stats.downloadspeed.vo, stats.downloadspeed.hf, stats.downloadspeed.vf) }}
                 {{ meterlinetemplate("uploadneedle", "#6688FF", stats.uploadspeed.ho, stats.uploadspeed.vo, stats.uploadspeed.hf, stats.uploadspeed.vf) }}
+                {{ connectivitytemplate() }}
                 {{ meterendtemplate() }}
 
 Count Meter
 
                 {{ meteroutlinetemplate("countmeter") }}
                 {{ meterblockstemplate(stats.downloadcount.fill, stats.downloadcount.gap, stats.downloadcount.offset, stats.activedownloads.fill, stats.activedownloads.gap, stats.activedownloads.offset, stats.uploadcount.fill, stats.uploadcount.gap, stats.uploadcount.offset, stats.activeuploads.fill, stats.activeuploads.gap, stats.activeuploads.offset) }}
+                {{ connectivitytemplate() }}
                 {{ meterendtemplate() }}
 
  --></div><!--
