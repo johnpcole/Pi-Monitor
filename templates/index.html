@@ -8,6 +8,7 @@
 {% from 'dialog.html' import dialogtoptemplate %}
 {% from 'dialog.html' import dialogbottomtemplate %}
 {% from 'icons.html' import thermometertemplate %}
+{% from 'icons.html' import storagetemplate %}
 
 
 <!-- ------------------------------------------------------------------------------------------------ -->
@@ -33,6 +34,7 @@ Space Meter
                 {{ meteroutlinetemplate("spacemeter") }}
                 {{ metermarkerstemplate("1", "", "", "10", "", "", "100", "low") }}
                 {{ meterlinetemplate("spaceneedle", "#92D050", stats.space.ho, stats.space.vo, stats.space.hf, stats.space.vf) }}
+                {{ storagetemplate() }}
                 {{ meterendtemplate() }}
 
 Thermometer
