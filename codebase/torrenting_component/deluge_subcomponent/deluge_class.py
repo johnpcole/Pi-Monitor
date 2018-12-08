@@ -45,7 +45,8 @@ class DefineDelugeInterface:
 
 	def getdelugekeys(self):
 
-		return ["state", "save_path", "name", "total_size", "progress", "eta", "files", "is_finished", "time_added"]
+		return ["state", "save_path", "name", "total_size", "progress", "eta", "files", "is_finished", "time_added",
+						"num_seeds", "num_peers"] #, "total_seeds", "total_peers" ]
 
 # =========================================================================================
 

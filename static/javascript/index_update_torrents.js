@@ -63,8 +63,10 @@ function updateTorrentTile(dataitem)
 
 function updateStats(stats)
 {
-    rerenderText('downloadneedle', '<line x1="'+stats.d.ho+'" y1="'+stats.d.vo+'" x2="'+stats.d.hf+'" y2="'+stats.d.vf+'" />');
-    rerenderText('uploadneedle', '<line x1="'+stats.u.ho+'" y1="'+stats.u.vo+'" x2="'+stats.u.hf+'" y2="'+stats.u.vf+'" />');
-    rerenderText('spaceneedle', '<line x1="'+stats.s.ho+'" y1="'+stats.s.vo+'" x2="'+stats.s.hf+'" y2="'+stats.s.vf+'" />');
-    rerenderText('tempneedle', '<line x1="'+stats.t.ho+'" y1="'+stats.t.vo+'" x2="'+stats.t.hf+'" y2="'+stats.t.vf+'" />');
+    rerenderText('downloadneedle', '<line x1="'+stats.downloadspeed.ho+'" y1="'+stats.downloadspeed.vo+'" x2="'+stats.downloadspeed.hf+'" y2="'+stats.downloadspeed.vf+'" />');
+    rerenderText('uploadneedle', '<line x1="'+stats.uploadspeed.ho+'" y1="'+stats.uploadspeed.vo+'" x2="'+stats.uploadspeed.hf+'" y2="'+stats.uploadspeed.vf+'" />');
+    rerenderText('spaceneedle', '<line x1="'+stats.space.ho+'" y1="'+stats.space.vo+'" x2="'+stats.space.hf+'" y2="'+stats.space.vf+'" />');
+    rerenderText('tempneedle', '<line x1="'+stats.temperature.ho+'" y1="'+stats.temperature.vo+'" x2="'+stats.temperature.hf+'" y2="'+stats.temperature.vf+'" />');
+    rerenderText('innerhider', '<circle cx="60.5" cy="61" r="49.5" stroke-dasharray="'+stats.activedownloads.fill+' '+stats.activedownloads.gap+'" stroke-dashoffset="'+stats.activedownloads.offset+'" /><circle cx="60.5" cy="61" r="36.5" stroke-dasharray="'+stats.activeuploads.fill+' '+stats.activeuploads.gap+'" stroke-dashoffset="'+stats.activeuploads.offset+'" />');
+    rerenderText('outerhider', '<circle cx="60.5" cy="61" r="49.5" stroke-dasharray="'+stats.downloadcount.fill+' '+stats.downloadcount.gap+'" stroke-dashoffset="'+stats.downloadcount.offset+'" /><circle cx="60.5" cy="61" r="36.5" stroke-dasharray="'+stats.uploadcount.fill+' '+stats.uploadcount.gap+'" stroke-dashoffset="'+stats.uploadcount.offset+'" />');
 };

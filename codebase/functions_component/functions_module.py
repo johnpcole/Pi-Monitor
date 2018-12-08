@@ -141,20 +141,28 @@ def getmeterdata(needleangle, needlesize, needlepivot):
 	#1212 678
 	# Needle length is 564 at 100% scaling
 
-	fullneedlestretch = 544.0
-	verticalratio = decalheight / 678.0
-	horizontalratio = decalwidth / 1212.0
-	verticalneedlelength = verticalratio * fullneedlestretch * needlesize
-	horizontalneedlelength = horizontalratio * fullneedlestretch * needlesize
-	verticalpivotlength = verticalratio * fullneedlestretch * needlepivot
-	horizontalpivotlength = horizontalratio * fullneedlestretch * needlepivot
-	verticalorigin = verticalratio * 74.0
-	horizontalorigin = horizontalratio * 610.0
-
-	verticalstart = (verticalpivotlength * Maths.sin(needleangle)) + verticalorigin
-	horizontalstart = (horizontalpivotlength * Maths.cos(needleangle)) + horizontalorigin
-	verticalfinal = (verticalneedlelength * Maths.sin(needleangle)) + verticalorigin
-	horizontalfinal = (horizontalneedlelength * Maths.cos(needleangle)) + horizontalorigin
+#	fullneedlestretch = 544.0
+#	verticalratio = decalheight / 678.0
+#	horizontalratio = decalwidth / 1212.0
+#	verticalneedlelength = verticalratio * fullneedlestretch * needlesize
+#	horizontalneedlelength = horizontalratio * fullneedlestretch * needlesize
+#	verticalpivotlength = verticalratio * fullneedlestretch * needlepivot
+#	horizontalpivotlength = horizontalratio * fullneedlestretch * needlepivot
+#	verticalorigin = verticalratio * 74.0
+#	horizontalorigin = horizontalratio * 610.0
+#	verticalstart = (verticalpivotlength * Maths.sin(needleangle)) + verticalorigin
+#	horizontalstart = (horizontalpivotlength * Maths.cos(needleangle)) + horizontalorigin
+#	verticalfinal = (verticalneedlelength * Maths.sin(needleangle)) + verticalorigin
+#	horizontalfinal = (horizontalneedlelength * Maths.cos(needleangle)) + horizontalorigin
+	metersize = 58.0
+	verticalorigin = 7.0
+	horizontalorigin = decalwidth * 0.5
+	needlestart = needlepivot * metersize
+	needlefinal = needlesize * metersize
+	verticalstart = (needlestart * Maths.sin(needleangle)) + verticalorigin
+	horizontalstart = (needlestart * Maths.cos(needleangle)) + horizontalorigin
+	verticalfinal = (needlefinal * Maths.sin(needleangle)) + verticalorigin
+	horizontalfinal = (needlefinal * Maths.cos(needleangle)) + horizontalorigin
 
 	outcome = {}
 	outcome['vo'] = decalheight - verticalstart
@@ -180,6 +188,7 @@ def getlogmeterangle(currentval, scale):
 	return outcome
 
 
+
 def getlinmeterangle(currentval, scalemin, scalemax):
 
 	fraction = (currentval - scalemin) / (scalemax - scalemin)
@@ -194,3 +203,29 @@ def getlinmeterangle(currentval, scalemin, scalemax):
 	return outcome
 
 
+
+def getblockmeterangle(currentval, anglemax, blocksin180):
+
+	blockanglesize = 180.0 / blocksin180
+
+	blockstart = currentval * blockanglesize
+
+	if blockstart > anglemax:
+		blockstart = anglemax
+
+	return blockstart
+
+
+
+def getmeter2data(circleradius, startangle, endangle):
+
+	circumference = circleradius * Maths.pi * 2.0
+
+	filledangle = (endangle - startangle) / 360.0
+
+	outcome = {}
+	outcome['fill'] = filledangle * circumference
+	outcome['gap'] = circumference - outcome['fill']
+	outcome['offset'] = ((180.0 - startangle) / 360.0) * circumference
+
+	return outcome
