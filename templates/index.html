@@ -7,6 +7,7 @@
 {% from 'button.html' import buttontemplate %}
 {% from 'dialog.html' import dialogtoptemplate %}
 {% from 'dialog.html' import dialogbottomtemplate %}
+{% from 'icons.html' import thermometertemplate %}
 
 
 <!-- ------------------------------------------------------------------------------------------------ -->
@@ -40,6 +41,7 @@ Thermometer
                 {{ meteroutlinetemplate("thermometer") }}
                 {{ metermarkerstemplate("35", "", "40", "", "45", "", "50", "high") }}
                 {{ meterlinetemplate("tempneedle", "#DD6666", stats.temperature.ho, stats.temperature.vo, stats.temperature.hf, stats.temperature.vf) }}
+                {{ thermometertemplate() }}
                 {{ meterendtemplate() }}
 
 Banner Content

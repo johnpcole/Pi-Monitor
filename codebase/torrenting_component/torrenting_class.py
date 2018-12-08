@@ -28,10 +28,10 @@ class DefineTorrentManager:
 	def getstats(self):
 
 		outcome = {}
-		outcome['downloadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.9, 0.5)
-		outcome['uploadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.5)
-		outcome['space'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.9, 0.5)
-		outcome['temperature'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.9, 0.5)
+		outcome['downloadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.9, 0.4)
+		outcome['uploadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.4)
+		outcome['space'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.9, 0.4)
+		outcome['temperature'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.9, 0.4)
 		outcome['downloadcount'] = Functions.getmeter2data(49.5, Functions.getblockmeterangle(self.sessiondata['downloadcount'], 185.0, 9.5), 185.0)
 		outcome['activedownloads'] = Functions.getmeter2data(49.5, Functions.getblockmeterangle(self.sessiondata['activedownloads'], 185.0, 9.5), 185.0)
 		outcome['uploadcount'] = Functions.getmeter2data(36.5, Functions.getblockmeterangle(self.sessiondata['uploadcount'], 185.0, 9.5), 185.0)
