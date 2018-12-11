@@ -1,4 +1,4 @@
-from filedata_subcomponent import filedata_module as FileData
+from .filedata_subcomponent import filedata_module as FileData
 from ...functions_component import functions_module as Functions
 
 
@@ -140,7 +140,7 @@ class DefineTorrentItem:
 		if existingfile is not None:
 			existingfile.updatefilepurpose(filepurpose)
 		else:
-			print "Cannot identify file"
+			print("Cannot identify file")
 
 # =========================================================================================
 
@@ -437,7 +437,7 @@ class DefineTorrentItem:
 			if existingfile is not None:
 				existingfile.updatefilepurpose(dataarray[2])
 			else:
-				print "Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1]
+				print("Ignoring Saved File Config for torrent ", dataarray[0], ", file ",dataarray[1])
 
 # =========================================================================================
 

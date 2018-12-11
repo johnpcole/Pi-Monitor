@@ -12,14 +12,14 @@ class DefineDelugeInterface:
 
 	def openconnection(self):
 
-		#print "Pretending to connect"
+		#print("Pretending to connect")
 		return True
 
 # =========================================================================================
 
 	def closeconnection(self):
 
-		#print "Pretending to disconnect"
+		#print("Pretending to disconnect")
 		return False
 
 # =========================================================================================
@@ -43,7 +43,7 @@ class DefineDelugeInterface:
 
 	def gettorrentdata(self, torrentid):
 
-		print torrentid
+		print(torrentid)
 		return ({'total_size': 1767583673,
 				'state': 'Seeding',
 				'save_path': '/Torrents/In Progress',
@@ -153,7 +153,7 @@ class DefineDelugeInterface:
 
 # =========================================================================================
 
- 	def getsessiondata(self):
+	def getsessiondata(self):
 
 		self.updatestats()
 		outcome = {}

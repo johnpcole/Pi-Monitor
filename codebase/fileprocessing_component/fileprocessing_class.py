@@ -1,5 +1,5 @@
-from filesystem_subcomponent import filesystem_module as FileSystem
-from copyaction_subcomponent import copyaction_module as CopyAction
+from .filesystem_subcomponent import filesystem_module as FileSystem
+from .copyaction_subcomponent import copyaction_module as CopyAction
 
 class DefineLibraryManager:
 
@@ -123,7 +123,7 @@ class DefineLibraryManager:
 	def queuefilecopy(self, copyactions):
 
 		if copyactions == []:
-			print "No copy actions to perform this time"
+			print("No copy actions to perform this time")
 		else:
 			self.copyactions = []
 

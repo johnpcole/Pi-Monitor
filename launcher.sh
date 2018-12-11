@@ -2,5 +2,5 @@
 
 cd /mnt/Torrents-Disk/Python-Applications/Download-Manager
 
-python Download_Manager.py
+python3 Download_Manager.py
 
