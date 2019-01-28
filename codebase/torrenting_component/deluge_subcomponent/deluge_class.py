@@ -124,7 +124,7 @@ class DefineDelugeInterface:
 		else:
 			outcome = self.delugeinterface.call('core.add_torrent_url', linkstring, {})
 
-		return outcome
+		return outcome.decode("ascii", "ignore")
 
 	# =========================================================================================
 
