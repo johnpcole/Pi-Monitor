@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd /mnt/Torrents-Disk/Python-Applications/Download-Manager
+cd /mnt/Torrents-Disk/Download-Manager
 
-python Download_Manager.py
+python3 Download_Manager.py >/mnt/Torrents-Disk/Download-Manager/data/Logging.log 2>%1
+
 

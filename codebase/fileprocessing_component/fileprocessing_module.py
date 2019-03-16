@@ -1,4 +1,4 @@
-from filesystem_subcomponent import filesystem_module as FileSystem
+from .filesystem_subcomponent import filesystem_module as FileSystem
 from . import fileprocessing_class as FileManagerClass
 
 # =========================================================================================

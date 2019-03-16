@@ -39,10 +39,10 @@ def updatelistpage():
 	if (bulkaction == "Start") or (bulkaction == "Stop"):
 		torrentmanager.bulkprocessalltorrents(bulkaction)
 	elif bulkaction == "RescanFileServer":
-		print "Rescanning File-Server for TV Shows & Seasons"
+		print("Rescanning File-Server for TV Shows & Seasons")
 		librarymanager.discovertvshows()
 	elif bulkaction != "Refresh":
-		print "Unknown Torrents List Update Action ", bulkaction
+		print("Unknown Torrents List Update Action ", bulkaction)
 	torrentmanager.refreshtorrentlist()
 	return Jsondata(torrents=torrentmanager.gettorrentlistdata("refresh"), stats = torrentmanager.getstats())
 
@@ -78,11 +78,11 @@ def updatetorrentpage():
 		if (torrentaction == "Start") or (torrentaction == "Stop"):
 			torrentmanager.processonetorrent(torrentid, torrentaction)
 		elif torrentaction != "Refresh":
-			print "Unknown Torrent Update Action ", torrentaction
+			print("Unknown Torrent Update Action ", torrentaction)
 		torrentmanager.refreshtorrentdata(torrentid)
 		return Jsondata(selectedtorrent=torrentmanager.gettorrentdata(torrentid, "refresh"))
 	else:
-		print "Updating unknown torrent ", torrentid
+		print("Updating unknown torrent ", torrentid)
 
 
 
@@ -99,7 +99,7 @@ def copytorrent():
 		if torrentmanager.validatetorrentid(torrentid) == True:
 			librarymanager.queuefilecopy(torrentmanager.getcopyactions(torrentid))
 		else:
-			print "Copying unknown torrent ", torrentid
+			print("Copying unknown torrent ", torrentid)
 		refreshmode = False
 	else:
 		wastetime()
@@ -120,7 +120,7 @@ def deletetorrent():
 	if torrentmanager.validatetorrentid(torrentid) == True:
 		torrentmanager.processonetorrent(torrentid, "Delete")
 	else:
-		print "Deleting unknown torrent ", torrentid
+		print("Deleting unknown torrent ", torrentid)
 	return Jsondata(deletedata = "Done")
 
 
@@ -140,7 +140,7 @@ def reconfiguretorrentconfiguration():
 		FileManager.saveconfigs(torrentmanager.getconfigs())
 		return Jsondata(selectedtorrent = torrentmanager.gettorrentdata(torrentid, "reconfigure"))
 	else:
-		print "Reconfiguring unknown torrent ", torrentid
+		print("Reconfiguring unknown torrent ", torrentid)
 
 
 
@@ -159,7 +159,7 @@ def edittorrentconfiguration():
 		return Jsondata(selectedtorrent=torrentdata,
 									listitems=librarymanager.getdropdownlists(torrentdata['tvshowname']))
 	else:
-		print "Edit unknown torrent ", torrentid
+		print("Edit unknown torrent ", torrentid)
 
 
 
@@ -195,7 +195,7 @@ def addnewtorrent():
 def wastetime():
 	if webmode == False:
 		for i in range(0, 100):
-			print str(i), "%"
+			print(str(i), "%")
 			for j in range(0, 10000):
 				pass
 

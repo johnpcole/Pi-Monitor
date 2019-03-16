@@ -2,7 +2,7 @@ import os as OperatingSystem
 
 def mountnetworkdrive(mountpoint, networkpath, username, password):
 	if concatenatepaths(" ", " ") == " / ":
-		outcome = OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+',noexec,vers=2.0 '+networkpath+' '+mountpoint)
+		outcome = OperatingSystem.system('sudo mount -t cifs -o username='+username+',password='+password+',uid=pi,gid=pi,noexec,vers=2.0 '+networkpath+' '+mountpoint)
 	else:
 		if username != "":
 			outcome = OperatingSystem.system('NET USE '+mountpoint+' '+networkpath+' '+password+' '+'/USER:'+username+' /PERSISTENT:NO')
@@ -38,7 +38,7 @@ def readfromdisk(filename):
 
 	except:
 		# Print an error if the file cannot be read
-		print "Cannot read file - ", filename
+		print("Cannot read file - ", filename)
 
 	return newfilelist
 
@@ -99,7 +99,7 @@ def getfolderlisting(folderpath):
 			outcome[listitem] = itemtype
 
 	except:
-		print "Cannot access folder - ", folderpath
+		print("Cannot access folder - ", folderpath)
 
 	return outcome
 
@@ -194,7 +194,7 @@ def writetodisk(filename, outputlist):
 
 	except:
 		# Print an error if the file cannot be written
-		print "Cannot write file - ", filename
+		print("Cannot write file - ", filename)
 
 
 
@@ -217,10 +217,10 @@ def createpathfromlist(pathlist):
 # ---------------------------------------------
 
 def copyfile(source, target):
-	print "======================================================================"
-	print "Source: ", source
-	print "Target: ", target
-	print "======================================================================"
+	print("======================================================================")
+	print("Source: ", source)
+	print("Target: ", target)
+	print("======================================================================")
 
 	if concatenatepaths(" ", " ") == " / ":
 		outcome = OperatingSystem.system('cp "' + source + '" "' + target + '"')

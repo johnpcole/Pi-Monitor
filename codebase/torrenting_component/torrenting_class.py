@@ -1,7 +1,8 @@
-from deluge_subcomponent import deluge_module as DelugeClient
-from torrentdata_subcomponent import torrentdata_module as TorrentData
+from .deluge_subcomponent import deluge_module as DelugeClient
+from .torrentdata_subcomponent import torrentdata_module as TorrentData
 from ..functions_component import functions_module as Functions
-from monitor_subcomponent import monitor_module as Monitor
+from .pimonitor_subcomponent import pimonitor_module as PiMonitor
+from .sessiondatameters_subcomponent import sessiondatameters_module as SessionDataMeters
 
 
 class DefineTorrentManager:
@@ -18,37 +19,8 @@ class DefineTorrentManager:
 		self.torrents = []
 
 		# An array of meter graph data, capturing important overall torrenting stats
-		self.sessiondata = {'uploadspeed':0, 'downloadspeed':0, 'freespace':0, 'temperature':0, 'downloadcount':0,
-								'activedownloads':0, 'uploadcount':0, 'activeuploads':0}
+		self.sessiondata = SessionDataMeters.createsessiondatameters()
 
-# =========================================================================================
-# Generates an array of stat numerics, required to draw the meter graphs
-# =========================================================================================
-
-	def getstats(self):
-
-		outcome = {}
-		outcome['downloadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['downloadspeed'], 1.0), 0.9, 0.4)
-		outcome['uploadspeed'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['uploadspeed'], 1.0), 0.75, 0.4)
-		outcome['space'] = Functions.getmeterdata(Functions.getlogmeterangle(self.sessiondata['freespace'], 3.0), 0.9, 0.4)
-		outcome['temperature'] = Functions.getmeterdata(Functions.getlinmeterangle(self.sessiondata['temperature'], 32.5, 52.5), 0.9, 0.4)
-		outcome['downloadcount'] = Functions.getmeter2data(49.5, Functions.getblockmeterangle(self.sessiondata['downloadcount'], 185.0, 9.5), 185.0)
-		outcome['activedownloads'] = Functions.getmeter2data(49.5, Functions.getblockmeterangle(self.sessiondata['activedownloads'], 185.0, 9.5), 185.0)
-		outcome['uploadcount'] = Functions.getmeter2data(36.5, Functions.getblockmeterangle(self.sessiondata['uploadcount'], 185.0, 9.5), 185.0)
-		outcome['activeuploads'] = Functions.getmeter2data(36.5, Functions.getblockmeterangle(self.sessiondata['activeuploads'], 185.0, 9.5), 185.0)
-
-#		index = 30.0
-#		for indexcounter in range(1, 11):
-#			index = index + 2.5
-#			item = Functions.getmeterdata(Functions.getlinmeterangle(index, 32.5, 56.25), 0.7, 0.0)
-#			dummyoutcome = '                    <line y1="' + str(item['vo']) + '" x1="' + str(item['ho']) + '" y2="' + str(item['vf']) + '" x2="' + str(item['hf']) + '" />'
-#			print dummyoutcome
-
-		return outcome
-
-
-
-		return outcome
 
 # =========================================================================================
 # Connects to the torrent daemon, and updates the local list of torrents
@@ -58,18 +30,18 @@ class DefineTorrentManager:
 
 		dummyoutcome = self.delugeclient.openconnection()
 
-		self.updatestats()
+		self.sessiondata.updatesessionstats(self.delugeclient.getsessiondata(), PiMonitor.gettemperature())
 
 		torrentidlist = self.delugeclient.gettorrentlist()
 
 		dummyoutcome = self.delugeclient.closeconnection()
-		#print "Connection closure attempted - Connection State = ", outcome
+		#print("Connection closure attempted - Connection State = ", outcome)
 
 		self.registermissingtorrentsandupdatetorrentdata(torrentidlist)
 
 		self.cleantorrentlist(torrentidlist)
 
-		self.updateactivitycounts()
+		self.sessiondata.updateactivitycounts(self.torrents)
 
 # =========================================================================================
 # Registers a torrent in Download-Manager, with default torrent data which is
@@ -79,7 +51,7 @@ class DefineTorrentManager:
 	def registertorrentobject(self, torrentid):
 
 		self.torrents.append(TorrentData.createitem(torrentid))
-		print "Registering Torrent in Download-Manager", torrentid
+		print("Registering Torrent in Download-Manager", torrentid)
 
 		return self.gettorrentobject(torrentid)
 
@@ -122,7 +94,7 @@ class DefineTorrentManager:
 		torrentobject.updateinfo(torrentdata)
 
 		dummyoutcome = self.delugeclient.closeconnection()
-		#print "Connection closure attempted - Connection State = ", outcome
+		#print("Connection closure attempted - Connection State = ", outcome)
 
 
 # =========================================================================================
@@ -172,7 +144,7 @@ class DefineTorrentManager:
 			if torrentobject is not None:
 				torrentobject.setsavedata(datavalues)
 			else:
-				print "Ignoring Saved Config for Torrent ", datavalues[0]
+				print("Ignoring Saved Config for Torrent ", datavalues[0])
 
 # =========================================================================================
 
@@ -180,6 +152,7 @@ class DefineTorrentManager:
 
 		outcome = self.delugeclient.openconnection()
 		newid = self.delugeclient.addtorrentlink(newurl)
+		print("New Raw Torrent ID: ", newid)
 		newobject = self.registertorrentobject(newid)
 		#TO-DO = change newobject to be success/error outcome, allowing for graceful failure
 		self.refreshtorrentdata(newid)
@@ -200,7 +173,7 @@ class DefineTorrentManager:
 			self.delugeclient.resumetorrent("ALL")
 			outcome = self.delugeclient.closeconnection()
 		else:
-			print "Unknown Bulk Torrent Request ", bulkaction
+			print("Unknown Bulk Torrent Request ", bulkaction)
 
 # =========================================================================================
 
@@ -220,7 +193,7 @@ class DefineTorrentManager:
 			self.delugeclient.deletetorrent(torrentid)
 			outcome = self.delugeclient.closeconnection()
 		else:
-			print "Unknown Single Torrent Request ", action
+			print("Unknown Single Torrent Request ", action)
 
 # =========================================================================================
 
@@ -235,12 +208,6 @@ class DefineTorrentManager:
 		return outcome
 
 
-# =========================================================================================
-
-	def updatestats(self):
-
-		self.sessiondata = self.delugeclient.getsessiondata()
-		self.sessiondata['temperature'] = Monitor.gettemperature()
 
 # =========================================================================================
 # Identifies any torrents in the deluge client that aren't captured in the Download-Manager,
@@ -273,25 +240,16 @@ class DefineTorrentManager:
 					foundflag = True
 
 			if foundflag == False:
-				print "Deregistering Missing Torrent in Download-Manager: ", existingtorrent.getid()
+				print("Deregistering Missing Torrent in Download-Manager: ", existingtorrent.getid())
 
 		self.torrents = Functions.sortdictionary(cleanlist, 'dateadded', True)
 
 
 
-	# =========================================================================================
+# =========================================================================================
+# Generates an array of stat numerics, required to draw the meter graphs
+# =========================================================================================
 
-	def updateactivitycounts(self):
+	def getstats(self):
 
-		self.sessiondata['downloadcount'] = 0
-		self.sessiondata['activedownloads'] = 0
-		self.sessiondata['uploadcount'] = 0
-		self.sessiondata['activeuploads'] = 0
-
-		for existingtorrent in self.torrents:
-
-			newcount = existingtorrent.getconnectiondata()
-
-			for indexkey in newcount:
-				self.sessiondata[indexkey] = self.sessiondata[indexkey] + newcount[indexkey]
-
+		return self.sessiondata.getstats()
